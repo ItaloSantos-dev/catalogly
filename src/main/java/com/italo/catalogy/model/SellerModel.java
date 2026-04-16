@@ -42,4 +42,11 @@ public class SellerModel extends UserModel{
 
     @OneToMany(mappedBy = "seller")
     private List<OrderModel> ordersSelled;
+
+    @OneToMany(mappedBy = "seller")
+    private List<SupplierModel> suppliers;
+
+    @OneToMany(mappedBy = "sellerModel")
+    private List<StockOrderModel> stockOrders;
+
 }

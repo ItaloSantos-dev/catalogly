@@ -68,4 +68,7 @@ public class ItemModel {
 
     @OneToMany(mappedBy = "item")
     private List<OrderItemModel> orders;
+
+    @OneToMany(mappedBy = "item")
+    private List<SupplierItemModel> suppliers;
 }
