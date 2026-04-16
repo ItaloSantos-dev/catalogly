@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_seller")
@@ -37,5 +38,8 @@ public class SellerModel extends UserModel{
     private LocalDateTime updatedAt;
 
     @OneToOne(mappedBy = "seller")
-    private CatalogModel catalo;
+    private CatalogModel catalog;
+
+    @OneToMany(mappedBy = "seller")
+    private List<OrderModel> ordersSelled;
 }

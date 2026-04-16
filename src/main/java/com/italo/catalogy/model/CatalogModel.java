@@ -63,10 +63,16 @@ public class CatalogModel {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "catalog", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "catalog")
     private List<ItemModel> items;
 
-    @OneToMany(mappedBy = "catalog", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "catalog")
     private List<CategoryModel> categorys;
+
+    @OneToMany(mappedBy = "catalog")
+    private List<OrderModel> orders;
+
+    @OneToMany(mappedBy = "catalog")
+    private List<CouponModel> coupons;
 
 }

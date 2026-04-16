@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -54,5 +55,11 @@ public abstract class UserModel {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "buyer")
+    private List<OrderModel> orders;
+
+    @OneToMany(mappedBy = "customer")
+    private List<InvoiceModel> invoices;
 
 }
