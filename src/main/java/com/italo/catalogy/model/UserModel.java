@@ -2,10 +2,7 @@ package com.italo.catalogy.model;
 
 import com.italo.catalogy.model.enums.UserRole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class UserModel implements UserDetails {
+public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -47,7 +44,7 @@ public abstract class UserModel implements UserDetails {
     @Column(name = "password",length = 100, nullable = false)
     private String password;
 
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRole role;
