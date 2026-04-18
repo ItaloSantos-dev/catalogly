@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                 .addFilterBefore(this.securityTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/seller").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

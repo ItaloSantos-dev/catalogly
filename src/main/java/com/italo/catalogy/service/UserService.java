@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         if (this.userRepository.existsByEmail(registerRequestDTO.email()))
             throw new RuntimeException("Email ja cadastrado");
         UserModel newUser = this.userMapper.registerToModel(registerRequestDTO, passwordEncoder);
-        return newUser;
+        return this.userRepository.save(newUser);
     }
 
 
