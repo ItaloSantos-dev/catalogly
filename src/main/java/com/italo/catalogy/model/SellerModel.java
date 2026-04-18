@@ -15,14 +15,22 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_seller")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@PrimaryKeyJoinColumn(name = "id")
-public class SellerModel extends UserModel{
+public class SellerModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @NotNull
+    @OneToOne(mappedBy = "user_id")
+    private UserModel user;
+
     @NotBlank
     @CPF
     @Column(name = "cpf",length = 11, nullable = false, unique = true)
@@ -51,34 +59,4 @@ public class SellerModel extends UserModel{
 
     @OneToMany(mappedBy = "sellerModel")
     private List<StockOrderModel> stockOrders;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_SELLER"), new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getUsername() {
-        return this.getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
