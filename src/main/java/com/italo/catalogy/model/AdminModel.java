@@ -23,7 +23,8 @@ public class AdminModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne(mappedBy = "user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private UserModel user;
 
     @Column(name = "created_at",nullable = false)

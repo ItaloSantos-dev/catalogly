@@ -28,7 +28,8 @@ public class SellerModel {
     private UUID id;
 
     @NotNull
-    @OneToOne(mappedBy = "user_id")
+    @OneToOne()
+    @JoinColumn(name = "user_id")
     private UserModel user;
 
     @NotBlank
