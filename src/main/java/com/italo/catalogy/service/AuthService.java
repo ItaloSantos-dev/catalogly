@@ -28,11 +28,10 @@ public class AuthService {
     public String login(LoginRequestDTO loginRequestDTO){
         Authentication usernamePassword = new UsernamePasswordAuthenticationToken(loginRequestDTO.email(), loginRequestDTO.password());
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
-
         return this.tokenService.genereateToken((UserModel) auth.getPrincipal());
     }
 
-    public UserResponseDTO register(RegisterRequestDTO registerRequestDTO){
+    public UserModel register(RegisterRequestDTO registerRequestDTO){
         return this.userService.createUser(registerRequestDTO);
     }
 }

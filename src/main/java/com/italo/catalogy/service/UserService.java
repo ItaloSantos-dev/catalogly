@@ -29,11 +29,11 @@ public class UserService implements UserDetailsService {
         return this.userRepository.findByEmail(username);
     }
 
-    public UserResponseDTO createUser(RegisterRequestDTO registerRequestDTO){
+    public UserModel createUser(RegisterRequestDTO registerRequestDTO){
         if (this.userRepository.existsByEmail(registerRequestDTO.email()))
             throw new RuntimeException("Email ja cadastrado");
         UserModel newUser = this.userMapper.registerToModel(registerRequestDTO, passwordEncoder);
-        return this.userMapper.modelToResponse(this.userRepository.save(newUser));
+        return newUser;
     }
 
 
