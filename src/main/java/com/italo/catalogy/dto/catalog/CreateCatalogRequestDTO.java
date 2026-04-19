@@ -1,7 +1,6 @@
 package com.italo.catalogy.dto.catalog;
 
-public record CatalogPublicResponseDTO(
-        String sellerName,
+public record CreateCatalogRequestDTO(
         String name,
         String slug,
         String slogan,
@@ -10,7 +9,5 @@ public record CatalogPublicResponseDTO(
         String phone,
         String imageIconUrl,
         String imageBannerUrl
-        //Add outros itens
-
 ) {
 }

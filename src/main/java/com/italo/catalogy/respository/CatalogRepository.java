@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface CatalogRepository extends JpaRepository<CatalogModel, UUID> {
 
     Optional<CatalogModel> findBySlug(String slug);
+    Boolean existsBySlug(String slug);
 }

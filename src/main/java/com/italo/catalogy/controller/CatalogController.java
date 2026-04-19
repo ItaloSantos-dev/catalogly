@@ -1,14 +1,15 @@
 package com.italo.catalogy.controller;
 
+import com.italo.catalogy.dto.catalog.CatalogPrivateResponseDTO;
 import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
+import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
 import com.italo.catalogy.mapper.CatalogMapper;
 import com.italo.catalogy.model.CatalogModel;
+import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.CatalogService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/catalog")
@@ -28,5 +29,13 @@ public class CatalogController {
         return ResponseEntity.ok(this.catalogMapper.modelToPublicResponse(catalog));
     }
 
+    @PostMapping
+    public ResponseEntity<CatalogPublicResponseDTO> createCatalog(
+            @AuthenticationPrincipal UserModel userModel,
+            @RequestBody CreateCatalogRequestDTO createCatalogRequestDTO
+            ){
+        CatalogModel catalogModel = this.catalogService.createCatalog(createCatalogRequestDTO, userModel);
+        return ResponseEntity.ok(this.catalogMapper.modelToPublicResponse(catalogModel));
+    }
 
 }
