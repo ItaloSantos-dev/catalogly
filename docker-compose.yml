@@ -1,0 +1,29 @@
+services:
+  back:
+    container_name: back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - private_network
+    depends_on:
+      - database
+
+  database:
+    container_name: database
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1131
+      - POSTGRES_DB=catalogly
+    ports:
+      - "5432:5432"
+    networks:
+      - private_network
+
+
+networks:
+  private_network:
+    driver: bridge
