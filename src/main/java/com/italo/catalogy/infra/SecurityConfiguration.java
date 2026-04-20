@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/seller").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/catalog/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/catalog/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();
