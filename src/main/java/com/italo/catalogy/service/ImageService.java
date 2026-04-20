@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ImageService {
@@ -39,6 +40,21 @@ public class ImageService {
             );
         }catch (MinioException | IOException e){
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public String  getAssignedUrlImage(String path){
+        try{
+            return this.minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Http.Method.GET)
+                            .bucket(bucketName)
+                            .object(path)
+                            .expiry(2, TimeUnit.HOURS)
+                            .build()
+            );
+        }catch (MinioException e){
+            throw  new RuntimeException(e.getMessage());
         }
     }
 }

@@ -5,6 +5,7 @@ import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
 import com.italo.catalogy.model.UserModel;
+import com.italo.catalogy.service.ImageService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,11 @@ import java.time.LocalDateTime;
 @Component
 public class CatalogMapper {
 
+    private final ImageService imageService;
+
+    public CatalogMapper(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     public CatalogModel createToModel(CreateCatalogRequestDTO createCatalogRequestDTO, SellerModel sellerModel){
         CatalogModel newCatalogModel = new CatalogModel();
@@ -36,8 +42,8 @@ public class CatalogMapper {
                 catalogModel.getAbout(),
                 catalogModel.getFisicAddress(),
                 catalogModel.getPhone(),
-                catalogModel.getImageIconPath(),
-                catalogModel.getImageBannerPath()
+                this.imageService.getAssignedUrlImage(catalogModel.getImageIconPath()),
+                this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath())
         );
     }
 }
