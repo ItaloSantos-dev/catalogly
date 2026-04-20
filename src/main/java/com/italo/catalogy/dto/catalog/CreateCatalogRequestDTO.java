@@ -6,8 +6,6 @@ public record CreateCatalogRequestDTO(
         String slogan,
         String about,
         String fisicAddress,
-        String phone,
-        String imageIconUrl,
-        String imageBannerUrl
+        String phone
 ) {
 }
