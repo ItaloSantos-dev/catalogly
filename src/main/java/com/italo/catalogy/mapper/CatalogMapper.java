@@ -1,5 +1,6 @@
 package com.italo.catalogy.mapper;
 
+import com.italo.catalogy.dto.catalog.CatalogPrivateResponseDTO;
 import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
 import com.italo.catalogy.model.CatalogModel;
@@ -19,6 +20,8 @@ public class CatalogMapper {
         this.imageService = imageService;
     }
 
+
+
     public CatalogModel createToModel(CreateCatalogRequestDTO createCatalogRequestDTO, SellerModel sellerModel){
         CatalogModel newCatalogModel = new CatalogModel();
         newCatalogModel.setName(createCatalogRequestDTO.name());
@@ -36,6 +39,19 @@ public class CatalogMapper {
     public CatalogPublicResponseDTO modelToPublicResponse(CatalogModel catalogModel){
         return new CatalogPublicResponseDTO(
                 catalogModel.getSeller().getUser().getFirstName(),
+                catalogModel.getName(),
+                catalogModel.getSlug(),
+                catalogModel.getSlogan(),
+                catalogModel.getAbout(),
+                catalogModel.getFisicAddress(),
+                catalogModel.getPhone(),
+                this.imageService.getAssignedUrlImage(catalogModel.getImageIconPath()),
+                this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath())
+        );
+    }
+
+    public CatalogPrivateResponseDTO modelToPrivateResponse(CatalogModel catalogModel){
+        return new CatalogPrivateResponseDTO(
                 catalogModel.getName(),
                 catalogModel.getSlug(),
                 catalogModel.getSlogan(),

@@ -74,4 +74,9 @@ public class CatalogService {
         return this.catalogRepository.save(catalogModel);
 
     }
+
+    public CatalogModel getBySellerId(UUID id){
+        return this.catalogRepository.findBySellerUserId(id)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+    }
 }
