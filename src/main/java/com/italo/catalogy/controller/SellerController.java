@@ -48,4 +48,10 @@ public class SellerController {
         CatalogModel catalogModel = this.catalogService.getBySellerId(userModel.getId());
         return ResponseEntity.ok(this.catalogMapper.modelToPrivateResponse(catalogModel));
     }
+
+    @DeleteMapping("/catalog")
+    public ResponseEntity<Void> deleteMyCatalog(@AuthenticationPrincipal UserModel userModel){
+        this.sellerService.deleteCatalogBySellerId(userModel.getId());
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -9,6 +9,7 @@ import com.italo.catalogy.model.enums.TypeImageCatalog;
 import com.italo.catalogy.respository.CatalogRepository;
 import com.italo.catalogy.respository.SellerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
@@ -100,4 +101,6 @@ public class CatalogService {
         catalogModel.setImageBannerPath(this.saveImage(imageBanner, TypeImageCatalog.BANNER));
         return this.catalogRepository.save(catalogModel);
     }
+
+
 }
