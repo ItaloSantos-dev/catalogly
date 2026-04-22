@@ -12,5 +12,6 @@ public interface CatalogRepository extends JpaRepository<CatalogModel, UUID> {
 
     Optional<CatalogModel> findBySlug(String slug);
     Boolean existsBySlug(String slug);
+    Boolean existsByNameAndSellerUserId(String name, UUID userId);
     Optional<CatalogModel>findBySellerUserId(UUID sellerId);
 }

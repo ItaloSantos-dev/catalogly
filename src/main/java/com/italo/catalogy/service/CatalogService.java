@@ -42,19 +42,22 @@ public class CatalogService {
     }
 
     // /catalogly-media/catalog/{id}/banner|icon/{UUID}.extensao
-    private String saveImage(MultipartFile image, TypeImageCatalog type, UUID catalogId){
+    private String saveImage(MultipartFile image, TypeImageCatalog type){
         UUID objectId = UUID.randomUUID();
         String extension = image.getContentType().split("/")[1];
-        String path = "/catalog/" + catalogId + "/" + type.toString().toLowerCase() + "/" + objectId + "." + extension;
+        String path = "/catalog/" + type.toString().toLowerCase() + "/" + objectId + "." + extension;
         this.imageService.uploadImage(image, path);
         return path;
     }
 
-    public CatalogModel createCatalog(CreateCatalogRequestDTO createCatalogRequestDTO, UserModel userModel, MultipartFile imageIcon, MultipartFile imageBanner){
+    private SellerModel validateDateOfCatalog(String catalogSlug, String catalogName,UserModel userModel, MultipartFile imageIcon, MultipartFile imageBanner){
         if (!validateImage(imageIcon) || !validateImage(imageBanner))
             throw new RuntimeException("Deu ruin");
 
-        if (this.catalogRepository.existsBySlug(createCatalogRequestDTO.slug()))
+        if (this.catalogRepository.existsBySlug(catalogSlug))
+            throw new RuntimeException("Deu ruin");
+
+        if (this.catalogRepository.existsByNameAndSellerUserId(catalogName, userModel.getId()))
             throw new RuntimeException("Deu ruin");
 
         SellerModel seller = this.sellerRepository.findByUserId(userModel.getId())
@@ -63,14 +66,20 @@ public class CatalogService {
         if (seller.getCatalog()!=null)
             throw new RuntimeException("Deu ruin");
 
+        return seller;
+    }
+
+    public CatalogModel createCatalog(CreateCatalogRequestDTO createCatalogRequestDTO, UserModel userModel, MultipartFile imageIcon, MultipartFile imageBanner){
+
+        SellerModel seller = this.validateDateOfCatalog(
+                createCatalogRequestDTO.slug(),
+                createCatalogRequestDTO.name(),
+                userModel, imageIcon, imageBanner
+        );
+
         CatalogModel catalogModel = this.catalogMapper.createToModel(createCatalogRequestDTO, seller);
-
-
-        catalogModel = this.catalogRepository.save(catalogModel);
-
-        catalogModel.setImageIconPath(this.saveImage(imageIcon, TypeImageCatalog.ICON, catalogModel.getId() ));
-        catalogModel.setImageBannerPath(this.saveImage(imageBanner, TypeImageCatalog.BANNER, catalogModel.getId() ));
-
+        catalogModel.setImageIconPath(this.saveImage(imageIcon, TypeImageCatalog.ICON));
+        catalogModel.setImageBannerPath(this.saveImage(imageBanner, TypeImageCatalog.BANNER));
         return this.catalogRepository.save(catalogModel);
 
     }
