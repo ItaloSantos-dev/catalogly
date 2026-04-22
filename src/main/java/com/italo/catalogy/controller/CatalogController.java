@@ -3,11 +3,11 @@ package com.italo.catalogy.controller;
 import com.italo.catalogy.dto.catalog.CatalogPrivateResponseDTO;
 import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
+import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
 import com.italo.catalogy.mapper.CatalogMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.CatalogService;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +38,18 @@ public class CatalogController {
             @RequestPart("imageIconUrl") MultipartFile imageIcon,
             @RequestPart("imageBannerUrl") MultipartFile imageBanner
             ){
-        CatalogModel catalogModel = this.catalogService.createCatalog(createCatalogRequestDTO, userModel, imageIcon, imageBanner);
+        CatalogModel catalogModel = this.catalogService.createCatalog(createCatalogRequestDTO, userModel.getId(), imageIcon, imageBanner);
+        return ResponseEntity.ok(this.catalogMapper.modelToPublicResponse(catalogModel));
+    }
+
+    @PutMapping
+    public ResponseEntity<CatalogPublicResponseDTO> updateCatalog(
+            @AuthenticationPrincipal UserModel userModel,
+            @RequestPart("data") UpdateCatalogRequestDTO updateCatalogRequestDTO,
+            @RequestPart("imageIconUrl") MultipartFile imageIcon,
+            @RequestPart("imageBannerUrl") MultipartFile imageBanner
+    ){
+        CatalogModel catalogModel = this.catalogService.updateCatalogBySellerrId(userModel.getId(), updateCatalogRequestDTO, imageIcon, imageBanner);
         return ResponseEntity.ok(this.catalogMapper.modelToPublicResponse(catalogModel));
     }
 

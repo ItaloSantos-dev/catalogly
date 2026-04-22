@@ -3,6 +3,7 @@ package com.italo.catalogy.mapper;
 import com.italo.catalogy.dto.catalog.CatalogPrivateResponseDTO;
 import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
+import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
 import com.italo.catalogy.model.UserModel;
@@ -61,5 +62,16 @@ public class CatalogMapper {
                 this.imageService.getAssignedUrlImage(catalogModel.getImageIconPath()),
                 this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath())
         );
+    }
+
+    public CatalogModel updateToModel(CatalogModel catalog, UpdateCatalogRequestDTO updateCatalogRequestDTO){
+        catalog.setName(updateCatalogRequestDTO.name());
+        catalog.setSlug(updateCatalogRequestDTO.slug());
+        catalog.setSlogan(updateCatalogRequestDTO.slogan());
+        catalog.setAbout(updateCatalogRequestDTO.about());
+        catalog.setFisicAddress(updateCatalogRequestDTO.fisicAddress());
+        catalog.setPhone(updateCatalogRequestDTO.phone());
+        catalog.setUpdatedAt(LocalDateTime.now());
+        return catalog;
     }
 }

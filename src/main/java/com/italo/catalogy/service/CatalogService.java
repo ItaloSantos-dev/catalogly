@@ -1,11 +1,10 @@
 package com.italo.catalogy.service;
 
-import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
+import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
 import com.italo.catalogy.mapper.CatalogMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
-import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.model.enums.TypeImageCatalog;
 import com.italo.catalogy.respository.CatalogRepository;
 import com.italo.catalogy.respository.SellerRepository;
@@ -50,32 +49,32 @@ public class CatalogService {
         return path;
     }
 
-    private SellerModel validateDateOfCatalog(String catalogSlug, String catalogName,UserModel userModel, MultipartFile imageIcon, MultipartFile imageBanner){
+    private void validateDateOfCatalog(String catalogSlug, MultipartFile imageIcon, MultipartFile imageBanner){
         if (!validateImage(imageIcon) || !validateImage(imageBanner))
             throw new RuntimeException("Deu ruin");
 
         if (this.catalogRepository.existsBySlug(catalogSlug))
             throw new RuntimeException("Deu ruin");
 
-        if (this.catalogRepository.existsByNameAndSellerUserId(catalogName, userModel.getId()))
+
+    }
+
+    public CatalogModel createCatalog(CreateCatalogRequestDTO createCatalogRequestDTO, UUID userId, MultipartFile imageIcon, MultipartFile imageBanner){
+
+        this.validateDateOfCatalog(
+                createCatalogRequestDTO.slug(),
+                imageIcon, imageBanner
+        );
+
+        if (this.catalogRepository.existsByNameAndSellerUserId(createCatalogRequestDTO.name(), userId))
             throw new RuntimeException("Deu ruin");
 
-        SellerModel seller = this.sellerRepository.findByUserId(userModel.getId())
+        SellerModel seller = this.sellerRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
 
         if (seller.getCatalog()!=null)
             throw new RuntimeException("Deu ruin");
-
-        return seller;
-    }
-
-    public CatalogModel createCatalog(CreateCatalogRequestDTO createCatalogRequestDTO, UserModel userModel, MultipartFile imageIcon, MultipartFile imageBanner){
-
-        SellerModel seller = this.validateDateOfCatalog(
-                createCatalogRequestDTO.slug(),
-                createCatalogRequestDTO.name(),
-                userModel, imageIcon, imageBanner
-        );
 
         CatalogModel catalogModel = this.catalogMapper.createToModel(createCatalogRequestDTO, seller);
         catalogModel.setImageIconPath(this.saveImage(imageIcon, TypeImageCatalog.ICON));
@@ -87,5 +86,18 @@ public class CatalogService {
     public CatalogModel getBySellerId(UUID id){
         return this.catalogRepository.findBySellerUserId(id)
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
+    }
+
+    public CatalogModel updateCatalogBySellerrId(UUID sellerId, UpdateCatalogRequestDTO updateCatalogRequestDTO, MultipartFile imageIcon, MultipartFile imageBanner){
+        this.validateDateOfCatalog(
+                updateCatalogRequestDTO.slug(),
+                imageIcon, imageBanner
+        );
+        CatalogModel catalogModel = this.catalogRepository.findBySellerUserId(sellerId)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+        catalogModel = this.catalogMapper.updateToModel(catalogModel, updateCatalogRequestDTO);
+        catalogModel.setImageIconPath(this.saveImage(imageIcon, TypeImageCatalog.ICON));
+        catalogModel.setImageBannerPath(this.saveImage(imageBanner, TypeImageCatalog.BANNER));
+        return this.catalogRepository.save(catalogModel);
     }
 }
