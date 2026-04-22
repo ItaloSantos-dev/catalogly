@@ -44,20 +44,8 @@ public class ItemService {
         return path;
     }
 
-    public ItemModel createItem(
-            CreateItemRequestDTO createItemRequestDTO,
-            UUID userId,
-            MultipartFile image1,
-            MultipartFile image2,
-            MultipartFile image3
-    ){
-        System.out.println(image1);
-        CatalogModel catalogModel = this.catalogRepository.findBySellerUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Deu ruin"));
-
-        ItemModel itemModel = this.itemMapper.createToModel(createItemRequestDTO, catalogModel);
-
-        if (this.itemRepository.existsByNameAndCatalogSellerUserId(createItemRequestDTO.name(), userId ))
+    private void validateDateOfItem(String itemName, UUID userId, MultipartFile image1){
+        if (this.itemRepository.existsByNameAndCatalogSellerUserId(itemName, userId ))
             throw new RuntimeException("Deu ruin");
 
         if (image1==null)
@@ -65,6 +53,22 @@ public class ItemService {
 
         if (!this.validateImage(image1) )
             throw new RuntimeException("Deu ruin");
+    }
+
+    public ItemModel createItem(
+            CreateItemRequestDTO createItemRequestDTO,
+            UUID userId,
+            MultipartFile image1,
+            MultipartFile image2,
+            MultipartFile image3
+    ){
+
+        this.validateDateOfItem(createItemRequestDTO.name(), userId, image1);
+
+        CatalogModel catalogModel = this.catalogRepository.findBySellerUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        ItemModel itemModel = this.itemMapper.createToModel(createItemRequestDTO, catalogModel);
 
         itemModel.setImagePath1(this.saveImage(image1));
 
@@ -73,8 +77,6 @@ public class ItemService {
 
         if (image3!=null && this.validateImage(image3))
             itemModel.setImagePath1(this.saveImage(image3));
-
-
 
         if (createItemRequestDTO.categoryId()!=null){
             CategoryModel categoryModel = this.categoryRepository.findById(createItemRequestDTO.categoryId())
