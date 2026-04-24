@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/seller").permitAll()
                         .requestMatchers(HttpMethod.GET, "/catalog/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/category/*/items").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

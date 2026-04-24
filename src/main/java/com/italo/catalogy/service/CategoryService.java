@@ -62,4 +62,8 @@ public class CategoryService {
         this.categoryRepository.deleteById(categoryModel.getId());
     }
 
+    public List<ItemModel> getItensOfCategoryById(UUID id){
+        return this.itemRepository.findByCategoryId(id);
+    }
+
 }
