@@ -49,6 +49,7 @@ public class SellerController {
         return ResponseEntity.ok(this.catalogMapper.modelToPrivateResponse(catalogModel));
     }
 
+    //Arrumar depois - SOFT DELETE
     @DeleteMapping("/catalog")
     public ResponseEntity<Void> deleteMyCatalog(@AuthenticationPrincipal UserModel userModel){
         this.sellerService.deleteCatalogBySellerId(userModel.getId());

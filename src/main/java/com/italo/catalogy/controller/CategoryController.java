@@ -8,10 +8,9 @@ import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("category")
@@ -28,5 +27,11 @@ public class CategoryController {
     public ResponseEntity<CategoryResponseDTO> createCategory(@RequestBody CreateCategoryRequestDTO createCategoryRequestDTO, @AuthenticationPrincipal UserModel userModel){
         CategoryModel categoryModel = this.categoryService.createCategory(createCategoryRequestDTO, userModel.getId());
         return ResponseEntity.ok(this.categoryMapper.modelToResponse(categoryModel));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@AuthenticationPrincipal UserModel userModel ,@PathVariable UUID id){
+        this.categoryService.deleteCategoryById(userModel, id);
+        return ResponseEntity.noContent().build();
     }
 }
