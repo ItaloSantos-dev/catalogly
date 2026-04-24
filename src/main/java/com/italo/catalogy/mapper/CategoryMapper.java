@@ -2,6 +2,7 @@ package com.italo.catalogy.mapper;
 
 import com.italo.catalogy.dto.category.CategoryResponseDTO;
 import com.italo.catalogy.dto.category.CreateCategoryRequestDTO;
+import com.italo.catalogy.dto.category.UpdateCategoryRequestDTO;
 import com.italo.catalogy.model.CategoryModel;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,11 @@ public class CategoryMapper {
                 categoryModel.getDescription(),
                 itemsCount
         );
+    }
+
+    public CategoryModel updateToModel(CategoryModel categoryModel, UpdateCategoryRequestDTO updateCategoryRequestDTO){
+        categoryModel.setName(updateCategoryRequestDTO.name());
+        categoryModel.setDescription(updateCategoryRequestDTO.description());
+        return categoryModel;
     }
 }

@@ -2,6 +2,7 @@ package com.italo.catalogy.controller;
 
 import com.italo.catalogy.dto.category.CategoryResponseDTO;
 import com.italo.catalogy.dto.category.CreateCategoryRequestDTO;
+import com.italo.catalogy.dto.category.UpdateCategoryRequestDTO;
 import com.italo.catalogy.dto.item.ItemResponseDTO;
 import com.italo.catalogy.mapper.CategoryMapper;
 import com.italo.catalogy.mapper.ItemMapper;
@@ -39,6 +40,16 @@ public class CategoryController {
     public ResponseEntity<Void> deleteCategory(@AuthenticationPrincipal UserModel userModel ,@PathVariable UUID id){
         this.categoryService.deleteCategoryById(userModel, id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponseDTO> getItensOfCategoryById(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserModel userModel,
+            @RequestBody UpdateCategoryRequestDTO updateCategoryRequestDTO
+            ){
+        CategoryModel category = this.categoryService.updateCategoryById(updateCategoryRequestDTO, id, userModel);
+        return ResponseEntity.ok(this.categoryMapper.modelToResponse(category));
     }
 
     @GetMapping("/{id}/items")

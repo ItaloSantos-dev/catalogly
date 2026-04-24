@@ -1,6 +1,7 @@
 package com.italo.catalogy.service;
 
 import com.italo.catalogy.dto.category.CreateCategoryRequestDTO;
+import com.italo.catalogy.dto.category.UpdateCategoryRequestDTO;
 import com.italo.catalogy.mapper.CategoryMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CategoryModel;
@@ -64,6 +65,22 @@ public class CategoryService {
 
     public List<ItemModel> getItensOfCategoryById(UUID id){
         return this.itemRepository.findByCategoryId(id);
+    }
+
+    public CategoryModel updateCategoryById(UpdateCategoryRequestDTO updateCategoryRequestDTO, UUID id, UserModel userModel){
+        CategoryModel categoryModel = this.categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        if (!categoryModel.getCatalog().getSeller().getUser().getId().equals(userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+
+        if (this.categoryRepository.existsByNameAndCatalogSellerUserId(updateCategoryRequestDTO.name(), userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+
+        categoryModel = this.categoryMapper.updateToModel(categoryModel, updateCategoryRequestDTO);
+
+        return this.categoryRepository.save(categoryModel);
+
     }
 
 }
