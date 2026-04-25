@@ -48,4 +48,17 @@ public class ItemController {
         this.itemService.deleteItemById(id, userModel);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ItemResponseDTO> updateItemById(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserModel userModel,
+            @RequestPart("data")CreateItemRequestDTO createItemRequestDTO,
+            @RequestPart("image1") @NotNull MultipartFile image1,
+            @RequestPart("image2") @Nullable MultipartFile image2,
+            @RequestPart("image3") @Nullable MultipartFile image3
+    ){
+        ItemModel itemModel = this.itemService.createItem(createItemRequestDTO, userModel.getId(), image1, image2, image3);
+        return ResponseEntity.ok(this.itemMapper.modelToResponse(itemModel));
+    }
 }

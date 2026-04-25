@@ -1,6 +1,7 @@
 package com.italo.catalogy.service;
 
 import com.italo.catalogy.dto.item.CreateItemRequestDTO;
+import com.italo.catalogy.dto.item.UpdateItemRequestDTO;
 import com.italo.catalogy.mapper.ItemMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CategoryModel;
@@ -108,6 +109,49 @@ public class ItemService {
             return;
         }
         this.itemRepository.deleteById(id);
+    }
+
+
+    public ItemModel updateItemById(
+            UUID id,
+            UpdateItemRequestDTO updateItemRequestDTO,
+            UUID userId,
+            MultipartFile image1,
+            MultipartFile image2,
+            MultipartFile image3
+    ){
+
+        if (this.itemRepository.existsByNameAndCatalogSellerUserId(updateItemRequestDTO.name(), userId ))
+            throw new RuntimeException("Deu ruin");
+
+        ItemModel itemModel = this.itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        CatalogModel catalogModel = this.catalogRepository.findBySellerUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        itemModel = this.itemMapper.updateToModel(updateItemRequestDTO, itemModel);
+
+        if (image1!=null && this.validateImage(image1))
+            itemModel.setImagePath2(this.saveImage(image1));
+
+        if (image2!=null && this.validateImage(image2))
+            itemModel.setImagePath2(this.saveImage(image2));
+
+        if (image3!=null && this.validateImage(image3))
+            itemModel.setImagePath1(this.saveImage(image3));
+
+        if (updateItemRequestDTO.categoryId()!=null){
+            CategoryModel categoryModel = this.categoryRepository.findById(updateItemRequestDTO.categoryId())
+                    .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+            if (!categoryModel.getCatalog().getId().equals(catalogModel.getId()))
+                throw new RuntimeException("Deu ruin");
+
+            itemModel.setCategory(categoryModel);
+        }
+
+        return this.itemRepository.save(itemModel);
     }
 
 

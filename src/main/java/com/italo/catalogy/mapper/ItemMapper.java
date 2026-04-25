@@ -2,6 +2,7 @@ package com.italo.catalogy.mapper;
 
 import com.italo.catalogy.dto.item.CreateItemRequestDTO;
 import com.italo.catalogy.dto.item.ItemResponseDTO;
+import com.italo.catalogy.dto.item.UpdateItemRequestDTO;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CategoryModel;
 import com.italo.catalogy.model.ItemModel;
@@ -45,5 +46,14 @@ public class ItemMapper {
                 itemModel.getImagePath2()==null? null : this.imageService.getAssignedUrlImage(itemModel.getImagePath2()),
                 itemModel.getImagePath3()==null? null : this.imageService.getAssignedUrlImage(itemModel.getImagePath3())
         );
+    }
+
+    public ItemModel updateToModel(UpdateItemRequestDTO updateItemRequestDTO, ItemModel itemModel){
+        itemModel.setName(updateItemRequestDTO.name());
+        itemModel.setAbout(updateItemRequestDTO.about());
+        itemModel.setPrice(updateItemRequestDTO.price());
+        itemModel.setUpdatedAt(LocalDateTime.now());
+        return itemModel;
+
     }
 }
