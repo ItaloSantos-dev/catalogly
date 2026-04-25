@@ -12,6 +12,7 @@ public record ItemResponseDTO (
         String about,
         BigDecimal price,
         Integer stock,
+        Boolean deleted,
         String imagePath1,
         String imagePath2,
         String imagePath3

@@ -51,6 +51,9 @@ public class ItemModel {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted;
+
     @Column(name = "image_path1", nullable = false)
     private String imagePath1;
 

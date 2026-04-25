@@ -10,11 +10,10 @@ import jakarta.validation.constraints.NotNull;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("item")
@@ -39,5 +38,14 @@ public class ItemController {
             ){
         ItemModel itemModel = this.itemService.createItem(createItemRequestDTO, userModel.getId(), image1, image2, image3);
         return ResponseEntity.ok(this.itemMapper.modelToResponse(itemModel));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteItemById(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserModel userModel
+            ){
+        this.itemService.deleteItemById(id, userModel);
+        return ResponseEntity.noContent().build();
     }
 }

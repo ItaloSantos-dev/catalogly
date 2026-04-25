@@ -52,7 +52,7 @@ public class OrderModel {
 
 
     @Digits(integer = 1, fraction = 4)
-    @Column(name = "coupon_discount", nullable = false, precision = 5, scale = 4)
+    @Column(name = "coupon_discount", precision = 5, scale = 4)
     private BigDecimal couponDiscount;
 
     @DecimalMin("0.01")

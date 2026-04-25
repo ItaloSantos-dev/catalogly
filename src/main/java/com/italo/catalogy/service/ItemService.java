@@ -5,9 +5,11 @@ import com.italo.catalogy.mapper.ItemMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CategoryModel;
 import com.italo.catalogy.model.ItemModel;
+import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.respository.CatalogRepository;
 import com.italo.catalogy.respository.CategoryRepository;
 import com.italo.catalogy.respository.ItemRepository;
+import com.italo.catalogy.respository.OrderItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,18 +24,20 @@ public class ItemService {
     private final CategoryRepository categoryRepository;
     private final ItemMapper itemMapper;
     private final ImageService imageService;
+    private final OrderItemRepository orderItemRepository;
 
     private final List<String> EXTENSIONS_IMAGE_ACCEPTDES = Arrays.asList("image/jpeg", "image/png", "image/gif");
     private Boolean validateImage(MultipartFile image){
         return this.EXTENSIONS_IMAGE_ACCEPTDES.contains(image.getContentType());
     }
 
-    public ItemService(ItemRepository itemRepository, CatalogRepository catalogRepository, CategoryRepository categoryRepository, ItemMapper itemMapper, ImageService imageService) {
+    public ItemService(ItemRepository itemRepository, CatalogRepository catalogRepository, CategoryRepository categoryRepository, ItemMapper itemMapper, ImageService imageService, OrderItemRepository orderItemRepository) {
         this.itemRepository = itemRepository;
         this.catalogRepository = catalogRepository;
         this.categoryRepository = categoryRepository;
         this.itemMapper = itemMapper;
         this.imageService = imageService;
+        this.orderItemRepository = orderItemRepository;
     }
 
     private String saveImage(MultipartFile image){
@@ -89,6 +93,21 @@ public class ItemService {
         }
 
         return this.itemRepository.save(itemModel);
+    }
+
+    public void deleteItemById(UUID id, UserModel userModel){
+        ItemModel itemModel = this.itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        if (!itemModel.getCatalog().getSeller().getUser().getId().equals(userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+
+        if (this.orderItemRepository.existsByItemId(id)){
+            itemModel.setDeleted(true);
+            this.itemRepository.save(itemModel);
+            return;
+        }
+        this.itemRepository.deleteById(id);
     }
 
 

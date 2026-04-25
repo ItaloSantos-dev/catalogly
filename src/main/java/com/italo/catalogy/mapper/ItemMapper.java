@@ -28,6 +28,7 @@ public class ItemMapper {
         itemModel.setCatalog(catalogModel);
         itemModel.setCreatedAt(LocalDateTime.now());
         itemModel.setUpdatedAt(LocalDateTime.now());
+        itemModel.setDeleted(false);
         return itemModel;
     }
 
@@ -39,6 +40,7 @@ public class ItemMapper {
                 itemModel.getAbout(),
                 itemModel.getPrice(),
                 itemModel.getStock(),
+                itemModel.getDeleted(),
                 this.imageService.getAssignedUrlImage(itemModel.getImagePath1()),
                 itemModel.getImagePath2()==null? null : this.imageService.getAssignedUrlImage(itemModel.getImagePath2()),
                 itemModel.getImagePath3()==null? null : this.imageService.getAssignedUrlImage(itemModel.getImagePath3())
