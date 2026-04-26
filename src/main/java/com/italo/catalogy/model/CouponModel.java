@@ -40,7 +40,7 @@ public class CouponModel {
     private BigDecimal amount;
 
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_minimum", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_minimum",precision = 10, scale = 2)
     private BigDecimal amountMinimum;
 
     @NotNull
@@ -49,7 +49,7 @@ public class CouponModel {
 
     @DecimalMin("0.01")
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_discount_maximum", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_discount_maximum",precision = 10, scale = 2)
     private BigDecimal amountDiscountMaximum;
 
     @Column(name = "created_at",nullable = false)
