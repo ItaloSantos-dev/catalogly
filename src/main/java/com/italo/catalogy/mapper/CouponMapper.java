@@ -2,6 +2,7 @@ package com.italo.catalogy.mapper;
 
 import com.italo.catalogy.dto.coupon.CouponResponseDTO;
 import com.italo.catalogy.dto.coupon.CreateCouponRequestDTO;
+import com.italo.catalogy.dto.coupon.UpdateCouponRequestDTO;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CouponModel;
 import org.springframework.stereotype.Component;
@@ -31,5 +32,13 @@ public class CouponMapper {
                 couponModel.getAmountMinimum(),
                 couponModel.getAmountDiscountMaximum()
         );
+    }
+
+    public CouponModel updateToModel(CouponModel couponModel, UpdateCouponRequestDTO updateCouponRequestDTO){
+        couponModel.setSlug(updateCouponRequestDTO.slug());
+        couponModel.setAmount(updateCouponRequestDTO.amount());
+        couponModel.setAmountMinimum(updateCouponRequestDTO.amountMinimum());
+        couponModel.setAmountDiscountMaximum(updateCouponRequestDTO.amountDiscountMaximum());
+        return couponModel;
     }
 }
