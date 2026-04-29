@@ -76,6 +76,6 @@ public class OrderModel {
     @OneToOne(mappedBy = "order")
     private InvoiceModel invoice;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItemModel> itens;
 }
