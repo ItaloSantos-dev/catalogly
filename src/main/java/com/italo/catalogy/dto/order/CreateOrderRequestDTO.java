@@ -1,6 +1,5 @@
 package com.italo.catalogy.dto.order;
 
-import com.italo.catalogy.dto.payment.CreatePaymentRequestDTO;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;

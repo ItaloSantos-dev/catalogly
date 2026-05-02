@@ -1,7 +1,9 @@
 package com.italo.catalogy.service;
 
+import com.italo.catalogy.dto.avocadopay.item.ItemAvocadoPayResponseDTO;
 import com.italo.catalogy.dto.item.CreateItemRequestDTO;
 import com.italo.catalogy.dto.item.UpdateItemRequestDTO;
+import com.italo.catalogy.infra.AvocadoPayConfig;
 import com.italo.catalogy.mapper.ItemMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CategoryModel;
@@ -11,6 +13,8 @@ import com.italo.catalogy.respository.CatalogRepository;
 import com.italo.catalogy.respository.CategoryRepository;
 import com.italo.catalogy.respository.ItemRepository;
 import com.italo.catalogy.respository.OrderItemRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,19 +30,21 @@ public class ItemService {
     private final ItemMapper itemMapper;
     private final ImageService imageService;
     private final OrderItemRepository orderItemRepository;
+    private final AvocadoPayConfig avocadoPayConfig;
 
     private final List<String> EXTENSIONS_IMAGE_ACCEPTDES = Arrays.asList("image/jpeg", "image/png", "image/gif");
     private Boolean validateImage(MultipartFile image){
         return this.EXTENSIONS_IMAGE_ACCEPTDES.contains(image.getContentType());
     }
 
-    public ItemService(ItemRepository itemRepository, CatalogRepository catalogRepository, CategoryRepository categoryRepository, ItemMapper itemMapper, ImageService imageService, OrderItemRepository orderItemRepository) {
+    public ItemService(ItemRepository itemRepository, CatalogRepository catalogRepository, CategoryRepository categoryRepository, ItemMapper itemMapper, ImageService imageService, OrderItemRepository orderItemRepository, AvocadoPayConfig avocadoPayConfig) {
         this.itemRepository = itemRepository;
         this.catalogRepository = catalogRepository;
         this.categoryRepository = categoryRepository;
         this.itemMapper = itemMapper;
         this.imageService = imageService;
         this.orderItemRepository = orderItemRepository;
+        this.avocadoPayConfig = avocadoPayConfig;
     }
 
     private String saveImage(MultipartFile image){
@@ -92,7 +98,10 @@ public class ItemService {
 
             itemModel.setCategory(categoryModel);
         }
-
+        ResponseEntity<ItemAvocadoPayResponseDTO> avocadoPayResponseDTOResponseEntity = this.avocadoPayConfig.createItem(itemModel);
+        if (avocadoPayResponseDTOResponseEntity.getStatusCode()!= HttpStatus.OK)
+            throw new RuntimeException("Deu ruin");
+        itemModel.setGatewayId(avocadoPayResponseDTOResponseEntity.getBody().data().id());
         return this.itemRepository.save(itemModel);
     }
 

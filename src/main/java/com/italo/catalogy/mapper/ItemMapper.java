@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class ItemMapper {
@@ -22,6 +23,7 @@ public class ItemMapper {
 
     public ItemModel createToModel(CreateItemRequestDTO createItemRequestDTO, CatalogModel catalogModel){
         ItemModel itemModel = new ItemModel();
+        itemModel.setId(UUID.randomUUID());
         itemModel.setName(createItemRequestDTO.name());
         itemModel.setAbout(createItemRequestDTO.about());
         itemModel.setPrice(new BigDecimal(createItemRequestDTO.price().toString()));

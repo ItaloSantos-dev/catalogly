@@ -24,7 +24,6 @@ import java.util.UUID;
 //adicionar constraint unique (name, catalog_id) e relacionar com 1 catalog e 1 category
 public class ItemModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
@@ -65,6 +64,9 @@ public class ItemModel {
 
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "gateway_id")
+    private String gatewayId;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
