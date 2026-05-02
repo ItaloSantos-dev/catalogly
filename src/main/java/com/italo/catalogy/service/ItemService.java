@@ -117,7 +117,13 @@ public class ItemService {
             this.itemRepository.save(itemModel);
             return;
         }
+        ResponseEntity<ItemAvocadoPayResponseDTO> itemAvocadoPayResponseDTOResponseEntity = this.avocadoPayConfig.deleteItemById(itemModel.getGatewayId());
+
+        if (itemAvocadoPayResponseDTOResponseEntity.getStatusCode()!=HttpStatus.OK)
+            throw new RuntimeException("Deu ruin");
+
         this.itemRepository.deleteById(id);
+
     }
 
 

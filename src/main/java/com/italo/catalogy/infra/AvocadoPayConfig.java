@@ -24,6 +24,15 @@ public class AvocadoPayConfig {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    private HttpHeaders setheaders(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+this.avocadoPayTokenApi);
+
+
+        return headers;
+    }
+
     public ResponseEntity<ItemAvocadoPayResponseDTO> createItem(ItemModel itemModel){
         String finalUrl = this.baseUrl + "products/create";
         CreateItemAvocadoPayRequestDTO body = new CreateItemAvocadoPayRequestDTO(
@@ -33,14 +42,16 @@ public class AvocadoPayConfig {
                 this.currency
 
         );
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer "+this.avocadoPayTokenApi);
-
-        HttpEntity<CreateItemAvocadoPayRequestDTO> request = new HttpEntity<>(body, headers);
-
+        HttpEntity<CreateItemAvocadoPayRequestDTO> request = new HttpEntity<>(body, this.setheaders());
         return this.restTemplate
                 .postForEntity(finalUrl,request ,ItemAvocadoPayResponseDTO.class);
+    }
+
+    public ResponseEntity<ItemAvocadoPayResponseDTO> deleteItemById(String id){
+        String finalUrl = baseUrl + "products/delete?id="+id;
+        HttpEntity<CreateItemAvocadoPayRequestDTO> request = new HttpEntity<>(null, this.setheaders());
+
+        return this.restTemplate.postForEntity(finalUrl, request, ItemAvocadoPayResponseDTO.class);
     }
 
 }
