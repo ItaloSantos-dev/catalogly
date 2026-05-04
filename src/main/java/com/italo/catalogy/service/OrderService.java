@@ -23,13 +23,15 @@ public class OrderService {
     private final CatalogRepository catalogRepository;
     private final CouponRepository couponRepository;
     private final OrderMapper orderMapper;
+    private final PaymentService paymentService;
 
-    public OrderService(OrderRepository orderRepository  , OrderItemService orderItemService, CatalogRepository catalogRepository, CouponRepository couponRepository, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository  , OrderItemService orderItemService, CatalogRepository catalogRepository, CouponRepository couponRepository, OrderMapper orderMapper, PaymentService paymentService) {
         this.orderRepository = orderRepository;
         this.orderItemService = orderItemService;
         this.catalogRepository = catalogRepository;
         this.couponRepository = couponRepository;
         this.orderMapper = orderMapper;
+        this.paymentService = paymentService;
     }
 
     public List<OrderModel> getMyOrders(UserModel userModel){
@@ -68,9 +70,9 @@ public class OrderService {
         orderModel.setPriceInitial(priceInitial);
         orderModel.setCouponDiscount(couponDiscount);
         orderModel.setPriceFinal(priceFinal.setScale(2, RoundingMode.HALF_UP));
-        System.out.println("Preço final: " + orderModel.getPriceFinal());
 
-        //Criar payment
+        PaymentModel paymentModel = this.paymentService.createPayment(orderModel);
+        orderModel.setPayment(List.of(paymentModel));
         return this.orderRepository.save(orderModel);
 
 

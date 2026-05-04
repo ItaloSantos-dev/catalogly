@@ -22,7 +22,6 @@ import java.util.UUID;
 @Data
 public class PaymentModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne
@@ -30,15 +29,15 @@ public class PaymentModel {
     @NotNull
     private OrderModel order;
 
-    @NotNull
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "method", nullable = false)
+    @Column(name = "method")
     private PaymentMethod method;
 
     @NotNull
     @DecimalMin("0.01")
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_initial", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_initial", nullable = false, precision = 10, scale = 2)//Vem da order
     private BigDecimal amountInitial;
 
     @Column(name = "installments")
@@ -54,27 +53,31 @@ public class PaymentModel {
     @Column(name = "installments_fee", precision = 10, scale = 2)
     private BigDecimal installmentsFee;
 
-    @NotNull
+
     @DecimalMin("0.01")
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_total", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_total",  precision = 10, scale = 2)//Vem depois do pagamento(juros ou não)
     private BigDecimal amountTotal;
 
-    @NotNull
+
     @DecimalMin("0.01")
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_commission", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_commission",  precision = 10, scale = 2)
     private BigDecimal amountCommission;
 
-    @NotNull
+
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_gateway", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_gateway",  precision = 10, scale = 2)
     private BigDecimal amountGateway;
 
     @NotNull
+    @Column(name = "payment_link")
+    private String paymentLink;
+
+
     @DecimalMin("0.01")
     @Digits(integer = 8, fraction = 2)
-    @Column(name = "amount_seller", nullable = false, precision = 10, scale = 2)
+    @Column(name = "amount_seller",  precision = 10, scale = 2)
     private BigDecimal amountSeller;
 
     @NotNull

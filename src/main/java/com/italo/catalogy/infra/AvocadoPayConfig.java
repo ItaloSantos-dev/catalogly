@@ -2,7 +2,10 @@ package com.italo.catalogy.infra;
 
 import com.italo.catalogy.dto.avocadopay.item.CreateItemAvocadoPayRequestDTO;
 import com.italo.catalogy.dto.avocadopay.item.ItemAvocadoPayResponseDTO;
+import com.italo.catalogy.dto.avocadopay.payment.CheckoutAvocadoRespondeDTO;
+import com.italo.catalogy.dto.avocadopay.payment.CreateCheckoutAvocadoPayRequestDTO;
 import com.italo.catalogy.model.ItemModel;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
@@ -21,6 +24,9 @@ public class AvocadoPayConfig {
     private final String baseUrl = "https://api.abacatepay.com/v2/";
 
     private final String currency = "BRL";
+
+    @Getter
+    private final String gatewayName = "AbacatePay";
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -49,9 +55,16 @@ public class AvocadoPayConfig {
 
     public ResponseEntity<ItemAvocadoPayResponseDTO> deleteItemById(String id){
         String finalUrl = baseUrl + "products/delete?id="+id;
-        HttpEntity<CreateItemAvocadoPayRequestDTO> request = new HttpEntity<>(null, this.setheaders());
+        HttpEntity<Void> request = new HttpEntity<>(null, this.setheaders());
 
         return this.restTemplate.postForEntity(finalUrl, request, ItemAvocadoPayResponseDTO.class);
+    }
+
+    public ResponseEntity<CheckoutAvocadoRespondeDTO> createCheckout(CreateCheckoutAvocadoPayRequestDTO createCheckoutAvocadoPayRequestDTO){
+        String finalUrl = this.baseUrl + "checkouts/create";
+        HttpEntity<CreateCheckoutAvocadoPayRequestDTO> request = new HttpEntity<>(createCheckoutAvocadoPayRequestDTO, this.setheaders());
+
+        return this.restTemplate.postForEntity(finalUrl, request, CheckoutAvocadoRespondeDTO.class);
     }
 
 }

@@ -13,7 +13,8 @@ public record OrderResponseDTO(
         String couponSlug,
         BigDecimal couponDiscount,
         BigDecimal priceInitial,
-        BigDecimal priceFinal
+        BigDecimal priceFinal,
+        String paymentUrl
 
 ) {
 }

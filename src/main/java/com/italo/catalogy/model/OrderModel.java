@@ -70,7 +70,7 @@ public class OrderModel {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<PaymentModel> payment;
 
     @OneToOne(mappedBy = "order")

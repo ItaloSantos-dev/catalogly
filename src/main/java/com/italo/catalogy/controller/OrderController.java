@@ -27,7 +27,7 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDTO>> getMyOrders(@AuthenticationPrincipal UserModel userModel){
         List<OrderModel> orders = this.orderService.getMyOrders(userModel);
         List<OrderResponseDTO> response = orders.stream()
-                .map(this.orderMapper::modelToResponse)
+                .map(order -> this.orderMapper.modelToResponse(order, null))
                 .toList();
         return ResponseEntity.ok(response);
     }
@@ -38,6 +38,6 @@ public class OrderController {
             @RequestBody CreateOrderRequestDTO createOrderRequestDTO
             ){
         OrderModel order = this.orderService.createOrder(userModel, createOrderRequestDTO);
-        return ResponseEntity.ok(this.orderMapper.modelToResponse(order));
+        return ResponseEntity.ok(this.orderMapper.modelToResponse(order, order.getPayment().getFirst().getPaymentLink()));
     }
 }

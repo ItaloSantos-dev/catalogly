@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 public class OrderMapper {
-    public OrderResponseDTO modelToResponse(OrderModel orderModel){
+    public OrderResponseDTO modelToResponse(OrderModel orderModel, String paymentLink){
         return new OrderResponseDTO(
                 orderModel.getId(),
                 orderModel.getStatus(),
@@ -21,7 +21,8 @@ public class OrderMapper {
                 orderModel.getCoupon()==null? null : orderModel.getCoupon().getSlug(),
                 orderModel.getCouponDiscount(),
                 orderModel.getPriceInitial(),
-                orderModel.getPriceFinal()
+                null,
+                paymentLink
         );
     }
 

@@ -2,9 +2,7 @@ package com.italo.catalogy.model.enums;
 
 public enum PaymentMethod {
     PIX("PIX"),
-    CREDITO("CREDITO"),
-    DEBITO("DEBITO"),
-    BOLETO("BOLETO");
+    CARD("CARD");
 
     private String method;
 
