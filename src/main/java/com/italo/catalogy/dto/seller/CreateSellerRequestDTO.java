@@ -10,8 +10,6 @@ public record CreateSellerRequestDTO (
         @Nullable
         RegisterRequestDTO userData,
 
-        @CPF
-        String cpf,
 
         @NotBlank
         @Size(min = 11, max = 11)

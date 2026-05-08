@@ -15,7 +15,7 @@ public class SellerMapper {
     public SellerModel createToModel(CreateSellerRequestDTO createSellerRequestDTO){
         SellerModel newSeller = new SellerModel();
         newSeller.setPhone(createSellerRequestDTO.phone());
-        newSeller.setCpf(createSellerRequestDTO.cpf());
+        newSeller.setCpf(createSellerRequestDTO.userData().cpf());
         newSeller.setCreatedAt(LocalDateTime.now());
         newSeller.setUpdatedAt(LocalDateTime.now());
         return  newSeller;

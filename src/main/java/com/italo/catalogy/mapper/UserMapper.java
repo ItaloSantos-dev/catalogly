@@ -22,6 +22,7 @@ public class UserMapper {
         newuser.setRole(UserRole.USER);
         newuser.setCreatedAt(LocalDateTime.now());
         newuser.setUpdatedAt(LocalDateTime.now());
+        newuser.setCpf(registerRequestDTO.cpf());
         return newuser;
     }
 

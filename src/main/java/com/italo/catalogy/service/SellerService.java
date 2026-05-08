@@ -31,6 +31,7 @@ public class SellerService {
         this.catalogRepository = catalogRepository;
     }
 
+    @Transactional
     public SellerModel createSeller(CreateSellerRequestDTO createSellerRequestDTO, UserModel userModel){
         Boolean tokenIsNull =  userModel == null;
 

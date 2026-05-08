@@ -32,6 +32,10 @@ public class UserService implements UserDetailsService {
     public UserModel createUser(RegisterRequestDTO registerRequestDTO){
         if (this.userRepository.existsByEmail(registerRequestDTO.email()))
             throw new RuntimeException("Email ja cadastrado");
+
+        if (this.userRepository.existsByCpf(registerRequestDTO.cpf()))
+            throw new RuntimeException("Cpf ja cadastrado");
+
         UserModel newUser = this.userMapper.registerToModel(registerRequestDTO, passwordEncoder);
         return this.userRepository.save(newUser);
     }

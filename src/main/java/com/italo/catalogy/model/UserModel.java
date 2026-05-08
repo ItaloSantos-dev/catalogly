@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +39,10 @@ public class UserModel implements UserDetails {
     @Email
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
+
+    @CPF
+    @Column(name="cpf", nullable = false, unique = true)
+    private String cpf;
 
     @NotBlank
     @Size(min=8)
