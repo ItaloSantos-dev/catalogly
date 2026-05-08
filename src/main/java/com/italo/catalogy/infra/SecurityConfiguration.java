@@ -34,6 +34,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/seller").permitAll()
                         .requestMatchers(HttpMethod.GET, "/catalog/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/category/*/items").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/webhook/payment").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/webhook/payment").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

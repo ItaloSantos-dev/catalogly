@@ -88,7 +88,7 @@ public class PaymentModel {
     @Column(name = "gateway", length = 100)
     private String gateway;
 
-    @Column(name = "gateway_payment_id", length = 100)
+    @Column(name = "gateway_payment_id", length = 100, unique = true)
     private String gatewayPaymentId;
 
     @Column(name = "paid_at")

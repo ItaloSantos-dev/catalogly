@@ -3,7 +3,7 @@ package com.italo.catalogy.model.enums;
 public enum PaymentStatus {
     PENDING("PENDING"),
     PROCESSING("PROCESSING"),
-    APPROVED("APPROVED"),
+    PAID("PAID"),
     FAILED("FAILED"),
     CANCELED("CANCELED"),
     REFUNDED("REFUNDED");
