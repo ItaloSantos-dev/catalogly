@@ -1,5 +1,6 @@
 package com.italo.catalogy.dto.nfe_io.serviceInvoiceResponse;
 
+import com.italo.catalogy.dto.nfe_io.Address;
 import jakarta.validation.constraints.NotBlank;
 import org.jspecify.annotations.Nullable;
 

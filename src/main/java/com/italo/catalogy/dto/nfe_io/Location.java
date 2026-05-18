@@ -1,7 +1,8 @@
-package com.italo.catalogy.dto.nfe_io.serviceInvoiceResponse;
+package com.italo.catalogy.dto.nfe_io;
 
 import jakarta.validation.constraints.NotBlank;
 import org.jspecify.annotations.Nullable;
+import com.italo.catalogy.dto.nfe_io.City;
 
 public record Location(
         @NotBlank String state,

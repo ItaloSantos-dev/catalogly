@@ -1,5 +1,8 @@
 package com.italo.catalogy.dto.nfe_io.serviceInvoiceResponse;
 
+import com.italo.catalogy.dto.nfe_io.ActivityEvent;
+import com.italo.catalogy.dto.nfe_io.Location;
+import com.italo.catalogy.model.enums.InvoiceStatus;
 import jakarta.validation.constraints.NotBlank;
 import org.jspecify.annotations.Nullable;
 
@@ -10,12 +13,12 @@ public record ServiceInvoiceResponseDTO(
         @NotBlank String id,
         @NotBlank String externalId,
         @NotBlank String environment,
-        @NotBlank String flowStatus,
+        @NotBlank FlowStatus flowStatus,
         Provider provider,
-        Borrower borrower,
+        BorrowerResponse borrower,
         Integer batchNumber,
         Integer number,
-        @NotBlank String status,
+        @NotBlank InvoiceStatus status,
         @NotBlank String rpsType,
         @NotBlank String rpsStatus,
         @NotBlank String taxationType,
@@ -47,7 +50,7 @@ public record ServiceInvoiceResponseDTO(
         BigDecimal amountNet,
         Location location,
         ActivityEvent activityEvent,
-        ApproximateTax approximateTax,
+        ApproximateTaxResponse approximateTax,
         @Nullable String additionalInformation,
         Instant createdOn
 ) {

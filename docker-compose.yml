@@ -9,6 +9,7 @@ services:
     environment:
       - ABACATEPAY_TOKEN=${ABACATEPAY_TOKEN}
       - ABACATEPAY_WEBHOOK_SECRET=${ABACATEPAY_WEBHOOK_SECRET}
+      - NF_IO_TOKEN=${NF_IO_TOKEN}
     networks:
       - private_network
     depends_on:

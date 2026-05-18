@@ -22,8 +22,10 @@ import java.util.UUID;
 @Data
 public class InvoiceModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(unique = true, nullable = false)
+    private String externalId;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -50,7 +52,10 @@ public class InvoiceModel {
     private String key;
 
     @Column(name = "model")
-    private Integer model;
+    private String  model;
+
+    @Column(name = "rps_number", nullable = false, unique = true)
+    private Integer rpsNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -127,9 +132,10 @@ public class InvoiceModel {
     @Column(name = "sefaz_authorization_date")
     private LocalDateTime sefazAuthorizationDate;
 
-    @NotBlank
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "sefaz_status_code", length = 10, nullable = false)
-    private String sefazStatusCode;
+    private InvoiceStatus sefazStatusCode;
 
     @Column(name = "digest_value")
     private String digestValue;

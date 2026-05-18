@@ -7,6 +7,7 @@ import com.italo.catalogy.mapper.UserMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
 import com.italo.catalogy.model.UserModel;
+import com.italo.catalogy.model.enums.UserRole;
 import com.italo.catalogy.respository.CatalogRepository;
 import com.italo.catalogy.respository.SellerRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +50,7 @@ public class SellerService {
                 tokenIsNull? this.userService.createUser(createSellerRequestDTO.userData()):
                 userModel
         );
+        newSeller.getUser().setRole(UserRole.SELLER);
 
         return this.sellerRepository.save(newSeller);
     }

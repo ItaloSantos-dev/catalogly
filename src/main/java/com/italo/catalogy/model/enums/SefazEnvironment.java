@@ -2,8 +2,8 @@ package com.italo.catalogy.model.enums;
 
 public enum SefazEnvironment {
     PRODUCTION("PRODUCTION"),
-    HOMOLOGATION("HOMOLOGATION");
-
+    HOMOLOGATION("HOMOLOGATION"),
+    DEVELOPMENT("DEVELOPMENT");
     private String environment;
 
     SefazEnvironment(String environment) {

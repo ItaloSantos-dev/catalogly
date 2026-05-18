@@ -10,6 +10,7 @@ import com.italo.catalogy.dto.avocadopay.payment.CreateCheckoutAvocadoPayRequest
 import com.italo.catalogy.dto.avocadopay.webhook.WebhookRequestBodyDTO;
 import com.italo.catalogy.infra.AvocadoPayConfig;
 import com.italo.catalogy.mapper.PaymentMapper;
+import com.italo.catalogy.model.InvoiceModel;
 import com.italo.catalogy.model.OrderModel;
 import com.italo.catalogy.model.PaymentModel;
 import com.italo.catalogy.model.enums.PaymentStatus;
@@ -31,14 +32,16 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final AvocadoPayConfig avocadoPayConfig;
     private final PaymentMapper paymentMapper;
+    private final InvoiceService invoiceService;
 
     private final BigDecimal percentAmountForSeller = new BigDecimal("0.95");
 
 
-    public PaymentService(PaymentRepository paymentRepository, AvocadoPayConfig avocadoPayConfig, PaymentMapper paymentMapper) {
+    public PaymentService(PaymentRepository paymentRepository, AvocadoPayConfig avocadoPayConfig, PaymentMapper paymentMapper, InvoiceService invoiceService) {
         this.paymentRepository = paymentRepository;
         this.avocadoPayConfig = avocadoPayConfig;
         this.paymentMapper = paymentMapper;
+        this.invoiceService = invoiceService;
     }
 
     public PaymentModel createPayment(OrderModel orderModel){
@@ -94,9 +97,10 @@ public class PaymentService {
         PaymentModel paymentModel = this.paymentRepository.findByGatewayPaymentId(webhookRequestBodyDTO.data().checkout().id())
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
         paymentModel = this.paymentMapper.requestWebhookToUpdatePayment(webhookRequestBodyDTO, paymentModel, this.percentAmountForSeller);
-
-        //Criar invoice
-
+        if (paymentModel.getStatus()==PaymentStatus.PAID){
+            InvoiceModel invoiceModel = this.invoiceService.createInvoices(paymentModel);
+            paymentModel.setInvoice(invoiceModel);
+        }
         this.paymentRepository.save(paymentModel);
 
     }

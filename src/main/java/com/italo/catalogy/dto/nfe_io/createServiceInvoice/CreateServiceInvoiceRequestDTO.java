@@ -1,5 +1,8 @@
-package com.italo.catalogy.dto.nfe_io;
+package com.italo.catalogy.dto.nfe_io.createServiceInvoice;
 
+import com.italo.catalogy.dto.nfe_io.ActivityEvent;
+import com.italo.catalogy.dto.nfe_io.createServiceInvoice.ApproximateTaxCreate;
+import com.italo.catalogy.dto.nfe_io.Location;
 import jakarta.validation.constraints.NotBlank;
 import org.jspecify.annotations.Nullable;
 
@@ -8,7 +11,7 @@ import java.time.Instant;
 
 public record CreateServiceInvoiceRequestDTO(
         @NotBlank String externalId,
-        Borrower borrower,
+        BorrowerCreate borrower,
         @NotBlank String cityServiceCode,
         @NotBlank String federalServiceCode,
         @NotBlank String cnaeCode,
@@ -31,7 +34,7 @@ public record CreateServiceInvoiceRequestDTO(
         BigDecimal inssAmountWithheld,
         BigDecimal issAmountWithheld,
         BigDecimal othersAmountWithheld,
-        ApproximateTax approximateTax,
+        ApproximateTaxCreate approximateTax,
         @Nullable String additionalInformation,
         Location location,
         ActivityEvent activityEvent

@@ -1,10 +1,11 @@
-package com.italo.catalogy.dto.nfe_io;
+package com.italo.catalogy.dto.nfe_io.createServiceInvoice;
 
+import com.italo.catalogy.dto.nfe_io.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.jspecify.annotations.Nullable;
 
-public record Borrower(
+public record BorrowerCreate(
         @NotBlank String type,
         @NotBlank String name,
         String federalTaxNumber,
