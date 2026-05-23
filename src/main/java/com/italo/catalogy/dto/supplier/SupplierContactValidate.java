@@ -7,9 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 public class SupplierContactValidate implements ConstraintValidator<SupplierContact, CreateSupplierRequestDTO> {
     @Override
     public boolean isValid(CreateSupplierRequestDTO createSupplierRequestDTO, ConstraintValidatorContext constraintValidatorContext) {
-        if (createSupplierRequestDTO.contactSuplierType()== ContactSupplierType.EMAIL){
+        if (createSupplierRequestDTO.contactSupplierType()== ContactSupplierType.EMAIL){
             return createSupplierRequestDTO.contactValue().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-        } else if (createSupplierRequestDTO.contactSuplierType()== ContactSupplierType.PHONE) {
+        } else if (createSupplierRequestDTO.contactSupplierType()== ContactSupplierType.PHONE) {
             return createSupplierRequestDTO.contactValue().matches("^\\d{11}$");
         }
         else return false;

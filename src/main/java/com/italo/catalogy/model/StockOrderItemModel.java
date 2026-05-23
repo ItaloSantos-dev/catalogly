@@ -31,11 +31,9 @@ public class StockOrderItemModel {
     @Column(name="amount",nullable = false)
     private Integer amount;
 
-    @DecimalMin("0.01")
-    @Column(name="priceUnique",nullable = false)
+    @Column(name="priceUnique")
     private BigDecimal priceUnique;
 
-    @DecimalMin("0.01")
-    @Column(name="priceFinal",nullable = false)
+    @Column(name="priceFinal")
     private BigDecimal priceFinal;
 }

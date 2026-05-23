@@ -1,6 +1,6 @@
 package com.italo.catalogy.mapper;
 
-import com.italo.catalogy.dto.order.ItemQuantity;
+import com.italo.catalogy.dto.ItemQuantity;
 import com.italo.catalogy.model.ItemModel;
 import com.italo.catalogy.model.OrderItemModel;
 import com.italo.catalogy.model.OrderModel;

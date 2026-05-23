@@ -18,7 +18,7 @@ public class SupplierMapper {
         supplierModel.setSeller(sellerModel);
         supplierModel.setCnpj(createSupplierRequestDTO.cnpj());
         supplierModel.setName(createSupplierRequestDTO.name());
-        supplierModel.setContactSupplierType(createSupplierRequestDTO.contactSuplierType());
+        supplierModel.setContactSupplierType(createSupplierRequestDTO.contactSupplierType());
         supplierModel.setContactValue(createSupplierRequestDTO.contactValue());
         supplierModel.setCreatedAt(LocalDateTime.now());
         supplierModel.setUpdatedAt(LocalDateTime.now());

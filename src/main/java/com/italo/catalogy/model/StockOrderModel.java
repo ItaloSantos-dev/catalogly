@@ -46,11 +46,9 @@ public class StockOrderModel {
     @Column(name = "status", nullable = false)
     private StockOrderStatus status;
 
-    @DecimalMin("0.01")
     @Column(name = "price_estimated")
     private BigDecimal priceEstimated;
 
-    @DecimalMin("0.01")
     @Column(name = "price_final" )
     private BigDecimal priceFinal;
 
@@ -63,7 +61,7 @@ public class StockOrderModel {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "stockOrder")
+    @OneToMany(mappedBy = "stockOrder", cascade = CascadeType.ALL)
     private List<StockOrderItemModel> items;
 
 

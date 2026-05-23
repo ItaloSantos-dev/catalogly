@@ -1,8 +1,7 @@
 package com.italo.catalogy.service;
 
-import com.italo.catalogy.dto.order.ItemQuantity;
+import com.italo.catalogy.dto.ItemQuantity;
 import com.italo.catalogy.mapper.OrderItemMapper;
-import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.ItemModel;
 import com.italo.catalogy.model.OrderItemModel;
 import com.italo.catalogy.model.OrderModel;
@@ -10,9 +9,7 @@ import com.italo.catalogy.respository.ItemRepository;
 import com.italo.catalogy.respository.OrderItemRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class OrderItemService {

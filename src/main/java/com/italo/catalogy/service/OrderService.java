@@ -1,7 +1,6 @@
 package com.italo.catalogy.service;
 
 import com.italo.catalogy.dto.order.CreateOrderRequestDTO;
-import com.italo.catalogy.dto.order.ItemQuantity;
 import com.italo.catalogy.mapper.OrderMapper;
 import com.italo.catalogy.model.*;
 import com.italo.catalogy.respository.*;
@@ -10,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @Slf4j
 @Service

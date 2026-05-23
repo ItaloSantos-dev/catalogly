@@ -1,4 +1,4 @@
-package com.italo.catalogy.dto.order;
+package com.italo.catalogy.dto;
 
 import java.util.UUID;
 
