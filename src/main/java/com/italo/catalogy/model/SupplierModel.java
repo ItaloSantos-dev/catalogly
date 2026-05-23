@@ -1,6 +1,6 @@
 package com.italo.catalogy.model;
 
-import com.italo.catalogy.model.enums.ContactSuplierType;
+import com.italo.catalogy.model.enums.ContactSupplierType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -48,7 +48,7 @@ public class SupplierModel {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "contact_supplier_type", nullable = false)
-    private ContactSuplierType contactSupplierType;
+    private ContactSupplierType contactSupplierType;
 
     @NotBlank
     @Column(name = "contact_value", nullable = false)
@@ -61,7 +61,7 @@ public class SupplierModel {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "supplier")
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private List<SupplierItemModel> items;
 
     @OneToMany(mappedBy = "supplierModel")

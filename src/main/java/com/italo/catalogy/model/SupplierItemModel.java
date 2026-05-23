@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Entity
@@ -36,5 +38,11 @@ public class SupplierItemModel {
 
      @OneToMany(mappedBy = "supplierItem")
      private List<StockOrderItemModel> orders;
+
+     @Column(name = "created_at", nullable = false)
+     private LocalDateTime createdAt;
+
+     @Column(name = "updated_at")
+     private LocalDateTime updatedAt;
 
 }

@@ -1,17 +1,18 @@
 package com.italo.catalogy.model.enums;
 
-public enum ContactSuplierType {
+public enum ContactSupplierType {
     EMAIL("SITE"),
-    PHONE("PHONE"),
-    WHATSAPP("WHATSAPP");
+    PHONE("PHONE");
 
     private final String value;
 
-    ContactSuplierType(String value) {
+    ContactSupplierType(String value) {
         this.value = value;
     }
 
     public String getValue() {
         return value;
     }
+
+
 }
