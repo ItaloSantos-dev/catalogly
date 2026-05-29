@@ -1,21 +1,28 @@
 package com.italo.catalogy.mapper;
 
-import com.italo.catalogy.dto.item.ItemResponseDTO;
+import com.italo.catalogy.dto.invoice_xml.Det;
 import com.italo.catalogy.dto.supplier_item.SupplierItemResponseDTO;
-import com.italo.catalogy.model.ItemModel;
-import com.italo.catalogy.model.SellerModel;
-import com.italo.catalogy.model.SupplierItemModel;
-import com.italo.catalogy.model.SupplierModel;
+import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.SupplierItemWithCprodResponseDTO;
+import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.TieItemInvoice;
+import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.TieItemStockOrder;
+import com.italo.catalogy.model.*;
+import com.italo.catalogy.service.ImageService;
+import com.italo.catalogy.service.XmlService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class SupplierItemMapper {
     private final ItemMapper itemMapper;
+    private final ImageService imageService;
+    private final XmlService xmlService;
 
-    public SupplierItemMapper(ItemMapper itemMapper) {
+    public SupplierItemMapper(ItemMapper itemMapper, ImageService imageService, XmlService xmlService) {
         this.itemMapper = itemMapper;
+        this.imageService = imageService;
+        this.xmlService = xmlService;
     }
 
     public SupplierItemModel createToModel(ItemModel itemModel, SupplierModel supplierModel){
@@ -33,5 +40,28 @@ public class SupplierItemMapper {
                 this.itemMapper.modelToResponse(supplierItemModel.getItem()),
                 supplierItemModel.getSupplierItemCode()==null? null : supplierItemModel.getSupplierItemCode()
         );
+    }
+
+    public SupplierItemWithCprodResponseDTO listToCprodAndSupplierItemWithCprodResponseDTO(List<Det> invoiceProducts, StockOrderModel stockOrderModel){
+
+        List<TieItemInvoice> invoiceProductList = invoiceProducts.stream()
+                .map(invoiceProduct -> new TieItemInvoice(
+                        invoiceProduct.prod().xProd(),
+                        invoiceProduct.prod().cProd(),
+                        invoiceProduct.prod().vUnCom()
+                ))
+                .toList();
+
+        List<TieItemStockOrder> stockOrderItems = stockOrderModel.getItems().stream()
+                .map(supplierItem -> new TieItemStockOrder(
+                        supplierItem.getSupplierItem().getId(),
+                        supplierItem.getSupplierItem().getItem().getName(),
+                        this.imageService.getAssignedUrlImage(supplierItem.getSupplierItem().getItem().getImagePath1())
+                ))
+                .toList();
+
+        return new SupplierItemWithCprodResponseDTO(stockOrderItems, invoiceProductList, this.xmlService.getAssignedUrlXml(stockOrderModel.getInvoice_xml_path()));
+
+        //Arrumar os nomes de amarração  verificar a logica dos detalhes de qual item retorna, o item do catalogo ou o item do supplier
     }
 }

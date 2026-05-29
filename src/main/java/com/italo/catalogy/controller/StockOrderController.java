@@ -3,19 +3,20 @@ package com.italo.catalogy.controller;
 import com.italo.catalogy.dto.stock_order.CreateStockOrderRequestDTO;
 import com.italo.catalogy.dto.stock_order.StockOrderResponseDTO;
 import com.italo.catalogy.dto.stock_order_item.StockOrderItemResponseDTO;
+import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.SupplierItemWithCprodResponseDTO;
 import com.italo.catalogy.mapper.StockOrderItemMapper;
 import com.italo.catalogy.mapper.StockOrderMapper;
 import com.italo.catalogy.model.StockOrderModel;
 import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.StockOrderService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("stock-order")
@@ -41,4 +42,14 @@ public class StockOrderController {
                 .toList();
         return ResponseEntity.ok(this.stockOrderMapper.modelToResponse(stockOrderModel, stockOrderItemsDTO));
     }
+
+    @PostMapping("/input-invoice-xml")
+    public ResponseEntity<SupplierItemWithCprodResponseDTO> inputInvoiceOfStockOrder(
+            @AuthenticationPrincipal UserModel userModel,
+            @RequestPart("invoiceXml") @NotNull MultipartFile invoiceXml,
+            @RequestParam("stockOrderId") @NotNull UUID stockOrderId
+            ){
+        return ResponseEntity.ok(this.stockOrderService.inputInvoiceXml(userModel, invoiceXml, stockOrderId));
+    }
+
 }
