@@ -52,9 +52,6 @@ public class StockOrderModel {
     @Column(name = "price_final" )
     private BigDecimal priceFinal;
 
-    @Column(name = "invoice_xml_path")
-    private String invoice_xml_path;
-
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
 
@@ -63,6 +60,9 @@ public class StockOrderModel {
 
     @OneToMany(mappedBy = "stockOrder", cascade = CascadeType.ALL)
     private List<StockOrderItemModel> items;
+
+    @OneToOne(mappedBy = "stockOrderModel", cascade = CascadeType.ALL)
+    private StockOrderInvoiceModel stockOrderInvoiceModel;
 
 
 

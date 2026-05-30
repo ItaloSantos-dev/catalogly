@@ -4,6 +4,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.italo.catalogy.dto.invoice_xml.InvoiceXmlDTO;
 import com.italo.catalogy.dto.stock_order.CreateStockOrderRequestDTO;
 import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.SupplierItemWithCprodResponseDTO;
+import com.italo.catalogy.mapper.StockOrderInvoiceMapper;
 import com.italo.catalogy.mapper.StockOrderMapper;
 import com.italo.catalogy.mapper.SupplierItemMapper;
 import com.italo.catalogy.model.*;
@@ -28,10 +29,10 @@ public class StockOrderService {
     private final StockOrderRepository stockOrderRepository;
     private final XmlService xmlService;
     private final SupplierItemMapper supplierItemMapper;
-
+    private final StockOrderInvoiceMapper stockOrderInvoiceMapper;
     private final String EXTENSION_ACCEPTED = ".xml";
 
-    public StockOrderService(StockOrderItemService stockOrderItemService, SellerRepository sellerRepository, StockOrderMapper stockOrderMapper, SupplierRepository supplierRepository, StockOrderRepository stockOrderRepository, XmlService xmlService, SupplierItemMapper supplierItemMapper) {
+    public StockOrderService(StockOrderItemService stockOrderItemService, SellerRepository sellerRepository, StockOrderMapper stockOrderMapper, SupplierRepository supplierRepository, StockOrderRepository stockOrderRepository, XmlService xmlService, SupplierItemMapper supplierItemMapper, StockOrderInvoiceMapper stockOrderInvoiceMapper) {
         this.stockOrderItemService = stockOrderItemService;
         this.sellerRepository = sellerRepository;
         this.stockOrderMapper = stockOrderMapper;
@@ -39,6 +40,7 @@ public class StockOrderService {
         this.stockOrderRepository = stockOrderRepository;
         this.xmlService = xmlService;
         this.supplierItemMapper = supplierItemMapper;
+        this.stockOrderInvoiceMapper = stockOrderInvoiceMapper;
     }
 
 
@@ -101,7 +103,7 @@ public class StockOrderService {
 
         //Exibir uma mensagem de alerta caso o invoice xml tenha uma quantidade de itens diferente da lista de stockOrder 
 
-        if (stockOrderModel.getInvoice_xml_path()!=null)
+        if (stockOrderModel.getStockOrderInvoiceModel()!=null)
             throw new RuntimeException("Deu ruin");
 
         if (!stockOrderModel.getSellerModel().getId().equals(sellerModel.getId()))
@@ -110,11 +112,13 @@ public class StockOrderService {
         if (!stockOrderModel.getSupplierModel().getCnpj().equals(invoiceXmlDTO.NFe().infNFe().emit().cnpj()))
             throw new RuntimeException("Deu ruin");
 
-        stockOrderModel.setInvoice_xml_path(this.saveXml(invoiceXml));
+
+
+        //Criar StockOrderInvoice
+        String xmlPath = this.saveXml(invoiceXml);
+        stockOrderModel.setStockOrderInvoiceModel(this.stockOrderInvoiceMapper.dataToModel(stockOrderModel, invoiceXmlDTO, xmlPath));
         stockOrderModel.setStatus(StockOrderStatus.CONCLUED);
         this.stockOrderRepository.save(stockOrderModel);
-
-        System.out.println(invoiceXmlDTO);
 
         return this.supplierItemMapper.listToCprodAndSupplierItemWithCprodResponseDTO(invoiceXmlDTO.NFe().infNFe().det(), stockOrderModel);
     }

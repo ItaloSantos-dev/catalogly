@@ -32,7 +32,8 @@ public class StockOrderMapper {
                 stockOrderModel.getItemsAmount(),
                 stockOrderModel.getStatus(),
                 stockOrderModel.getPriceFinal(),
-                stockOrderModel.getInvoice_xml_path(),
+                stockOrderModel.getStockOrderInvoiceModel()==null?
+                        null : stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path(),
                 supplierItems
         );
     }

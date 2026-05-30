@@ -60,7 +60,7 @@ public class SupplierItemMapper {
                 ))
                 .toList();
 
-        return new SupplierItemWithCprodResponseDTO(stockOrderItems, invoiceProductList, this.xmlService.getAssignedUrlXml(stockOrderModel.getInvoice_xml_path()));
+        return new SupplierItemWithCprodResponseDTO(stockOrderItems, invoiceProductList, this.xmlService.getAssignedUrlXml(stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path()));
 
         //Arrumar os nomes de amarração  verificar a logica dos detalhes de qual item retorna, o item do catalogo ou o item do supplier
     }
