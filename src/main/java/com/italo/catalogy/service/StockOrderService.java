@@ -1,9 +1,12 @@
 package com.italo.catalogy.service;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.italo.catalogy.dto.invoice_xml.Det;
 import com.italo.catalogy.dto.invoice_xml.InvoiceXmlDTO;
 import com.italo.catalogy.dto.stock_order.CreateStockOrderRequestDTO;
 import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.SupplierItemWithCprodResponseDTO;
+import com.italo.catalogy.dto.tie_supplier_item.update_cprod.TieCprodInvoiceWithSupplierItemId;
+import com.italo.catalogy.dto.tie_supplier_item.update_cprod.UpdateCprodOfSupplierItemsRequestDTO;
 import com.italo.catalogy.mapper.StockOrderInvoiceMapper;
 import com.italo.catalogy.mapper.StockOrderMapper;
 import com.italo.catalogy.mapper.SupplierItemMapper;
@@ -17,8 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class StockOrderService {
@@ -129,5 +131,45 @@ public class StockOrderService {
         String path = "catalog/" + "stock-order-invoice-xml" + "/" + objectId + "." + extension;
         this.xmlService.uploadXml(invoiceXml, path);
         return path;
+    }
+
+    public StockOrderModel updateCprodOfSupplierItems(UUID stockOrderId, UserModel userModel, UpdateCprodOfSupplierItemsRequestDTO updateCprodOfSupplierItemsRequestDTO){
+
+        StockOrderModel stockOrderModel = this.stockOrderRepository.findByIdAndSellerModelUserId(stockOrderId, userModel.getId())
+                .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        if (stockOrderModel.getStockOrderInvoiceModel()==null)
+            throw new RuntimeException("Deu ruin");
+
+        Map<UUID, String > mapItemIdAndCprod = new HashMap<>();
+        Map<String, BigDecimal> mapCprodAndLastPrice = new HashMap<>();
+
+        List<String> cprodsOfInvoice = new ArrayList<>();
+
+        for (Det det : stockOrderModel.getStockOrderInvoiceModel().getInvoiceXmlDTO().NFe().infNFe().det()){
+            cprodsOfInvoice.add(det.prod().cProd());
+            mapCprodAndLastPrice.put(det.prod().cProd(), det.prod().vUnCom());
+        }
+
+        List<UUID> stockOrderItemsId = stockOrderModel.getItems().stream()
+                .map(stockOrderItemModel -> stockOrderItemModel.getId())
+                .toList();
+
+        for(TieCprodInvoiceWithSupplierItemId idAndCprod : updateCprodOfSupplierItemsRequestDTO.tieItems()){
+            if (!cprodsOfInvoice.contains(idAndCprod.cProd()))
+                throw new RuntimeException("Deu ruin");
+
+            if (!stockOrderItemsId.contains(idAndCprod.stockOrderItemId()))
+                throw new RuntimeException("Deu ruin");
+
+            mapItemIdAndCprod.put(idAndCprod.stockOrderItemId(), idAndCprod.cProd());
+        }
+
+        for (StockOrderItemModel stockOrderItemModel : stockOrderModel.getItems()){
+            stockOrderItemModel.getSupplierItem().setSupplierItemCode(mapItemIdAndCprod.get(stockOrderItemModel.getId()));
+            stockOrderItemModel.getSupplierItem().setLastPrice(mapCprodAndLastPrice.get(stockOrderItemModel.getSupplierItem().getSupplierItemCode()));
+        }
+
+        return  this.stockOrderRepository.save(stockOrderModel);
     }
 }

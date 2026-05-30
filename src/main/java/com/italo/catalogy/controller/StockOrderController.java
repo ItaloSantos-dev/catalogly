@@ -3,9 +3,12 @@ package com.italo.catalogy.controller;
 import com.italo.catalogy.dto.stock_order.CreateStockOrderRequestDTO;
 import com.italo.catalogy.dto.stock_order.StockOrderResponseDTO;
 import com.italo.catalogy.dto.stock_order_item.StockOrderItemResponseDTO;
+import com.italo.catalogy.dto.supplier_item.SupplierItemResponseDTO;
 import com.italo.catalogy.dto.tie_supplier_item.supplier_item_cprod.SupplierItemWithCprodResponseDTO;
+import com.italo.catalogy.dto.tie_supplier_item.update_cprod.UpdateCprodOfSupplierItemsRequestDTO;
 import com.italo.catalogy.mapper.StockOrderItemMapper;
 import com.italo.catalogy.mapper.StockOrderMapper;
+import com.italo.catalogy.mapper.SupplierItemMapper;
 import com.italo.catalogy.model.StockOrderModel;
 import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.StockOrderService;
@@ -24,11 +27,13 @@ public class StockOrderController {
     private final StockOrderService stockOrderService;
     private final StockOrderMapper stockOrderMapper;
     private final StockOrderItemMapper stockOrderItemMapper;
+    private final SupplierItemMapper supplierItemMapper;
 
-    public StockOrderController(StockOrderService stockOrderService, StockOrderMapper stockOrderMapper, StockOrderItemMapper stockOrderItemMapper) {
+    public StockOrderController(StockOrderService stockOrderService, StockOrderMapper stockOrderMapper, StockOrderItemMapper stockOrderItemMapper, SupplierItemMapper supplierItemMapper) {
         this.stockOrderService = stockOrderService;
         this.stockOrderMapper = stockOrderMapper;
         this.stockOrderItemMapper = stockOrderItemMapper;
+        this.supplierItemMapper = supplierItemMapper;
     }
 
     @PostMapping
@@ -50,6 +55,21 @@ public class StockOrderController {
             @RequestParam("stockOrderId") @NotNull UUID stockOrderId
             ){
         return ResponseEntity.ok(this.stockOrderService.inputInvoiceXml(userModel, invoiceXml, stockOrderId));
+    }
+
+    @PutMapping("/{id}/update-cprod-itens")
+    public ResponseEntity<List<SupplierItemResponseDTO>> updateCprodOfSupplierItens(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserModel userModel,
+            @RequestBody @NotNull UpdateCprodOfSupplierItemsRequestDTO updateCprodOfSupplierItemsRequestDTO
+    ){
+        StockOrderModel stockOrderModel = this.stockOrderService.updateCprodOfSupplierItems(id, userModel, updateCprodOfSupplierItemsRequestDTO);
+
+        List<SupplierItemResponseDTO> response = stockOrderModel.getItems().stream()
+                .map(stockOrderItemModel -> this.supplierItemMapper.modelToResponse(stockOrderItemModel.getSupplierItem()))
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 
 }

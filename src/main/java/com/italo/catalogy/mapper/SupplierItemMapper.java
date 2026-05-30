@@ -36,9 +36,10 @@ public class SupplierItemMapper {
     public SupplierItemResponseDTO modelToResponse(SupplierItemModel supplierItemModel){
         return new SupplierItemResponseDTO(
                 supplierItemModel.getId(),
-                supplierItemModel.getItem().getName(),
+                supplierItemModel.getSupplier().getName(),
                 this.itemMapper.modelToResponse(supplierItemModel.getItem()),
-                supplierItemModel.getSupplierItemCode()==null? null : supplierItemModel.getSupplierItemCode()
+                supplierItemModel.getSupplierItemCode()==null? null : supplierItemModel.getSupplierItemCode(),
+                supplierItemModel.getLastPrice()==null? null : supplierItemModel.getLastPrice()
         );
     }
 
