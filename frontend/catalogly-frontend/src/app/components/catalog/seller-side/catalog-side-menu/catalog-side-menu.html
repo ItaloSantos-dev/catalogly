@@ -1,0 +1,126 @@
+<aside class="w-64  overflow-hidden bg-white border-r border-slate-200/80 min-h-screen flex flex-col justify-between shrink-0 font-sans antialiased">
+
+    @if (sellerHasCatalog()) {
+        <!-- Parte Superior: Logo e Rotas -->
+        <div>
+            <!-- Brand / Logo Area -->
+            <div class="h-16 flex items-center px-6 border-b border-slate-100 gap-2.5">
+            <div class="flex items-center justify-center w-10 h-10 hover:scale-110 transition-all duration-150 rounded-xl bg-gray-900 text-white shadow-md shadow-emerald-200  hover:shadow-emerald-600 cursor-pointer">
+            <img src="favico.jpg" alt="">
+            </div>
+            <span class="font-extrabold text-slate-950 tracking-tight text-base">Catalogly</span>
+            </div>
+
+            <!-- Título de Seção do Menu -->
+            <div class="px-6 pt-6 pb-2">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Navegação Principal</p>
+            </div>
+
+            <!-- Links do Menu (Baseado no Sem título.png) -->
+            <nav class="px-3 space-y-1">
+            
+            <!-- HOME (Estado Ativo de exemplo) -->
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100/50 group transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width="24"
+                    height="24">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 4h6v6H4V4zm10 0h6v4h-6V4zM4 14h6v6H4v-6zm10-2h6v8h-6v-8z" />
+                </svg>
+                Dashboard
+            </a>
+
+            <!-- Produtos -->
+            <a href="#" class="flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-50 group transition-all">
+                <div class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-600 shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                Produtos
+                </div>
+                <!-- Badge de contador opcional para dar dinamismo -->
+            </a>
+
+            <!-- CATEGORIAS -->
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-50 group transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-600 shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+                Categorias
+            </a>
+
+            <!-- CUPONS -->
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-50 group transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-hover:text-slate-600 shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                </svg>
+                Cupons
+            </a>
+
+            </nav>
+        </div>
+
+        <!-- Rodapé: Perfil da Loja / Ações do Usuário -->
+        <div class="p-4 border-t border-slate-100 bg-slate-50/50">
+            <div class="flex items-center gap-3 p-1.5 rounded-xl">
+            <!-- Avatar da Loja -->
+            <div class="w-9 h-9 rounded-full bg-slate-200 border border-slate-300 flex-shrink-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar Loja" class="w-full h-full object-cover">
+            </div>
+            <!-- Detalhes do Perfil -->
+            <div class="min-w-0 flex-1">
+                <p class="text-xs font-bold text-slate-950 truncate">Loja Urban Concept</p>
+                <p class="text-[11px] font-medium text-slate-400 truncate">vendedor@urban.com</p>
+            </div>
+            <!-- Botão de Sair / Ações -->
+            <button type="button" aria-label="Sair" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+            </button>
+            </div>
+        </div>
+    }
+    @else {
+        <div class="flex flex-col justify-between h-full w-full flex-1">
+            
+            <!-- Mantém o Topo estrutural padrão da aplicação -->
+            <div class="h-16 flex items-center px-6 border-b border-slate-100 gap-2.5">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gray-900 text-white shadow-sm">
+                    <img src="favico.jpg" alt="" class="w-full h-full object-cover rounded-xl">
+                </div>
+                <span class="font-extrabold text-slate-950 tracking-tight text-base">Catalogly</span>
+            </div>
+
+            <!-- Bloco de Aviso Centralizado (Estilo Blue/Blur Premium) -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-4">
+                
+                <!-- Ilustração do cadeado amigável com Glow Azul de Fundo -->
+                <div class="relative w-12 h-12 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-300 to-indigo-100 opacity-40 blur-sm"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+
+                <!-- Div de Texto Solicitada -->
+                <div class="space-y-1.5 px-2">
+                    <div class="text-sm font-bold text-slate-950 leading-snug">
+                        Crie seu catálogo para ter acesso a esta área
+                    </div>
+                    <p class="text-[11px] font-medium text-slate-400 max-w-[180px] mx-auto leading-normal">
+                        Assim que publicar sua primeira vitrine, todas as ferramentas de gestão ficarão disponíveis por aqui.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    }
+
+</aside>
