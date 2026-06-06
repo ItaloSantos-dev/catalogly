@@ -1,0 +1,76 @@
+<div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-emerald-500 selection:text-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+  
+  <!-- Elementos decorativos de fundo para profundidade (Identidade Catalogly) -->
+  <div class="absolute inset-0 pointer-events-none opacity-40">
+    <div class="absolute -top-[10%] right-[5%] w-[500px] h-[500px] bg-emerald-200 rounded-full blur-[130px]"></div>
+    <div class="absolute bottom-[10%] left-[5%] w-[450px] h-[450px] bg-indigo-100 rounded-full blur-[120px]"></div>
+  </div>
+
+  <!-- Cabeçalho de Boas-Vindas -->
+  <div class="relative sm:mx-auto sm:w-full sm:max-w-md text-center mb-4 px-4 z-10">
+    <!-- Logo Contextualizado -->
+    <h2 class="text-3xl font-extrabold tracking-tight text-slate-950">
+      Bem-vindo de volta
+    </h2>
+    <p class="mt-2 text-sm text-slate-500">
+      Acesse o painel para gerenciar seus produtos e vendas.
+    </p>
+  </div>
+
+  <!-- Container Principal do Formulário -->
+  <div class="relative sm:mx-auto sm:w-full sm:max-w-md px-4 z-10">
+    
+    <!-- Card de Login -->
+    <div class="bg-white border border-slate-200/80 shadow-xl rounded-3xl p-6 md:p-10 transition-all duration-300">
+      
+      <form [formGroup]="formLoginSeller" class="space-y-6">
+        
+        <!-- Campo: E-mail -->
+        <div>
+            @if(formLoginSeller.get('email')?.invalid && formLoginSeller.get('email')?.touched) {
+                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-xl p-2.5 animate-shake">
+                    <i class="bi bi-exclamation-circle-fill text-red-400"></i>
+                    <span class="text-red-400 text-xs font-semibold">Email inválido</span>
+                </div>
+            }
+            <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">E-mail</label>
+            <input formControlName="email" id="email" name="email" type="email" required placeholder="seu@email.com" class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm placeholder:text-slate-400" />
+        </div>
+
+        <!-- Campo: Senha -->
+        <div>
+            @if(formLoginSeller.get('password')?.invalid && formLoginSeller.get('password')?.touched) {
+                <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-xl p-2.5 animate-shake">
+                    <i class="bi bi-exclamation-circle-fill text-red-400"></i>
+                    <span class="text-red-400 text-xs font-semibold">Senha inválida</span>
+                </div>
+            }
+            <div class="flex justify-between items-center mb-2">
+                <label for="password" class="block text-xs font-bold uppercase tracking-wider text-slate-700">Senha</label>
+                <a href="#" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">Esqueceu a senha?</a>
+            </div>
+            <input id="password" name="password" formControlName="password" type="password" required placeholder="••••••••" class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm placeholder:text-slate-400" />
+        </div>
+
+        
+
+        <!-- Botão de Envio -->
+        <div class="pt-2">
+          <button (click)="ngOnSubmit()" [disabled]="!formLoginSeller.valid" type="submit" class="w-full disabled:bg-gray-700 disabled:cursor-not-allowed bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-600/10 hover:shadow-xl hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+            Acessar Painel
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- Link para Cadastro (Inversão do fluxo anterior) -->
+    <p class="text-center text-xs text-slate-500 mt-6 tracking-wide">
+      Novo por aqui? 
+      <a routerLink="/seller/register" class="text-emerald-600 hover:text-emerald-700 underline font-bold transition-colors">Crie sua conta agora.</a>
+    </p>
+  </div>
+</div>

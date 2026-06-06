@@ -16,8 +16,8 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("seller")
 public class SellerController {
 
