@@ -4,21 +4,28 @@ import com.italo.catalogy.dto.catalog.CatalogPrivateResponseDTO;
 import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
 import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
+import com.italo.catalogy.dto.catalog.dashboard.CatalogDashboard;
+import com.italo.catalogy.dto.catalog.dashboard.*;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
 import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.ImageService;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Component
 public class CatalogMapper {
 
     private final ImageService imageService;
+    private final SellerMapper sellerMapper;
 
-    public CatalogMapper(ImageService imageService) {
+    public CatalogMapper(ImageService imageService, SellerMapper sellerMapper) {
         this.imageService = imageService;
+        this.sellerMapper = sellerMapper;
     }
 
 
@@ -51,7 +58,7 @@ public class CatalogMapper {
         );
     }
 
-    public CatalogPrivateResponseDTO modelToPrivateResponse(CatalogModel catalogModel){
+    public CatalogPrivateResponseDTO modelToPrivateResponse(CatalogModel catalogModel, CatalogDashboard catalogDashboard){
         return new CatalogPrivateResponseDTO(
                 catalogModel.getName(),
                 catalogModel.getSlug(),
@@ -60,7 +67,9 @@ public class CatalogMapper {
                 catalogModel.getFisicAddress(),
                 catalogModel.getPhone(),
                 this.imageService.getAssignedUrlImage(catalogModel.getImageIconPath()),
-                this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath())
+                this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath()),
+                this.sellerMapper.modelToResponse(catalogModel.getSeller()),
+                catalogDashboard
         );
     }
 
@@ -73,5 +82,47 @@ public class CatalogMapper {
         catalog.setPhone(updateCatalogRequestDTO.phone());
         catalog.setUpdatedAt(LocalDateTime.now());
         return catalog;
+    }
+
+    public CatalogDashboard dataToCatalogDashboard(
+            UUID catalogId,
+            String name,
+            String slug,
+            Integer totalItems,
+            Integer totalCategories,
+            Integer totalOrders,
+            Integer completedOrders,
+            Integer pendingOrders,
+            BigDecimal totalRevenue,
+            BigDecimal averageOrderValue,
+            BigDecimal stockValue,
+            Integer lowStockItems,
+            Integer outOfStockItems,
+            Integer activeCoupons,
+            Integer pendingInvoices,
+            List<TopItem> topItems,
+            List<RecentOrder> recentOrders,
+            List<CategorySummary> categories
+    ){
+        return new CatalogDashboard(
+                catalogId,
+                name,
+                slug,
+                totalItems,
+                totalCategories,
+                totalOrders,
+                completedOrders,
+                pendingOrders,
+                totalRevenue,
+                averageOrderValue,
+                stockValue,
+                lowStockItems,
+                outOfStockItems,
+                activeCoupons,
+                pendingInvoices,
+                topItems,
+                recentOrders,
+                categories
+        );
     }
 }

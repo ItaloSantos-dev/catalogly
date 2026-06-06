@@ -71,12 +71,14 @@
             <div class="flex items-center gap-3 p-1.5 rounded-xl">
             <!-- Avatar da Loja -->
             <div class="w-9 h-9 rounded-full bg-slate-200 border border-slate-300 flex-shrink-0 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Avatar Loja" class="w-full h-full object-cover">
+                <img [src]="catalogPrivateOfSeller()?.imageIconUrl" alt="Avatar Loja" class="w-full h-full object-cover">
             </div>
             <!-- Detalhes do Perfil -->
             <div class="min-w-0 flex-1">
-                <p class="text-xs font-bold text-slate-950 truncate">Loja Urban Concept</p>
-                <p class="text-[11px] font-medium text-slate-400 truncate">vendedor@urban.com</p>
+                <p class="text-xs font-bold text-slate-950 truncate">{{catalogPrivateOfSeller()?.name}}</p>
+                <p class="text-[11px] font-medium text-slate-400 truncate">
+                    {{catalogPrivateOfSeller()?.sellerData?.firstName + " " + catalogPrivateOfSeller()?.sellerData?.lastName }}
+                </p>
             </div>
             <!-- Botão de Sair / Ações -->
             <button type="button" aria-label="Sair" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition-colors">

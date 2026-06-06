@@ -4,9 +4,12 @@ import com.italo.catalogy.model.CategoryModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryModel, UUID> {
     Boolean existsByNameAndCatalogSellerUserId(String name, UUID userId);
+    Integer countByCatalogId(UUID catalogId);
+    List<CategoryModel> findByCatalogId(UUID catalogId);
 }

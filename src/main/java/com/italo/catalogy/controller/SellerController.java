@@ -46,7 +46,7 @@ public class SellerController {
     @GetMapping("/catalog")
     public ResponseEntity<CatalogPrivateResponseDTO> getMyCatalog(@NotNull @AuthenticationPrincipal UserModel userModel){
         CatalogModel catalogModel = this.catalogService.getBySellerId(userModel.getId());
-        return ResponseEntity.ok(this.catalogMapper.modelToPrivateResponse(catalogModel));
+        return ResponseEntity.ok(this.catalogMapper.modelToPrivateResponse(catalogModel, this.catalogService.generateDashBoard(userModel)));
     }
 
     //Arrumar depois - SOFT DELETE

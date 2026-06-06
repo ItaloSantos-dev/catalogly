@@ -1,4 +1,8 @@
+import { SellerResponseDTO } from "../seller/seller-response";
+import { CatalogDashboard } from "./dashboard/catalog-dashboard";
+
 export interface CatalogPrivateResponseDTO {
+    name:string;
     slug: string;
     slogan: string;
     about: string;
@@ -6,4 +10,6 @@ export interface CatalogPrivateResponseDTO {
     phone: string;
     imageIconUrl: string;
     imageBannerUrl: string;
+    sellerData:SellerResponseDTO;
+    dashboard:CatalogDashboard;
 }
