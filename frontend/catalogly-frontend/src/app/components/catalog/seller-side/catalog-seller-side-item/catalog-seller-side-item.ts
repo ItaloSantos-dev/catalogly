@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ItemService } from '../../../../service/item/item-service';
 import { ItemResponseDTO } from '../../../../../types/item/item-response';
 import { DecimalPipe } from '@angular/common';
+import { HelperService } from '../../../../service/helper/helper-service';
 
 @Component({
   selector: 'app-catalog-seller-side-item',
@@ -12,6 +13,7 @@ import { DecimalPipe } from '@angular/common';
 export class CatalogSellerSideItem {
   private ItemService = inject(ItemService);
   items = signal(<ItemResponseDTO[]>[]);
+  private helperService = inject(HelperService);
 
   ngOnInit() {
     this.ItemService.getItemsOfCatalog().subscribe({
@@ -22,5 +24,6 @@ export class CatalogSellerSideItem {
         console.error("Error fetching items of catalog: ", err);
       }
     });
+    this.helperService.setAtualPage(1);
   }
 }
