@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { SellerResponseDTO } from "../../types/seller/seller-response";
 import { CatalogPrivateResponseDTO } from "../../types/catalog/catalog-private-response";
 import { LoginRequestDTO } from "../../types/auth/login-request";
+import { ItemResponseDTO } from "../../types/item/item-response";
 
 @Injectable({
     providedIn: 'root'
@@ -25,5 +26,9 @@ export class BackApi {
 
     getMyCatalog():Observable<CatalogPrivateResponseDTO>{
         return this.httpClient.get<CatalogPrivateResponseDTO>(this.baseUrl + "seller/catalog");
+    }
+
+    getItemsOfCatalog():Observable<ItemResponseDTO[]>{
+        return this.httpClient.get<ItemResponseDTO[]>(this.baseUrl + "catalog/items");
     }
 }

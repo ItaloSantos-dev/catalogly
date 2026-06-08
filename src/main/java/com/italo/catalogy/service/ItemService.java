@@ -169,6 +169,9 @@ public class ItemService {
         return this.itemRepository.save(itemModel);
     }
 
+    public List<ItemModel> getItemsOfCatalogByUser(UserModel userModel){
+        return this.itemRepository.findByCatalogSellerUserId(userModel.getId());
+    }
 
 
 }

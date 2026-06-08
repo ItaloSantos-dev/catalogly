@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { SellerService } from '../../../../service/seller/seller-service';
 import { CatalogPrivateResponseDTO } from '../../../../../types/catalog/catalog-private-response';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-catalog-side-menu',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './catalog-side-menu.html',
   styleUrl: './catalog-side-menu.css',
 })

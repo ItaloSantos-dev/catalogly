@@ -5,6 +5,7 @@ import { RegisterSeller } from './components/auth/seller/register-seller/registe
 import { CatalogLayout } from './components/catalog/seller-side/catalog-layout/catalog-layout';
 import { CatalogDashboard } from './components/catalog/seller-side/catalog-dashboard/catalog-dashboard';
 import { LoginSeller } from './components/auth/seller/login-seller/login-seller';
+import { CatalogSellerSideItem } from './components/catalog/seller-side/catalog-seller-side-item/catalog-seller-side-item';
 
 export const routes: Routes = [
     {
@@ -32,6 +33,10 @@ export const routes: Routes = [
             {
                 path: 'dashboard',
                 component: CatalogDashboard
+            },
+            {
+                path: 'products',
+                component:CatalogSellerSideItem
             }
         ]
     }

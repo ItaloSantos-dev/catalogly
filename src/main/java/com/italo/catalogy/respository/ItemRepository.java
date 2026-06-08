@@ -21,4 +21,6 @@ public interface ItemRepository extends JpaRepository<ItemModel, UUID> {
 
     @Query("SELECT COALESCE(SUM(i.price * i.stock), 0) FROM ItemModel i WHERE i.catalog.id = :catalogId AND i.deleted = false")
     BigDecimal sumStockValueByCatalogId(UUID catalogId);
+
+    List<ItemModel> findByCatalogSellerUserId(UUID userId);
 }
