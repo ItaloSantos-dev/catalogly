@@ -11,5 +11,5 @@ export interface CatalogPrivateResponseDTO {
     imageIconUrl: string;
     imageBannerUrl: string;
     sellerData:SellerResponseDTO;
-    dashboard:CatalogDashboard;
+    catalogDashboard:CatalogDashboard;
 }
