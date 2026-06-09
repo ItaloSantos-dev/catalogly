@@ -1,42 +1,43 @@
 import { Routes } from '@angular/router';
-import { PageLayout } from './components/page/page-layout/page-layout';
-import { PageHome } from './components/page/page-home/page-home';
-import { RegisterSeller } from './components/auth/seller/register-seller/register-seller';
-import { CatalogLayout } from './components/catalog/seller-side/catalog-layout/catalog-layout';
-import { CatalogDashboard } from './components/catalog/seller-side/catalog-dashboard/catalog-dashboard';
-import { LoginSeller } from './components/auth/seller/login-seller/login-seller';
-import { CatalogSellerSideItem } from './components/catalog/seller-side/catalog-seller-side-item/catalog-seller-side-item';
+import { LandingLayout } from './components/landing-page/layout/landing-layout/landing-layout';
+import { LandingHome } from './components/landing-page/home/landing-home/landing-home';
+import { SellerRegister } from './components/seller-side/auth/seller-register/seller-register';
+import { SellerLogin } from './components/seller-side/auth/seller-login/seller-login';
+import { SellerLayout } from './components/seller-side/catalog/layout/seller-layout/seller-layout';
+import { SellerDashboard } from './components/seller-side/catalog/seller-dashboard/seller-dashboard';
+import { SellerShowItems } from './components/seller-side/catalog/item/seller-show-items/seller-show-items';
+
 
 export const routes: Routes = [
     {
         path: '',
-        component:PageLayout,
+        component:LandingLayout,
         children: [
             {
                 path:'',
-                component: PageHome
+                component: LandingHome
             },
             {
                 path:'seller/register',
-                component: RegisterSeller
+                component: SellerRegister
             },
             {
                 path:'seller/login',
-                component: LoginSeller
+                component: SellerLogin
             },
         ]
     },
     {
         path: 'catalog',
-        component: CatalogLayout,
+        component: SellerLayout,
         children: [
             {
                 path: 'dashboard',
-                component: CatalogDashboard
+                component: SellerDashboard
             },
             {
                 path: 'products',
-                component:CatalogSellerSideItem
+                component:SellerShowItems
             }
         ]
     }

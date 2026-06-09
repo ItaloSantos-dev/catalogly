@@ -1,0 +1,151 @@
+<div class="font-sans antialiased text-slate-800 py-4 sm:p-6 px-0 space-y-6">
+  
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 w-full">
+    <div>
+      <h1 class="text-xl font-black text-slate-950 tracking-tight">Meus Itens</h1>
+      <p class="text-xs text-slate-400 font-medium">Gerencie o estoque, preços e a visibilidade dos produtos no seu catálogo.</p>
+    </div>
+    
+    <button type="button" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 py-3.5 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+      </svg>
+      Adicionar Novo Item
+    </button>
+  </div>
+
+  <div class="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+    <div class="relative w-full md:max-w-md">
+      <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </span>
+      <input type="text" placeholder="Buscar por nome" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-xs font-medium placeholder:text-slate-400" />
+    </div>
+
+    <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+      <span class="text-xs font-bold text-slate-400 border-l border-slate-200 pl-3 h-5 flex items-center shrink-0">
+        Total: {{ items().length }} itens
+      </span>
+    </div>
+  </div>
+
+  <div class="bg-white border border-slate-200/80 rounded-3xl shadow-sm overflow-hidden w-full">
+    <div class="overflow-x-auto w-full">
+      <div class="min-w-[900px] w-full divide-y divide-slate-100">
+        
+        <div class="grid grid-cols-12 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50/50 py-4 px-6 gap-4 items-center">
+          <div class="col-span-4">Produto</div>
+          <div class="col-span-2 text-center">Categoria</div>
+          <div class="col-span-2 text-center">Preço</div>
+          <div class="col-span-2 text-center">Estoque</div>
+          <div class="col-span-1 text-center">Status</div>
+          <div class="col-span-1 text-right">Ações</div>
+        </div>
+
+        @for (item of items(); track item.id) {
+          <div class="grid grid-cols-12 text-sm py-4 px-6 gap-4 items-center hover:bg-slate-50/40 transition-colors group" [class.opacity-60]="item.deleted">
+            
+            <div class="col-span-4 flex items-center gap-3.5 min-w-0">
+              <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200/60 shrink-0 overflow-hidden flex items-center justify-center text-slate-300">
+                @if (item.imagePath1) {
+                  <img [src]="item.imagePath1" alt="Produto" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                }
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="text-xs font-black text-slate-950 truncate tracking-tight group-hover:text-emerald-700 transition-colors">
+                  {{ item.name }}
+                </p>
+                <p class="text-[11px] font-medium text-slate-400 truncate max-w-[300px] mt-0.5">
+                  {{ item.about || 'Sem descrição cadastrada.' }}
+                </p>
+              </div>
+            </div>
+
+            <div class="col-span-2 text-center whitespace-nowrap">
+              <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-indigo-50/60 text-indigo-700 border border-indigo-100/40">
+                {{ item.categoryName }}
+              </span>
+            </div>
+
+            <div class="col-span-2 text-center font-black text-slate-950 whitespace-nowrap">
+              R$ {{ item.price | number:'1.2-2' }}
+            </div>
+
+            <div class="col-span-2 text-center whitespace-nowrap">
+              @if (item.stock === 0) {
+                <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-50 text-rose-700 border border-rose-100">
+                  Esgotado (0)
+                </span>
+              } @else if (item.stock <= 5) {
+                <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-50 text-amber-700 border border-amber-100">
+                  Baixo ({{ item.stock }})
+                </span>
+              } @else {
+                <span class="inline-flex items-center justify-center text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200/60 px-2.5 py-0.5 rounded-md">
+                  {{ item.stock }} un
+                </span>
+              }
+            </div>
+
+            <div class="col-span-1 text-center whitespace-nowrap">
+              @if (item.deleted) {
+                <span class="inline-flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
+                  Arquivado
+                </span>
+              } @else {
+                <span class="inline-flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100/60 px-2 py-0.5 rounded-md">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Ativo
+                </span>
+              }
+            </div>
+
+            <div class="col-span-1 text-right flex items-center justify-end gap-1.5 whitespace-nowrap">
+              <button type="button" aria-label="Editar" class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all" title="Editar item">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+
+              <button type="button" aria-label="Excluir" class="p-1.5 rounded-lg transition-all" [class]="item.deleted ? 'text-emerald-600 hover:bg-emerald-50' : 'text-slate-400 hover:text-rose-600 hover:bg-rose-50'" [title]="item.deleted ? 'Restaurar item' : 'Arquivar item'">
+                @if (item.deleted) {
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18" />
+                  </svg>
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                }
+              </button>
+            </div>
+
+          </div>
+        } @empty {
+          <div class="py-12 text-center w-full">
+            <div class="space-y-3 flex flex-col items-center justify-center">
+              <div class="w-12 h-12 bg-slate-50 border border-slate-150 rounded-2xl flex items-center justify-center text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+              <div class="space-y-1">
+                <p class="text-xs font-bold text-slate-950">Nenhum produto por aqui</p>
+                <p class="text-[11px] font-medium text-slate-400 max-w-xs mx-auto">Clique no botão superior para cadastrar seus itens e começar a vender.</p>
+              </div>
+            </div>
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+
+</div>
