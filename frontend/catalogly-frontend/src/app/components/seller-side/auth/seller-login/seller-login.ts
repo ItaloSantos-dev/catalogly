@@ -29,13 +29,14 @@ export class SellerLogin {
   }
 
   ngOnSubmit(){
+    localStorage.clear();
     this.sellerService.loginSeller(this.createLoginSellerRequestDTO()).subscribe({
       next: (token) => {
         this.authService.setToken(token);
         this.router.navigate(['/catalog/dashboard']);
       },
       error: (err) => {
-        console.error(err);
+        window.alert("Deu ruin");
       }
     });
   }

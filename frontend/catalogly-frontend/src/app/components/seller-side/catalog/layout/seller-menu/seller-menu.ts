@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class SellerMenu {
   private sellerService = inject(SellerService);
   catalogPrivateOfSeller = signal(<CatalogPrivateResponseDTO | null>null);
-  sellerHasCatalog = signal(true);
+  sellerHasCatalog = signal(false);
   private helperService = inject(HelperService);
 
   currentPage = signal(0);

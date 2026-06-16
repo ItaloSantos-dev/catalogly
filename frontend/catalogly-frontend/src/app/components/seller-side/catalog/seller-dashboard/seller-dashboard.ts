@@ -3,10 +3,11 @@ import { SellerService } from '../../../../service/seller/seller-service';
 import { CatalogPrivateResponseDTO } from '../../../../../types/catalog/catalog-private-response';
 import { HelperService } from '../../../../service/helper/helper-service';
 import { DecimalPipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-seller-dashboard',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './seller-dashboard.html',
   styleUrl: './seller-dashboard.css',
 })

@@ -6,6 +6,7 @@ import { SellerResponseDTO } from "../../types/seller/seller-response";
 import { CatalogPrivateResponseDTO } from "../../types/catalog/catalog-private-response";
 import { LoginRequestDTO } from "../../types/auth/login-request";
 import { ItemResponseDTO } from "../../types/item/item-response";
+import { CreateCatalogRequestDTO } from "../../types/catalog/create-catalog-request";
 
 @Injectable({
     providedIn: 'root'
@@ -30,5 +31,9 @@ export class BackApi {
 
     getItemsOfCatalog():Observable<ItemResponseDTO[]>{
         return this.httpClient.get<ItemResponseDTO[]>(this.baseUrl + "catalog/items");
+    }
+
+    createCatalog(data:FormData){
+        return this.httpClient.post(this.baseUrl + "catalog", data);
     }
 }
