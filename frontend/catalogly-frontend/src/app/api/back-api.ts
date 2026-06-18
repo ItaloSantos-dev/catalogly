@@ -36,4 +36,8 @@ export class BackApi {
     createCatalog(data:FormData){
         return this.httpClient.post(this.baseUrl + "catalog", data);
     }
+
+    createItem(data:FormData){
+        return this.httpClient.post(this.baseUrl + "item", data);
+    }
 }

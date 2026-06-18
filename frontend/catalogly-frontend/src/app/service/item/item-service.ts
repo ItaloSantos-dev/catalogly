@@ -10,4 +10,8 @@ export class ItemService {
   getItemsOfCatalog() {
     return this.backApi.getItemsOfCatalog();
   }
+
+  createItem(data:FormData){
+    return this.backApi.createItem(data);
+  }
 }

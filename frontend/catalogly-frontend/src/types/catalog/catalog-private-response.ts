@@ -1,3 +1,4 @@
+import { CategoryNameAndId } from "../category/category-name-and-id";
 import { SellerResponseDTO } from "../seller/seller-response";
 import { CatalogDashboard } from "./dashboard/catalog-dashboard";
 
@@ -12,4 +13,5 @@ export interface CatalogPrivateResponseDTO {
     imageBannerUrl: string;
     sellerData:SellerResponseDTO;
     catalogDashboard:CatalogDashboard;
+    categoryNamesAndIds:CategoryNameAndId[];
 }

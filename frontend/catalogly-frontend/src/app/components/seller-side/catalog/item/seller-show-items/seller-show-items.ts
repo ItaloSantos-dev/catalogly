@@ -3,10 +3,11 @@ import { Component, inject, signal } from '@angular/core';
 import { ItemService } from '../../../../../service/item/item-service';
 import { ItemResponseDTO } from '../../../../../../types/item/item-response';
 import { HelperService } from '../../../../../service/helper/helper-service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-seller-show-items',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './seller-show-items.html',
   styleUrl: './seller-show-items.css',
 })

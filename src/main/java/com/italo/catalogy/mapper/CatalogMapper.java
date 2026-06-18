@@ -5,6 +5,7 @@ import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
 import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
 import com.italo.catalogy.dto.catalog.dashboard.CatalogDashboard;
+import com.italo.catalogy.dto.category.CategoryNameAndId;
 import com.italo.catalogy.dto.catalog.dashboard.*;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
@@ -69,7 +70,10 @@ public class CatalogMapper {
                 this.imageService.getAssignedUrlImage(catalogModel.getImageIconPath()),
                 this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath()),
                 this.sellerMapper.modelToResponse(catalogModel.getSeller()),
-                catalogDashboard
+                catalogDashboard,
+                catalogModel.getCategorys().stream()
+                    .map(category -> new CategoryNameAndId(category.getId(), category.getName()))
+                    .toList()
         );
     }
 

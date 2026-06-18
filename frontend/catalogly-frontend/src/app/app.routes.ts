@@ -7,6 +7,7 @@ import { SellerLayout } from './components/seller-side/catalog/layout/seller-lay
 import { SellerDashboard } from './components/seller-side/catalog/seller-dashboard/seller-dashboard';
 import { SellerShowItems } from './components/seller-side/catalog/item/seller-show-items/seller-show-items';
 import { SellerCreateCatalog } from './components/seller-side/catalog/seller-create-catalog/seller-create-catalog';
+import { SellerCreateItem } from './components/seller-side/catalog/item/seller-create-item/seller-create-item';
 
 
 export const routes: Routes = [
@@ -38,12 +39,17 @@ export const routes: Routes = [
             },
             {
                 path: 'products',
-                component:SellerShowItems
+                component:SellerShowItems,
+            },
+            {
+                path:"products/create",
+                component:SellerCreateItem
             },
             {
                 path: 'create',
                 component:SellerCreateCatalog
-            }
+            },
+            
         ]
     }
     
