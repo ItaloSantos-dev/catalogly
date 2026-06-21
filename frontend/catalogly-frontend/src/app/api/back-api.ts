@@ -7,6 +7,7 @@ import { CatalogPrivateResponseDTO } from "../../types/catalog/catalog-private-r
 import { LoginRequestDTO } from "../../types/auth/login-request";
 import { ItemResponseDTO } from "../../types/item/item-response";
 import { CreateCatalogRequestDTO } from "../../types/catalog/create-catalog-request";
+import { CategoryRespondeDTO } from "../../types/category/category-response";
 
 @Injectable({
     providedIn: 'root'
@@ -39,5 +40,9 @@ export class BackApi {
 
     createItem(data:FormData){
         return this.httpClient.post(this.baseUrl + "item", data);
+    }
+
+    getCategorysOfCatalogById(id:string):Observable<[CategoryRespondeDTO]>{
+        return this.httpClient.get<[CategoryRespondeDTO]>(this.baseUrl+"catalog/"+id+"/categorys");
     }
 }

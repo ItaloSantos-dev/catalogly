@@ -83,4 +83,8 @@ public class CategoryService {
 
     }
 
+    public List<CategoryModel> getCategorysByCatalogId(UUID id){
+        return this.categoryRepository.findByCatalogId(id);
+    }
+
 }

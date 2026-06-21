@@ -22,6 +22,7 @@ public class CategoryMapper {
     public CategoryResponseDTO modelToResponse(CategoryModel categoryModel){
         Integer itemsCount = categoryModel.getItems()==null? 0: categoryModel.getItems().size();
         return new CategoryResponseDTO(
+                categoryModel.getId(),
                 categoryModel.getName(),
                 categoryModel.getDescription(),
                 itemsCount

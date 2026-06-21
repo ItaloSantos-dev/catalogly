@@ -3,6 +3,7 @@ import { SellerResponseDTO } from "../seller/seller-response";
 import { CatalogDashboard } from "./dashboard/catalog-dashboard";
 
 export interface CatalogPrivateResponseDTO {
+    id:string;
     name:string;
     slug: string;
     slogan: string;

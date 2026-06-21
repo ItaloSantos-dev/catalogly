@@ -61,6 +61,7 @@ public class CatalogMapper {
 
     public CatalogPrivateResponseDTO modelToPrivateResponse(CatalogModel catalogModel, CatalogDashboard catalogDashboard){
         return new CatalogPrivateResponseDTO(
+                catalogModel.getId(),
                 catalogModel.getName(),
                 catalogModel.getSlug(),
                 catalogModel.getSlogan(),
