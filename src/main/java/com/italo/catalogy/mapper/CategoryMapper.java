@@ -7,11 +7,13 @@ import com.italo.catalogy.model.CategoryModel;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class CategoryMapper {
-    public CategoryModel createToModel(CreateCategoryRequestDTO createCategoryRequestDTO){
+    public CategoryModel createToModel(CreateCategoryRequestDTO createCategoryRequestDTO, UUID id){
         CategoryModel categoryModel = new CategoryModel();
+        categoryModel.setId(id);
         categoryModel.setName(createCategoryRequestDTO.name());
         categoryModel.setDescription(createCategoryRequestDTO.description());
         categoryModel.setCreatedAt(LocalDateTime.now());

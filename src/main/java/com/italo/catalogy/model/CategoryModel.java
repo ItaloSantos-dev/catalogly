@@ -23,7 +23,6 @@ import java.util.UUID;
 //adicionar constraint unique (name, catalog_id) e relacionar com N items
 public class CategoryModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
@@ -43,6 +42,6 @@ public class CategoryModel {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ItemModel> items;
 }

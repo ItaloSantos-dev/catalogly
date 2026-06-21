@@ -9,6 +9,7 @@ import { SellerShowItems } from './components/seller-side/catalog/item/seller-sh
 import { SellerCreateCatalog } from './components/seller-side/catalog/seller-create-catalog/seller-create-catalog';
 import { SellerCreateItem } from './components/seller-side/catalog/item/seller-create-item/seller-create-item';
 import { SellerShowCategorys } from './components/seller-side/catalog/category/seller-show-categorys/seller-show-categorys';
+import { SellerCreateCategory } from './components/seller-side/catalog/category/seller-create-category/seller-create-category';
 
 
 export const routes: Routes = [
@@ -53,6 +54,10 @@ export const routes: Routes = [
             {
                 path: 'categories',
                 component:SellerShowCategorys
+            },
+            {
+                path: 'categories/create',
+                component:SellerCreateCategory
             },
             
             

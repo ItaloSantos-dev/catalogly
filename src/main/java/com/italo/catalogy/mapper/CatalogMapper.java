@@ -23,10 +23,13 @@ public class CatalogMapper {
 
     private final ImageService imageService;
     private final SellerMapper sellerMapper;
+    private final ItemMapper itemMapper;
 
-    public CatalogMapper(ImageService imageService, SellerMapper sellerMapper) {
+    public CatalogMapper(ImageService imageService, SellerMapper sellerMapper, ItemMapper itemMapper) {
         this.imageService = imageService;
         this.sellerMapper = sellerMapper;
+        this.itemMapper = itemMapper;
+        
     }
 
 
@@ -74,6 +77,9 @@ public class CatalogMapper {
                 catalogDashboard,
                 catalogModel.getCategorys().stream()
                     .map(category -> new CategoryNameAndId(category.getId(), category.getName()))
+                    .toList(),
+                catalogModel.getItems().stream()
+                    .map(item -> this.itemMapper.modelToResponse(item))
                     .toList()
         );
     }

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.italo.catalogy.dto.catalog.dashboard.CatalogDashboard;
 import com.italo.catalogy.dto.category.CategoryNameAndId;
+import com.italo.catalogy.dto.item.ItemResponseDTO;
 import com.italo.catalogy.dto.seller.SellerResponseDTO;
 
 public record CatalogPrivateResponseDTO(
@@ -19,7 +20,8 @@ public record CatalogPrivateResponseDTO(
         String imageBannerUrl,
         SellerResponseDTO sellerData,
         CatalogDashboard catalogDashboard,
-        List<CategoryNameAndId> categoryNamesAndIds
+        List<CategoryNameAndId> categoryNamesAndIds,
+        List<ItemResponseDTO> items
         //Add outros itens
 ) {
 }

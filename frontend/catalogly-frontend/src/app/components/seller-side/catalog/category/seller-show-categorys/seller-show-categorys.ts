@@ -4,10 +4,11 @@ import { CategoryRespondeDTO } from '../../../../../../types/category/category-r
 import { CatalogPrivateResponseDTO } from '../../../../../../types/catalog/catalog-private-response';
 import { SellerService } from '../../../../../service/seller/seller-service';
 import { HelperService } from '../../../../../service/helper/helper-service';
+import { RouterLinkActive, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-seller-show-categorys',
-  imports: [],
+  imports: [RouterLinkActive, RouterLink],
   templateUrl: './seller-show-categorys.html',
   styleUrl: './seller-show-categorys.css',
 })
@@ -37,7 +38,7 @@ export class SellerShowCategorys {
     })
 
 
-    this.helperService.setAtualPage(1);
+    this.helperService.setAtualPage(2);
 
   }
 }

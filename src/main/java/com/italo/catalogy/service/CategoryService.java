@@ -37,10 +37,14 @@ public class CategoryService {
         CatalogModel catalogModel = this.catalogRepository.findBySellerUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
 
-        CategoryModel newCategory = this.categoryMapper.createToModel(createCategoryRequestDTO);
+        CategoryModel newCategory = this.categoryMapper.createToModel(createCategoryRequestDTO, UUID.randomUUID());
 
         if (createCategoryRequestDTO.items()!=null && !createCategoryRequestDTO.items().isEmpty()){
             List<ItemModel> items =  this.itemRepository.findAllById(createCategoryRequestDTO.items());
+            if (items.size()!=createCategoryRequestDTO.items().size()) {
+                throw new RuntimeException("Nem todos os itens foram encontrados");
+            }
+            items.forEach(item -> item.setCategory(newCategory));
             newCategory.setItems(items);
         }
         newCategory.setCatalog(catalogModel);

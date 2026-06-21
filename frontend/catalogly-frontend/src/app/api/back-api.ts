@@ -8,6 +8,7 @@ import { LoginRequestDTO } from "../../types/auth/login-request";
 import { ItemResponseDTO } from "../../types/item/item-response";
 import { CreateCatalogRequestDTO } from "../../types/catalog/create-catalog-request";
 import { CategoryRespondeDTO } from "../../types/category/category-response";
+import { CreateCategoryRequestDTO } from "../../types/category/create-category-request";
 
 @Injectable({
     providedIn: 'root'
@@ -44,5 +45,9 @@ export class BackApi {
 
     getCategorysOfCatalogById(id:string):Observable<[CategoryRespondeDTO]>{
         return this.httpClient.get<[CategoryRespondeDTO]>(this.baseUrl+"catalog/"+id+"/categorys");
+    }
+
+    createCategory(data:CreateCategoryRequestDTO){
+        return this.httpClient.post(this.baseUrl + "category", data);
     }
 }
