@@ -10,6 +10,7 @@ import { SellerCreateCatalog } from './components/seller-side/catalog/seller-cre
 import { SellerCreateItem } from './components/seller-side/catalog/item/seller-create-item/seller-create-item';
 import { SellerShowCategorys } from './components/seller-side/catalog/category/seller-show-categorys/seller-show-categorys';
 import { SellerCreateCategory } from './components/seller-side/catalog/category/seller-create-category/seller-create-category';
+import { SellerShowItemsOfCategory } from './components/seller-side/catalog/category/seller-show-items-of-category/seller-show-items-of-category';
 
 
 export const routes: Routes = [
@@ -58,6 +59,10 @@ export const routes: Routes = [
             {
                 path: 'categories/create',
                 component:SellerCreateCategory
+            },
+            {
+                path: 'categories/:id/items',
+                component:SellerShowItemsOfCategory
             },
             
             

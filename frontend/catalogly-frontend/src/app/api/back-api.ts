@@ -54,4 +54,8 @@ export class BackApi {
     deleteCategoryById(id:string):Observable<void>{
         return this.httpClient.delete<void>(this.baseUrl + "category/" + id);
     }
+
+    getItensOfCategoryById(id:string):Observable<ItemResponseDTO[]>{
+        return this.httpClient.get<ItemResponseDTO[]>(this.baseUrl + "category/"+id+"/items");
+    }
 }
