@@ -4,7 +4,8 @@ import { CategoryRespondeDTO } from '../../../../../../types/category/category-r
 import { CatalogPrivateResponseDTO } from '../../../../../../types/catalog/catalog-private-response';
 import { SellerService } from '../../../../../service/seller/seller-service';
 import { HelperService } from '../../../../../service/helper/helper-service';
-import { RouterLinkActive, RouterLink } from "@angular/router";
+import { RouterLinkActive, RouterLink, Router } from "@angular/router";
+import { CategoryService } from '../../../../../service/category/category-service';
 
 @Component({
   selector: 'app-seller-show-categorys',
@@ -18,6 +19,8 @@ export class SellerShowCategorys {
   categorysOfCatalog = signal(<CategoryRespondeDTO[]>[]);
   catalogPrivateOfSeller = signal(<CatalogPrivateResponseDTO>{});
   private helperService = inject(HelperService);
+  private categoryService = inject(CategoryService);
+  private router = inject(Router);
 
   
   ngOnInit(){
@@ -40,5 +43,18 @@ export class SellerShowCategorys {
 
     this.helperService.setAtualPage(2);
 
+  }
+
+
+  deleteCategory(id:string){
+    this.categoryService.deleteCategoryById(id).subscribe({
+      next: async () => {
+        await this.router.navigate(['/']);
+        await this.router.navigate(['/catalog/categories']);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 }

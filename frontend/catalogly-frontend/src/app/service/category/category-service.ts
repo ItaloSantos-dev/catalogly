@@ -12,4 +12,8 @@ export class CategoryService {
   createCategory(data:CreateCategoryRequestDTO):Observable<any>{
     return this.backApi.createCategory(data);
   }
+
+  deleteCategoryById(id:string):Observable<void>{
+    return this.backApi.deleteCategoryById(id);
+  }
 }

@@ -50,4 +50,8 @@ export class BackApi {
     createCategory(data:CreateCategoryRequestDTO){
         return this.httpClient.post(this.baseUrl + "category", data);
     }
+
+    deleteCategoryById(id:string):Observable<void>{
+        return this.httpClient.delete<void>(this.baseUrl + "category/" + id);
+    }
 }
