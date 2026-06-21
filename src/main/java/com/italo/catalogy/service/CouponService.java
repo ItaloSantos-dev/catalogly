@@ -11,6 +11,7 @@ import com.italo.catalogy.respository.CouponRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,5 +57,9 @@ public class CouponService {
         couponModel = this.couponMapper.updateToModel(couponModel, updateCouponRequestDTO);
         return this.couponRepository.save(couponModel);
 
+    }
+
+    public List<CouponModel> getCouponsOfCatalogById(UUID id){
+        return this.couponRepository.findAllByCatalogId(id);
     }
 }

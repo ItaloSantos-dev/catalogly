@@ -30,7 +30,8 @@ public class CouponMapper {
                 couponModel.getSlug(),
                 couponModel.getAmount(),
                 couponModel.getAmountMinimum(),
-                couponModel.getAmountDiscountMaximum()
+                couponModel.getAmountDiscountMaximum(),
+                couponModel.getActive()
         );
     }
 

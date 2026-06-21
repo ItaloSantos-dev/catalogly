@@ -9,6 +9,7 @@ public record CouponResponseDTO(
         String slug,
         BigDecimal amount,
         BigDecimal amountMinimum,
-        BigDecimal amountDiscountMaximum
+        BigDecimal amountDiscountMaximum,
+        Boolean active
 ) {
 }

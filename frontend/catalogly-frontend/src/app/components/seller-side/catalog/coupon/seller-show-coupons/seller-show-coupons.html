@@ -1,0 +1,229 @@
+<div class="w-full font-sans antialiased text-slate-800 p-4 sm:p-6 lg:p-8 space-y-8 flex-1 bg-slate-50/50 min-h-screen">
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+      <div class="space-y-1">
+        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/50 px-2 py-0.5 rounded-full uppercase tracking-wider">
+          Painel de Marketing
+        </span>
+        <h1 class="text-2xl font-black text-slate-950 tracking-tight">
+          Cupons de Desconto
+        </h1>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <button class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+          <i class="bi bi-plus-lg stroke-[1.5]"></i> Novo Cupom
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">     
+         
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 shrink-0">
+            <i class="bi bi-ticket-perforated text-lg"></i>
+            </div>
+            <div class="space-y-0.5 min-w-0">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Cupons Criados</span>
+            <p class="text-lg font-black text-slate-950 truncate">{{ totalCouponsCount() }}</p>
+            <span class="text-[10px] font-medium text-slate-400 block">Códigos ativos para uso</span>
+            </div>
+        </div>
+
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
+            <div class="w-10 h-10 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center text-green-500 shrink-0">
+                <i class="bi bi-ticket-perforated text-lg"></i>
+            </div>
+
+            <div class="space-y-0.5 min-w-0">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                Cupons Ativos
+                </span>
+
+                <p class="text-lg font-black text-slate-950 truncate">
+                {{ totalCouponsActivated() }}
+                </p>
+
+                <span class="text-[10px] font-medium text-slate-400 block">
+                Disponíveis para utilização
+                </span>
+            </div>
+        </div>
+
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 shrink-0">
+            <i class="bi bi-graph-down-arrow text-lg"></i>
+            </div>
+            <div class="space-y-0.5 min-w-0">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Desconto Médio (cupons ativos)</span>
+            <p class="text-lg font-black text-slate-950 truncate">R$ {{ averageDiscountValue().toFixed(2) }}</p>
+            <span class="text-[10px] font-medium text-slate-400 block">Média de abatimento por cupom</span>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+    <div class="space-y-4">
+      <div class="flex justify-between">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Lista de Regras e Cupons</h3>
+        <div class="flex gap-3">
+            @if(totalCouponsCount()>totalCouponsActivated()){
+            <div class="flex gap-3">
+                <span class="text-[11px] text-slate-400 font-medium">Exibir itens inativos</span>
+                <input [checked]="showInativeCoupons()" class="cursor-pointer" (change)="showInativeCoupons.set(!showInativeCoupons())" type="checkbox" name="" id="">
+            </div>
+        }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        @for (coupon of couponsOfCatalog(); track coupon.id) {
+            @if (showInativeCoupons()) {
+              <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between gap-4 relative overflow-hidden transition-all shadow-sm hover:shadow-md group">
+            
+                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-600"></div>
+
+                <div class="flex items-start justify-between gap-4 pl-2">
+                    <div class="space-y-1">
+                        <div class="font-mono text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200/60 px-2.5 py-1 rounded-lg tracking-wider uppercase inline-flex items-center gap-1.5 select-all cursor-pointer title='Clique para selecionar o código'">
+                            <i class="bi bi-files text-slate-400 text-[10px]"></i>
+                            {{ coupon.slug }}
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-medium">ID único: {{ coupon.id.substring(0, 8) }}...</p>
+                    </div>
+
+                    <div class="text-right">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Desconto Abatido</span>
+                        <span class="text-xl font-black text-emerald-600 block">
+                            {{ (coupon.amount*100).toFixed(0) }}%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-center my-1 pl-2">
+                    <div class="w-full border-t border-dashed border-slate-200"></div>
+                </div>
+
+            <div class="grid grid-cols-2 gap-2 pl-2 text-xs">
+              
+                <div class="space-y-0.5 bg-slate-50 p-2 rounded-xl border border-slate-100">
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Pedido Mínimo</span>
+                    <span class="font-bold text-slate-800">
+                    @if (coupon.amountMinimum > 0) {
+                        R$ {{ coupon.amountMinimum.toFixed(2) }}
+                    } @else {
+                        Sem mínimo
+                    }
+                    </span>
+                </div>
+
+                    <div class="space-y-0.5 bg-slate-50 p-2 rounded-xl border border-slate-100">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Teto de Desconto</span>
+                        <span class="font-bold text-slate-800">
+                        @if (coupon.amountDiscountMaximum > 0) {
+                            R$ {{ coupon.amountDiscountMaximum.toFixed(2) }}
+                        } @else {
+                            Sem limite máximo
+                        }
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-50 pl-2">
+                    <button title="Excluir Cupom" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-red-200 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer">
+                        <i class="bi bi-trash text-xs"></i>
+                    </button>
+                    <button title="Editar Regras" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-slate-200 bg-white text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center cursor-pointer">
+                        <i class="bi bi-pencil text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+            }
+            @else {
+              @if (coupon.active) {
+                <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between gap-4 relative overflow-hidden transition-all shadow-sm hover:shadow-md group">
+            
+                <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-600"></div>
+
+                <div class="flex items-start justify-between gap-4 pl-2">
+                    <div class="space-y-1">
+                        <div class="font-mono text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200/60 px-2.5 py-1 rounded-lg tracking-wider uppercase inline-flex items-center gap-1.5 select-all cursor-pointer title='Clique para selecionar o código'">
+                            <i class="bi bi-files text-slate-400 text-[10px]"></i>
+                            {{ coupon.slug }}
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-medium">ID único: {{ coupon.id.substring(0, 8) }}...</p>
+                    </div>
+
+                    <div class="text-right">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Desconto Abatido</span>
+                        <span class="text-xl font-black text-emerald-600 block">
+                            {{ (coupon.amount*100).toFixed(0) }}%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-center my-1 pl-2">
+                    <div class="w-full border-t border-dashed border-slate-200"></div>
+                </div>
+
+            <div class="grid grid-cols-2 gap-2 pl-2 text-xs">
+              
+                <div class="space-y-0.5 bg-slate-50 p-2 rounded-xl border border-slate-100">
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Pedido Mínimo</span>
+                    <span class="font-bold text-slate-800">
+                    @if (coupon.amountMinimum > 0) {
+                        R$ {{ coupon.amountMinimum.toFixed(2) }}
+                    } @else {
+                        Sem mínimo
+                    }
+                    </span>
+                </div>
+
+                    <div class="space-y-0.5 bg-slate-50 p-2 rounded-xl border border-slate-100">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Teto de Desconto</span>
+                        <span class="font-bold text-slate-800">
+                        @if (coupon.amountDiscountMaximum > 0) {
+                            R$ {{ coupon.amountDiscountMaximum.toFixed(2) }}
+                        } @else {
+                            Sem limite máximo
+                        }
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-50 pl-2">
+                    <button title="Excluir Cupom" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-red-200 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer">
+                        <i class="bi bi-trash text-xs"></i>
+                    </button>
+                    <button title="Editar Regras" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-slate-200 bg-white text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center cursor-pointer">
+                        <i class="bi bi-pencil text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+              }
+            }
+        } @empty {
+          <div class="col-span-1 md:col-span-2 p-12 border border-dashed border-slate-200 rounded-3xl bg-white text-center space-y-3 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 mx-auto">
+              <i class="bi bi-ticket-detailed text-xl"></i>
+            </div>
+            <div class="space-y-1">
+              <p class="text-sm font-bold text-slate-800">Sua loja não possui cupons</p>
+              <p class="text-xs text-slate-400 max-w-sm mx-auto">Crie campanhas de desconto para incentivar seus clientes a finalizarem mais compras no carrinho.</p>
+            </div>
+          </div>
+        }
+
+      </div>
+    </div>
+
+  </div>
+</div>

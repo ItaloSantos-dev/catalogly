@@ -9,7 +9,7 @@ import { CategoryService } from '../../../../../service/category/category-servic
 
 @Component({
   selector: 'app-seller-show-categorys',
-  imports: [RouterLinkActive, RouterLink],
+  imports: [ RouterLink],
   templateUrl: './seller-show-categorys.html',
   styleUrl: './seller-show-categorys.css',
 })
