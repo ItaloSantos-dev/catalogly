@@ -6,6 +6,7 @@ import { CatalogPrivateResponseDTO } from '../../../../../../types/catalog/catal
 import { SellerService } from '../../../../../service/seller/seller-service';
 import { ItemService } from '../../../../../service/item/item-service';
 import { Router } from '@angular/router';
+import { HelperService } from '../../../../../service/helper/helper-service';
 
 @Component({
   selector: 'app-seller-create-item',
@@ -19,6 +20,7 @@ export class SellerCreateItem {
   catalogPrivateOfSeller = signal(<CatalogPrivateResponseDTO>{});
   private itemService = inject(ItemService);
   router = inject(Router);
+  private helperService = inject(HelperService);
 
   // Arquivos capturados nos eventos (change) das fotos
 
@@ -76,6 +78,7 @@ export class SellerCreateItem {
   }
 
   ngOnInit(){
+    this.helperService.setAtualPage(1)
     this.sellerService.catalogPrivateData$.subscribe(data =>{
       if(data){
         console.log(data);

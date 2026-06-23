@@ -44,6 +44,7 @@ public class OrderService {
         if (createOrderRequestDTO.couponSlug()!=null){
             couponModelSelected = this.couponRepository.findBySlugAndCatalogId(createOrderRequestDTO.couponSlug(), catalogModel.getId())
                     .orElseThrow(() -> new RuntimeException("Deu ruin"));
+            //Adicionar regra se o cupon tiver, valor mínimo e máximo
 
         }
         OrderModel orderModel = this.orderMapper.createToModel(userModel, couponModelSelected, catalogModel);

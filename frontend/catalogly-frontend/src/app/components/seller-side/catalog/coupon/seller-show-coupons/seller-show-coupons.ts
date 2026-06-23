@@ -4,10 +4,11 @@ import { CatalogPrivateResponseDTO } from '../../../../../../types/catalog/catal
 import { SellerService } from '../../../../../service/seller/seller-service';
 import { CouponResponseDTO } from '../../../../../../types/coupon/coupon-response';
 import { HelperService } from '../../../../../service/helper/helper-service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-seller-show-coupons',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './seller-show-coupons.html',
   styleUrl: './seller-show-coupons.css',
 })
@@ -20,7 +21,7 @@ export class SellerShowCoupons {
   showInativeCoupons = signal(false);
 
 
-  private coupons: CouponResponseDTO[] = [
+  private couponsMock: CouponResponseDTO[] = [
   {
   id: '1fbf361c-05b2-45a4-b99a-1e94e7a09bd7',
   slug: 'NATAL-10',

@@ -7,6 +7,7 @@ import { LinkItensAndCategory } from './link-itens-and-category/link-itens-and-c
 import { CreateCategoryRequestDTO } from '../../../../../../types/category/create-category-request';
 import { CategoryService } from '../../../../../service/category/category-service';
 import { Router } from '@angular/router';
+import { HelperService } from '../../../../../service/helper/helper-service';
 
 @Component({
   selector: 'app-seller-create-category',
@@ -20,6 +21,7 @@ export class SellerCreateCategory {
   itemsSelected = signal(<string[]>[])
   private categoryService = inject(CategoryService);
   private router = inject(Router);
+  private helperService = inject(HelperService);
 
   formCreateCategory = new FormGroup({
     name: new FormControl("", [Validators.min(4), Validators.required]),
@@ -205,6 +207,7 @@ export class SellerCreateCategory {
 
 
   ngOnInit(){
+    this.helperService.setAtualPage(2)
     this.sellerService.getMyCatalog().subscribe((data)=>{
       if(data){
         this.catalogPrivateOfSeller.set(data);

@@ -10,6 +10,7 @@ import { CreateCatalogRequestDTO } from "../../types/catalog/create-catalog-requ
 import { CategoryRespondeDTO } from "../../types/category/category-response";
 import { CreateCategoryRequestDTO } from "../../types/category/create-category-request";
 import { CouponResponseDTO } from "../../types/coupon/coupon-response";
+import { CreateCouponRequestDTO } from "../../types/coupon/create-coupon-request";
 
 @Injectable({
     providedIn: 'root'
@@ -62,5 +63,9 @@ export class BackApi {
 
     getCouponsOfCatalogById(id:string):Observable<CouponResponseDTO[]>{
         return this.httpClient.get<CouponResponseDTO[]>(this.baseUrl + "catalog/" + id + "/coupons")
+    }
+
+    createCoupon(data:CreateCouponRequestDTO):Observable<any>{
+        return this.httpClient.post(this.baseUrl + "coupon", data);
     }
 }
