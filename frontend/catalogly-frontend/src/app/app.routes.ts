@@ -14,6 +14,7 @@ import { SellerShowItemsOfCategory } from './components/seller-side/catalog/cate
 import { SellerShowCoupons } from './components/seller-side/catalog/coupon/seller-show-coupons/seller-show-coupons';
 import { SellerCreateCoupon } from './components/seller-side/catalog/coupon/seller-create-coupon/seller-create-coupon';
 import { SellerShowSuppliers } from './components/seller-side/catalog/supplier/seller-show-suppliers/seller-show-suppliers';
+import { SellerCreateSupplier } from './components/seller-side/catalog/supplier/seller-create-supplier/seller-create-supplier';
 
 
 export const routes: Routes = [
@@ -79,9 +80,11 @@ export const routes: Routes = [
                 path: 'suppliers',
                 component:SellerShowSuppliers
             },
-
-            
-            
+            {
+                path: 'suppliers/create',
+                component:SellerCreateSupplier
+            },
+ 
         ]
     }
     

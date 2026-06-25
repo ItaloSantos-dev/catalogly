@@ -3,6 +3,7 @@ import { BackApi } from '../../api/back-api';
 import { Observable } from 'rxjs';
 import { CategoryRespondeDTO } from '../../../types/category/category-response';
 import { CouponResponseDTO } from '../../../types/coupon/coupon-response';
+import { SupplierResponseDTO } from '../../../types/supplier/supplier-response';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +21,9 @@ export class CatalogService {
 
   getCouponsOfCatalogById(id:string):Observable<CouponResponseDTO[]>{
     return this.backApi.getCouponsOfCatalogById(id);
+  }
+
+  getSuppliersOfCatalog():Observable<SupplierResponseDTO[]>{
+    return this.backApi.getSuppliersOfCatalog();
   }
 }
