@@ -1,0 +1,134 @@
+<div class="w-full font-sans antialiased text-slate-800 p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-slate-50/50 min-h-screen">
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+      <div class="space-y-1">
+        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/50 px-2 py-0.5 rounded-full uppercase tracking-wider">
+          Gestão de Estoque & B2B
+        </span>
+        <h1 class="text-2xl font-black text-slate-950 tracking-tight">
+          Fornecedores Cadastrados
+        </h1>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <button class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+          <i class="bi bi-person-plus stroke-[1.5]"></i> Novo Fornecedor
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-500 shrink-0">
+          <i class="bi bi-truck text-lg"></i>
+        </div>
+        <div class="space-y-0.5 min-w-0">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Parceiros Ativos</span>
+          <p class="text-lg font-black text-slate-950 truncate">{{ totalSuppliersCount() }}</p>
+          <span class="text-[10px] font-medium text-slate-400 block">Empresas e distribuidores</span>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex items-center gap-4 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-500 shrink-0">
+          <i class="bi bi-journal-code text-lg"></i>
+        </div>
+        <div class="space-y-0.5 min-w-0">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Produtos Mapeados</span>
+          <p class="text-lg font-black text-slate-950 truncate">{{ totalLinkedItems() }}</p>
+          <span class="text-[10px] font-medium text-slate-400 block">Vínculos de códigos de fábrica</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="space-y-4">
+      <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Cadeia de Fornecimento</h3>
+
+      <div class="grid grid-cols-1 gap-4">
+        @for (supplier of suppliers(); track supplier.cnpj) {
+          
+          <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-slate-300 transition-all group">
+            
+            <div class="space-y-1">
+              <h4 class="text-base font-black text-slate-950 tracking-tight group-hover:text-emerald-600 transition-colors">
+                {{ supplier.name }}
+              </h4>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400 font-medium">
+                <span>CNPJ: {{ supplier.cnpj }}</span>
+                <span class="text-slate-200">•</span>
+                
+                <div class="flex items-center gap-3">
+                    @if (supplier.contactSupplierType === 'EMAIL') {
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                        <i class="bi bi-envelope-fill text-emerald-600"></i>
+                        </div>
+
+                        <div>
+                        <p class="text-xs text-slate-500">E-mail</p>
+                        <p class="text-sm font-medium text-slate-800">
+                            {{ supplier.contactValue }}
+                        </p>
+                        </div>
+                    } @else {
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                        <i class="bi bi-telephone-fill text-blue-600"></i>
+                        </div>
+
+                        <div>
+                        <p class="text-xs text-slate-500">Telefone</p>
+                        <p class="text-sm font-medium text-slate-800">
+                            {{ supplier.contactValue }}
+                        </p>
+                        </div>
+                    }
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 select-none">
+                <i class="bi bi-box-seam text-sm"></i>
+                {{ supplier.supplierItems.length }} {{ supplier.supplierItems.length === 1 ? 'item' : 'itens' }}
+              </span>
+
+              <button title="Ver detalhes do fornecedor" 
+                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer">
+                <i class="bi bi-eye text-sm text-slate-400"></i>
+                Ver mais
+              </button>
+
+              <button title="Editar informações do fornecedor" 
+                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-50 hover:bg-emerald-600 border border-slate-200 hover:border-emerald-600 text-slate-600 hover:text-white transition-all cursor-pointer group/btn">
+                <i class="bi bi-pencil text-sm text-slate-400 group-hover/btn:text-white transition-colors"></i>
+                Editar
+              </button>
+
+              <button title="Excluir Fornecedor" 
+                      class="w-8 h-8 rounded-full border border-slate-100 hover:border-red-100 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer ml-1">
+                <i class="bi bi-trash text-xs"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+        } @empty {
+          <div class="p-12 border border-dashed border-slate-200 rounded-3xl bg-white text-center space-y-3 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 mx-auto">
+              <i class="bi bi-truck-flatbed text-xl"></i>
+            </div>
+            <div class="space-y-1">
+              <p class="text-sm font-bold text-slate-800">Sua lista de fornecedores está vazia</p>
+              <p class="text-xs text-slate-400 max-w-sm mx-auto">Cadastre seus distribuidores parceiros para mapear códigos de nota fiscal e gerenciar os custos de reposição.</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>

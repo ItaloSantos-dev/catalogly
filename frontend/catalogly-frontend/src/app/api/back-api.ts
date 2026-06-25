@@ -11,6 +11,7 @@ import { CategoryRespondeDTO } from "../../types/category/category-response";
 import { CreateCategoryRequestDTO } from "../../types/category/create-category-request";
 import { CouponResponseDTO } from "../../types/coupon/coupon-response";
 import { CreateCouponRequestDTO } from "../../types/coupon/create-coupon-request";
+import { SupplierResponseDTO } from "../../types/supplier/supplier-response";
 
 @Injectable({
     providedIn: 'root'
@@ -67,5 +68,9 @@ export class BackApi {
 
     createCoupon(data:CreateCouponRequestDTO):Observable<any>{
         return this.httpClient.post(this.baseUrl + "coupon", data);
+    }
+
+    getSuppliersOfCatalog():Observable<SupplierResponseDTO[]>{
+        return this.httpClient.get<SupplierResponseDTO[]>(this.baseUrl + "catalog/suppliers");
     }
 }

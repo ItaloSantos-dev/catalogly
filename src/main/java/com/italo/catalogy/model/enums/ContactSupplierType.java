@@ -1,7 +1,7 @@
 package com.italo.catalogy.model.enums;
 
 public enum ContactSupplierType {
-    EMAIL("SITE"),
+    EMAIL("EMAIL"),
     PHONE("PHONE");
 
     private final String value;

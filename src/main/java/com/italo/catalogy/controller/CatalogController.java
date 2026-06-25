@@ -7,20 +7,28 @@ import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
 import com.italo.catalogy.dto.category.CategoryResponseDTO;
 import com.italo.catalogy.dto.coupon.CouponResponseDTO;
 import com.italo.catalogy.dto.item.ItemResponseDTO;
+import com.italo.catalogy.dto.seller.SellerResponseDTO;
+import com.italo.catalogy.dto.supplier.SupplierResponseDTO;
+import com.italo.catalogy.dto.supplier_item.SupplierItemResponseDTO;
 import com.italo.catalogy.mapper.CatalogMapper;
 import com.italo.catalogy.mapper.CategoryMapper;
 import com.italo.catalogy.mapper.CouponMapper;
 import com.italo.catalogy.mapper.ItemMapper;
+import com.italo.catalogy.mapper.SupplierItemMapper;
+import com.italo.catalogy.mapper.SupplierMapper;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.CategoryModel;
 import com.italo.catalogy.model.CouponModel;
 import com.italo.catalogy.model.ItemModel;
+import com.italo.catalogy.model.SupplierModel;
 import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.CatalogService;
 import com.italo.catalogy.service.CategoryService;
 import com.italo.catalogy.service.CouponService;
 import com.italo.catalogy.service.ItemService;
+import com.italo.catalogy.service.SupplierService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,9 +48,12 @@ public class CatalogController {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
     private final CouponService couponService;
-    private final CouponMapper couponMapper; 
+    private final CouponMapper couponMapper;
+    private final SupplierService supplierService;
+    private final SupplierMapper supplierMapper;
+    private final SupplierItemMapper supplierItemMapper;
 
-    public CatalogController(CatalogService catalogService, CatalogMapper catalogMapper, ItemService itemService, ItemMapper itemMapper, CategoryService categoryService, CategoryMapper categoryMapper, CouponService couponService, CouponMapper couponMapper) {
+    public CatalogController(CatalogService catalogService, CatalogMapper catalogMapper, ItemService itemService, ItemMapper itemMapper, CategoryService categoryService, CategoryMapper categoryMapper, CouponService couponService, CouponMapper couponMapper, SupplierService supplierService, SupplierMapper supplierMapper, SupplierItemMapper supplierItemMapper) {
         this.itemMapper = itemMapper;
         this.itemService = itemService;
         this.catalogService = catalogService;
@@ -51,6 +62,33 @@ public class CatalogController {
         this.categoryMapper = categoryMapper;
         this.couponMapper = couponMapper;
         this.couponService = couponService;
+        this.supplierService = supplierService;
+        this.supplierMapper = supplierMapper;
+        this.supplierItemMapper = supplierItemMapper;
+    }
+
+    private List<SupplierResponseDTO> generatSupplierResponseDTOs(UserModel userModel){
+        List<SupplierModel> suppliers = this.supplierService.getSuppliersOfCatalogById(userModel);
+        List<SupplierResponseDTO> response = new ArrayList<>();
+
+        for (SupplierModel supplier : suppliers) {
+            boolean supplierHasItens = supplier.getItems()!=null && supplier.getItems().size()>0;
+
+            List<SupplierItemResponseDTO> itensOfSupplierResponse = new ArrayList<>();
+            
+            if (supplierHasItens) {
+                itensOfSupplierResponse = supplier.getItems().stream()
+                    .map(item -> this.supplierItemMapper.modelToResponse(item))
+                    .toList();
+            }
+
+            response.add(
+                this.supplierMapper.modelToResponse(supplier, itensOfSupplierResponse)
+            );
+
+        }
+
+        return response;
     }
 
     @GetMapping("/{slug}")
@@ -98,6 +136,11 @@ public class CatalogController {
             .map(itemMapper::modelToResponse)
             .toList();
         return ResponseEntity.ok(itemsResponse);
+    }
+
+    @GetMapping("/suppliers")
+    public ResponseEntity<List<SupplierResponseDTO>> getSuppliersOfCatalog(@AuthenticationPrincipal UserModel userModel){
+        return ResponseEntity.ok(this.generatSupplierResponseDTOs(userModel));
     }
 
     @GetMapping("/{id}/coupons")

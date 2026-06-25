@@ -64,4 +64,8 @@ public class SupplierService {
 
         return this.supplierMapper.modelToResponse(supplierModel, supplierItemsResponse);
     }
+
+    public List<SupplierModel> getSuppliersOfCatalogById(UserModel userModel){
+        return this.supplierRepository.findAllBySellerUserId(userModel.getId());
+    }
 }
