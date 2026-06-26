@@ -174,4 +174,9 @@ public class ItemService {
     }
 
 
+    public ItemModel getItemById(UUID id){
+        return this.itemRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("deu ruin"));
+    }
+
 }

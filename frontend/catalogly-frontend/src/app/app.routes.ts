@@ -15,6 +15,7 @@ import { SellerShowCoupons } from './components/seller-side/catalog/coupon/selle
 import { SellerCreateCoupon } from './components/seller-side/catalog/coupon/seller-create-coupon/seller-create-coupon';
 import { SellerShowSuppliers } from './components/seller-side/catalog/supplier/seller-show-suppliers/seller-show-suppliers';
 import { SellerCreateSupplier } from './components/seller-side/catalog/supplier/seller-create-supplier/seller-create-supplier';
+import { SellerShowItem } from './components/seller-side/catalog/item/seller-show-item/seller-show-item';
 
 
 export const routes: Routes = [
@@ -57,6 +58,10 @@ export const routes: Routes = [
                 component:SellerCreateItem
             },
             {
+                path:"products/:id",
+                component:SellerShowItem
+            },
+            {
                 path: 'categories',
                 component:SellerShowCategorys
             },
@@ -65,7 +70,7 @@ export const routes: Routes = [
                 component:SellerCreateCategory
             },
             {
-                path: 'categories/:id/items',
+                path: 'categories/:id/products',
                 component:SellerShowItemsOfCategory
             },
             {

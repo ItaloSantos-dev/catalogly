@@ -175,7 +175,7 @@ export class SellerCreateCategory {
     price: 9.99,
     stock: 10,
     deleted: false,
-    imagePath1: null,
+    imagePath1: 'https://example.com/images/brownie.jpg',
     imagePath2: null,
     imagePath3: null
   }

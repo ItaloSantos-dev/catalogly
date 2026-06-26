@@ -28,6 +28,13 @@ public class ItemController {
         this.itemMapper = itemMapper;
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ItemResponseDTO> getItemById(@PathVariable UUID id){
+        ItemModel item = this.itemService.getItemById(id);
+        return ResponseEntity.ok(this.itemMapper.modelToResponse(item));
+    }
+
     @PostMapping
     public ResponseEntity<ItemResponseDTO> createItem(
             @AuthenticationPrincipal UserModel userModel,

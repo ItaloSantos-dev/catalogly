@@ -60,7 +60,7 @@ export class LinkItensAndSupplier {
     price: 39.90,
     stock: 150,
     deleted: false,
-    imagePath1: null,
+    imagePath1: "https://picsum.photos/400/400?random=4",
     imagePath2: null,
     imagePath3: null
   },

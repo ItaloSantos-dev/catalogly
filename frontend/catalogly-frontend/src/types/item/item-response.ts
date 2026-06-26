@@ -6,7 +6,7 @@ export interface ItemResponseDTO {
   price: number;
   stock: number;
   deleted: boolean;
-  imagePath1: string | null;
+  imagePath1: string;
   imagePath2: string | null;
   imagePath3: string | null;
 }

@@ -78,4 +78,8 @@ export class BackApi {
     createSupplier(data:CreateSupplierRequestDTO):Observable<any>{
         return this.httpClient.post<any>(this.baseUrl + "supplier", data)
     }
+
+    getItemById(id:string):Observable<ItemResponseDTO>{
+        return this.httpClient.get<ItemResponseDTO>(this.baseUrl + "item/" + id);
+    }
 }
