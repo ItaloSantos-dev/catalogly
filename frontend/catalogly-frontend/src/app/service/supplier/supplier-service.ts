@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BackApi } from '../../api/back-api';
 import { Observable } from 'rxjs';
 import { SupplierResponseDTO } from '../../../types/supplier/supplier-response';
+import { CreateSupplierRequestDTO } from '../../../types/supplier/create-supplier-request';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { SupplierResponseDTO } from '../../../types/supplier/supplier-response';
 export class SupplierService {
   private backApi = inject(BackApi);
 
-  getSuppliersOfCatalog():Observable<SupplierResponseDTO[]>{
-    return this.backApi.getSuppliersOfCatalog();
+  createSupplier(data:CreateSupplierRequestDTO):Observable<any>{
+    return this.backApi.createSupplier(data);
   }
 }

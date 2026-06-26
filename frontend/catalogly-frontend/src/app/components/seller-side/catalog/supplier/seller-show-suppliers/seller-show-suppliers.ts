@@ -4,6 +4,7 @@ import { SupplierItemResponseDTO } from '../../../../../../types/supplier-item/s
 import { SupplierResponseDTO } from '../../../../../../types/supplier/supplier-response';
 import { ContactSupplierType } from '../../../../../../types/enums/contact-supplier-type';
 import { SupplierService } from '../../../../../service/supplier/supplier-service';
+import { CatalogService } from '../../../../../service/catalog/catalog-service';
 
 @Component({
   selector: 'app-seller-show-suppliers',
@@ -15,6 +16,7 @@ export class SellerShowSuppliers {
   private helperService = inject(HelperService);
   suppliers = signal(<SupplierResponseDTO[]>[]);
   private supplierService = inject(SupplierService);
+  private catalogService = inject(CatalogService);
 
 
  suppliersMock: SupplierResponseDTO[] = [
@@ -144,7 +146,7 @@ export class SellerShowSuppliers {
 
   ngOnInit(){
     this.helperService.setAtualPage(4);
-    this.supplierService.getSuppliersOfCatalog().subscribe({
+    this.catalogService.getSuppliersOfCatalog().subscribe({
       next: (data) =>{
         this.suppliers.set(data);
       }

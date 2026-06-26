@@ -12,6 +12,7 @@ import { CreateCategoryRequestDTO } from "../../types/category/create-category-r
 import { CouponResponseDTO } from "../../types/coupon/coupon-response";
 import { CreateCouponRequestDTO } from "../../types/coupon/create-coupon-request";
 import { SupplierResponseDTO } from "../../types/supplier/supplier-response";
+import { CreateSupplierRequestDTO } from "../../types/supplier/create-supplier-request";
 
 @Injectable({
     providedIn: 'root'
@@ -72,5 +73,9 @@ export class BackApi {
 
     getSuppliersOfCatalog():Observable<SupplierResponseDTO[]>{
         return this.httpClient.get<SupplierResponseDTO[]>(this.baseUrl + "catalog/suppliers");
+    }
+
+    createSupplier(data:CreateSupplierRequestDTO):Observable<any>{
+        return this.httpClient.post<any>(this.baseUrl + "supplier", data)
     }
 }
