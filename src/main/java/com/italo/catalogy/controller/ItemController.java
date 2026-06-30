@@ -2,6 +2,7 @@ package com.italo.catalogy.controller;
 
 import com.italo.catalogy.dto.item.CreateItemRequestDTO;
 import com.italo.catalogy.dto.item.ItemResponseDTO;
+import com.italo.catalogy.dto.item.UpdateItemRequestDTO;
 import com.italo.catalogy.mapper.ItemMapper;
 import com.italo.catalogy.model.ItemModel;
 import com.italo.catalogy.model.UserModel;
@@ -13,6 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -60,12 +64,13 @@ public class ItemController {
     public ResponseEntity<ItemResponseDTO> updateItemById(
             @PathVariable UUID id,
             @AuthenticationPrincipal UserModel userModel,
-            @RequestPart("data")CreateItemRequestDTO createItemRequestDTO,
-            @RequestPart("image1") @NotNull MultipartFile image1,
-            @RequestPart("image2") @Nullable MultipartFile image2,
-            @RequestPart("image3") @Nullable MultipartFile image3
+            @RequestPart("data") UpdateItemRequestDTO updateItemRequestDTO,
+            @RequestPart(value = "image1", required =false) MultipartFile image1,
+            @RequestPart(value = "image2", required =false) MultipartFile image2,
+            @RequestPart(value = "image3", required =false) MultipartFile image3
     ){
-        ItemModel itemModel = this.itemService.createItem(createItemRequestDTO, userModel.getId(), image1, image2, image3);
+        List<MultipartFile> images = new ArrayList<>(Arrays.asList(image1, image2, image3));
+        ItemModel itemModel = this.itemService.updateItemById(id, updateItemRequestDTO , userModel.getId(), images);
         return ResponseEntity.ok(this.itemMapper.modelToResponse(itemModel));
     }
 }

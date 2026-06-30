@@ -8,6 +8,7 @@ import java.util.UUID;
 public record ItemResponseDTO (
         UUID id,
         String categoryName,
+        UUID categoryId,
         String name,
         String about,
         BigDecimal price,

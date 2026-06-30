@@ -1,6 +1,7 @@
 export interface ItemResponseDTO {
   id: string; // UUID
-  categoryName: string;
+  categoryName?: string;
+  categoryId?:string;
   name: string;
   about: string;
   price: number;

@@ -39,6 +39,7 @@ public class ItemMapper {
         return new ItemResponseDTO(
                 itemModel.getId(),
                 itemModel.getCategory()==null? null : itemModel.getCategory().getName(),
+                itemModel.getCategory()==null? null : itemModel.getCategory().getId(),
                 itemModel.getName(),
                 itemModel.getAbout(),
                 itemModel.getPrice(),
@@ -55,6 +56,7 @@ public class ItemMapper {
         itemModel.setAbout(updateItemRequestDTO.about());
         itemModel.setPrice(updateItemRequestDTO.price());
         itemModel.setUpdatedAt(LocalDateTime.now());
+        itemModel.setStock(updateItemRequestDTO.stock());
         return itemModel;
 
     }

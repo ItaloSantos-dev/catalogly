@@ -57,4 +57,17 @@ public class ImageService {
             throw  new RuntimeException(e.getMessage());
         }
     }
+
+    public void deleteImage(String path) {
+        try {
+            minioClient.removeObject(
+                RemoveObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(path)
+                    .build()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao excluir imagem do MinIO", e);
+        }
+    }
 }

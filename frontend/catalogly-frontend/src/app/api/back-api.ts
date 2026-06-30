@@ -13,6 +13,7 @@ import { CouponResponseDTO } from "../../types/coupon/coupon-response";
 import { CreateCouponRequestDTO } from "../../types/coupon/create-coupon-request";
 import { SupplierResponseDTO } from "../../types/supplier/supplier-response";
 import { CreateSupplierRequestDTO } from "../../types/supplier/create-supplier-request";
+import { UpdateItemRequestDTO } from "../../types/item/update-item-request";
 
 @Injectable({
     providedIn: 'root'
@@ -81,5 +82,9 @@ export class BackApi {
 
     getItemById(id:string):Observable<ItemResponseDTO>{
         return this.httpClient.get<ItemResponseDTO>(this.baseUrl + "item/" + id);
+    }
+
+    updateItemById(id:string, data:FormData):Observable<ItemResponseDTO>{
+        return this.httpClient.put<ItemResponseDTO>(this.baseUrl + "item/" + id, data);
     }
 }

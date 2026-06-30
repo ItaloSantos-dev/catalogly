@@ -1,149 +1,331 @@
 <div class="w-full font-sans antialiased text-slate-800 p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-slate-50/50 min-h-screen">
   
   @if (item(); as data) {
-    <div class="max-w-5xl mx-auto space-y-6">
+    @if (this.formUpdateItemIsActive()) {
+      <div class="max-w-5xl mx-auto space-y-6">
       
       <!-- BREADCRUMBS (Rastro de Navegação igual ao da imagem_2843a3.png) -->
-      <nav class="flex items-center gap-2 text-[11px] font-medium text-slate-400 overflow-x-auto whitespace-nowrap scrollbar-none">
-        <span class="hover:text-slate-600 cursor-pointer transition-colors">Produtos</span>
-        <i class="bi bi-chevron-right text-[9px]"></i>
-        <span class="hover:text-slate-600 cursor-pointer transition-colors">{{ data.categoryName || 'Sem Categoria' }}</span>
-        <i class="bi bi-chevron-right text-[9px]"></i>
-        <span class="text-slate-600 font-bold truncate max-w-[200px]">{{ data.name }}</span>
-      </nav>
+        <nav class="flex items-center gap-2 text-[11px] font-medium text-slate-400 overflow-x-auto whitespace-nowrap scrollbar-none">
+          <span class="hover:text-slate-600 cursor-pointer transition-colors">Produtos</span>
+          <i class="bi bi-chevron-right text-[9px]"></i>
+          <span class="hover:text-slate-600 cursor-pointer transition-colors">{{ data.categoryName || 'Sem Categoria' }}</span>
+          <i class="bi bi-chevron-right text-[9px]"></i>
+          <span class="text-slate-600 font-bold truncate max-w-[200px]">{{ data.name }}</span>
+        </nav>
 
-      <!-- LAYOUT PRINCIPAL DA PÁGINA (Grid de Detalhes) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- COLUNA DA ESQUERDA: GALERIA DE FOTOS (Inspirada na imagem_2843a3.png) -->
-        <div class="lg:col-span-7 flex gap-4 items-start">
+        <!-- LAYOUT PRINCIPAL DA PÁGINA (Grid de Detalhes) -->
+        <form [formGroup]="formUpdateItem" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <!-- Lista Vertical de Miniaturas (Thumbnails) -->
-          <div class="flex flex-col gap-2 shrink-0 w-14 sm:w-16">
-            
-            <!-- Thumbnail 1 (Obrigatória) -->
-            <button (click)="selectedImage.set(data.imagePath1)"
-                    [class.border-blue-500]="activePreviewImage() === data.imagePath1"
-                    [class.ring-2]="activePreviewImage() === data.imagePath1"
-                    [class.ring-blue-500/20]="activePreviewImage() === data.imagePath1"
-                    [class.border-slate-200]="activePreviewImage() !== data.imagePath1"
-                    class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer">
-              <img [src]="data.imagePath1" [alt]="data.name" class="w-full h-full object-cover rounded-lg" />
-            </button>
+          <!-- COLUNA DA ESQUERDA: GALERIA DE FOTOS (Inspirada na imagem_2843a3.png) -->
+          <div class="lg:col-span-7 flex gap-4 items-start">
+  
+            <div class="flex flex-col gap-2 shrink-0 w-14 sm:w-16">
+              
+              <div class="relative group">
+                <button type="button" (click)="fileInput1.click()"
+                        [class.border-blue-500]="activePreviewImage() === data.imagePath1"
+                        [class.ring-2]="activePreviewImage() === data.imagePath1"
+                        [class.ring-blue-500/20]="activePreviewImage() === data.imagePath1"
+                        [class.border-slate-200]="activePreviewImage() !== data.imagePath1"
+                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer flex items-center justify-center relative group">
+                  
+                  @if (data.imagePath1) {
+                    <img [src]="data.imagePath1" [alt]="data.name" class="w-full h-full object-cover rounded-lg group-hover:opacity-40 transition-opacity" />
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-slate-700">
+                      <i class="bi bi-camera text-sm"></i>
+                    </div>
+                  } @else {
+                    <div class="flex flex-col items-center justify-center text-slate-400 gap-0.5">
+                      <i class="bi bi-plus-lg text-xs"></i>
+                      <span class="text-[8px] font-bold uppercase tracking-wider">Foto 1</span>
+                    </div>
+                  }
+                </button>
+                <input #fileInput1 type="file" accept="image/*" class="hidden" (change)="onFileChange($event, 1)" />
+              </div>
 
-            <!-- Thumbnail 2 (Se existir) -->
-            @if (data.imagePath2) {
-              <button (click)="selectedImage.set(data.imagePath2)"
-                      [class.border-blue-500]="activePreviewImage() === data.imagePath2"
-                      [class.ring-2]="activePreviewImage() === data.imagePath2"
-                      [class.ring-blue-500/20]="activePreviewImage() === data.imagePath2"
-                      [class.border-slate-200]="activePreviewImage() !== data.imagePath2"
-                      class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer">
-                <img [src]="data.imagePath2" [alt]="data.name" class="w-full h-full object-cover rounded-lg" />
-              </button>
-            }
+              <div class="relative group">
+                <button type="button" (click)="fileInput2.click()"
+                        [class.border-blue-500]="activePreviewImage() === data.imagePath2"
+                        [class.ring-2]="activePreviewImage() === data.imagePath2"
+                        [class.ring-blue-500/20]="activePreviewImage() === data.imagePath2"
+                        [class.border-slate-200]="activePreviewImage() !== data.imagePath2"
+                        [class.border-dashed]="!data.imagePath2"
+                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer flex items-center justify-center relative">
+                  
+                  @if (inputImage2Selected()) {
+                    <img [src]="inputImage2Selected()" [alt]="data.name" class="w-full h-full object-cover rounded-lg group-hover:opacity-40 transition-opacity" />
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-slate-700">
+                      <i class="bi bi-camera text-sm"></i>
+                    </div>
+                  } @else {
+                    <div class="flex flex-col items-center justify-center text-slate-400 gap-0.5">
+                      <i class="bi bi-plus-lg text-xs"></i>
+                      <span class="text-[8px] font-bold uppercase tracking-wider">Foto 2</span>
+                    </div>
+                  }
+                </button>
+                <input #fileInput2 type="file" accept="image/*" class="hidden" (change)="onFileChange($event, 2)" />
+                
+                @if (inputImage2Selected()) {
+                  <button type="button" (click)="$event.stopPropagation(); removeImage(2)" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] flex items-center justify-center shadow-sm hover:bg-red-600 transition-colors cursor-pointer">
+                    <i class="bi bi-x"></i>
+                  </button>
+                }
+              </div>
 
-            <!-- Thumbnail 3 (Se existir) -->
-            @if (data.imagePath3) {
-              <button (click)="selectedImage.set(data.imagePath3)"
-                      [class.border-blue-500]="activePreviewImage() === data.imagePath3"
-                      [class.ring-2]="activePreviewImage() === data.imagePath3"
-                      [class.ring-blue-500/20]="activePreviewImage() === data.imagePath3"
-                      [class.border-slate-200]="activePreviewImage() !== data.imagePath3"
-                      class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer">
-                <img [src]="data.imagePath3" [alt]="data.name" class="w-full h-full object-cover rounded-lg" />
-              </button>
-            }
-          </div>
+              <div class="relative group">
+                <button type="button" (click)="fileInput3.click()"
+                        [class.border-blue-500]="activePreviewImage() === data.imagePath3"
+                        [class.ring-2]="activePreviewImage() === data.imagePath3"
+                        [class.ring-blue-500/20]="activePreviewImage() === data.imagePath3"
+                        [class.border-slate-200]="activePreviewImage() !== data.imagePath3"
+                        [class.border-dashed]="!data.imagePath3"
+                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer flex items-center justify-center relative">
+                  
+                  @if (inputImage3Selected()) {
+                    <img [src]="inputImage3Selected()" [alt]="data.name" class="w-full h-full object-cover rounded-lg group-hover:opacity-40 transition-opacity" />
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-slate-700">
+                      <i class="bi bi-camera text-sm"></i>
+                    </div>
+                  } @else {
+                    <div class="flex flex-col items-center justify-center text-slate-400 gap-0.5">
+                      <i class="bi bi-plus-lg text-xs"></i>
+                      <span class="text-[8px] font-bold uppercase tracking-wider">Foto 3</span>
+                    </div>
+                  }
+                </button>
+                <input #fileInput3 type="file" accept="image/*" class="hidden" (change)="onFileChange($event, 3)" />
 
-          <!-- Janela do Preview de Imagem Principal -->
-          <div class="flex-1 aspect-square bg-white border border-slate-200/80 rounded-3xl p-6 flex items-center justify-center relative shadow-sm min-h-[280px] sm:min-h-[400px]">
-            @if (activePreviewImage()) {
-              <img [src]="activePreviewImage()" [alt]="data.name" class="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300" />
-            } @else {
-              <i class="bi bi-image text-slate-200 text-5xl"></i>
-            }
+                @if (inputImage3Selected()) {
+                  <button type="button" (click)="$event.stopPropagation(); removeImage(3)" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] flex items-center justify-center shadow-sm hover:bg-red-600 transition-colors cursor-pointer">
+                    <i class="bi bi-x"></i>
+                  </button>
+                }
+              </div>
 
-            <!-- Selo de Esgotado caso o estoque acabe -->
-            @if (data.stock === 0) {
-              <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-sm">
-                Fora de Estoque
-              </span>
-            }
-          </div>
-
-        </div>
-
-        <!-- COLUNA DA DIREITA: DETALHES DO PRODUTO & AÇÕES -->
-        <div class="lg:col-span-5 space-y-6 bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm">
-          
-          <!-- Categoria e ID -->
-          <div class="space-y-1">
-            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/40 px-2 py-0.5 rounded-md uppercase tracking-wider inline-block">
-              {{ data.categoryName || 'Sem Categoria' }}
-            </span>
-            <p class="text-[10px] font-mono text-slate-400 font-medium">Ref: {{ data.id }}</p>
-          </div>
-
-          <!-- Título e Descrição curta -->
-          <div class="space-y-2">
-            <h1 class="text-xl font-black text-emerald-600 tracking-tight leading-snug">
-              {{ data.name }}
-            </h1>
-            <p class="text-xs text-slate-500 font-medium leading-relaxed">
-              {{ data.about || 'Nenhuma descrição detalhada fornecida para este item.' }}
-            </p>
-          </div>
-
-          <!-- Bloco Comercial: Preço e Estoque -->
-          <div class="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 space-y-3">
-            <div class="flex items-baseline gap-1.5">
-              <span class="text-xs font-bold text-slate-400">R$</span>
-              <span class="text-3xl font-black text-emerald-600 tracking-tight">
-                {{ data.price.toFixed(2) }}
-              </span>
-            </div>
-            
-            <div class="flex items-center gap-2 text-xs font-semibold">
-              <i class="bi bi-box-seam" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
-              <span [class.text-slate-600]="data.stock > 0" [class.text-red-500]="data.stock === 0">
-                {{ data.stock }} {{ data.stock === 1 ? 'unidade disponível' : 'unidades em estoque' }}
-              </span>
             </div>
 
-            <div class="flex items-center gap-2 text-xs font-semibold">
-              <i class="bi bi-cash" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
-              <span [class.text-slate-600]="data.stock > 0" [class.text-red-500]="data.stock === 0">
-                R$: {{ this.totalValueStocked()}} em mercadoria 
-              </span>
+            <div class="flex-1 aspect-square bg-white border border-slate-200/80 rounded-3xl p-6 flex items-center justify-center relative shadow-sm min-h-[280px] sm:min-h-[400px]">
+              @if (activePreviewImage()) {
+                <img [src]="activePreviewImage()" [alt]="data.name" class="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300" />
+                <span class="absolute bottom-4 right-4 text-[10px] bg-slate-900/50 backdrop-blur-sm text-white px-2.5 py-1 rounded-lg font-medium tracking-wide select-none">
+                  Pré-visualização do upload
+                </span>
+              } @else {
+                <div class="text-center space-y-2 text-slate-400">
+                  <i class="bi bi-cloud-arrow-up text-4xl block text-slate-300"></i>
+                  <p class="text-[11px] font-semibold max-w-[180px] mx-auto leading-normal">Selecione ou arraste uma foto nos slots ao lado.</p>
+                </div>
+              }
+
+              @if (data.stock === 0) {
+                <span class="absolute top-4 left-4 bg-amber-500 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-sm">
+                  Estoque Zerado
+                </span>
+              }
             </div>
 
-            <div class="flex items-center gap-2 text-xs font-semibold">
-              <i class="bi bi-trash" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
-              <span [class.text-slate-600]="data.stock > 0" [class.text-red-500]="data.stock === 0">
-                {{ this.item().deleted? "Item desativado" : "Item ativo"}}
-              </span>
+          </div>
+
+          <!-- COLUNA DA DIREITA: DETALHES DO PRODUTO & AÇÕES -->
+            <div class="lg:col-span-5 space-y-2 bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm">
+              
+              <!-- Categoria e ID -->
+              <div class="space-y-1">
+                <p class="text-[10px] font-mono text-slate-400 font-medium">Ref: {{ data.id }}</p>
+                <select formControlName="categoryId" id="categoryId" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-xs font-semibold text-slate-950 placeholder:text-slate-400 appearance-none cursor-pointer">
+                  <option [value]="data.categoryId" >{{data.categoryName}}</option>
+                  @for (category of this.privateCatalogOfSeller().categoryNamesAndIds; track $index) {
+                    <option [value]="category.id">{{category.name.toUpperCase()}}</option>
+                  }
+                </select>
+              </div>
+
+              <!-- Título e Descrição curta -->
+              <div class="space-y-2">
+                <input formControlName="name" type="text" id="name" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-xs font-semibold text-slate-950 placeholder:text-slate-400" />
+                
+                <input formControlName="about" type="text" id="about" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-xs font-semibold text-slate-950 placeholder:text-slate-400" />
+              </div>
+
+              <!-- Bloco Comercial: Preço e Estoque -->
+              <div class="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 space-y-1">
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-xs font-bold text-slate-400">R$</span>
+                  <input formControlName="price" type="number" id="price" step="0.01" class="w-full p-3 text-xl bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-semibold text-slate-950 placeholder:text-slate-400" />
+                </div>
+                
+                <div class="flex items-center gap-2 text-xs font-semibold">
+                  <i class="bi bi-box-seam" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
+                  <input formControlName="stock" type="number" id="stock"  class="w-full p-3 text-xl bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-semibold text-slate-950 placeholder:text-slate-400" />
+                </div>
+              </div>
+
+              <!-- BOTÃO EDITAR ITEM -->
+              <div class="pt-2 flex flex-col gap-2">
+                <button (click)="this.ngOnSubmit()" type="button"
+                        class="w-full bg-emerald-600 hover:bg-slate-800 text-white font-semibold text-xs px-5 py-3.5 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer transform hover:-translate-y-0.5">
+                  <i class="bi bi-save text-sm"></i>
+                  Salvar Item
+                </button>
+                
+                <button (click)="closeForm()" type="button"
+                        class="w-full border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold text-xs px-5 py-3 rounded-xl transition-colors flex items-center justify-center cursor-pointer">
+                  Cancelar
+                </button>
+              </div>
+
             </div>
-          </div>
 
-          <!-- BOTÃO EDITAR ITEM -->
-          <div class="pt-2 flex flex-col gap-2">
-            <button type="button"
-                    class="w-full bg-emerald-600 hover:bg-slate-800 text-white font-semibold text-xs px-5 py-3.5 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer transform hover:-translate-y-0.5">
-              <i class="bi bi-pencil-square text-sm"></i>
-              Editar Item
-            </button>
-            
-            <button type="button"
-                    class="w-full border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold text-xs px-5 py-3 rounded-xl transition-colors flex items-center justify-center cursor-pointer">
-              Voltar ao Catálogo
-            </button>
-          </div>
-
-        </div>
-
+        </form>
       </div>
-    </div>
+    }
+    @else{
+      <div class="max-w-5xl mx-auto space-y-6">
+        
+        <!-- BREADCRUMBS (Rastro de Navegação igual ao da imagem_2843a3.png) -->
+        <nav class="flex items-center gap-2 text-[11px] font-medium text-slate-400 overflow-x-auto whitespace-nowrap scrollbar-none">
+          <span class="hover:text-slate-600 cursor-pointer transition-colors">Produtos</span>
+          <i class="bi bi-chevron-right text-[9px]"></i>
+          <span class="hover:text-slate-600 cursor-pointer transition-colors">{{ data.categoryName || 'Sem Categoria' }}</span>
+          <i class="bi bi-chevron-right text-[9px]"></i>
+          <span class="text-slate-600 font-bold truncate max-w-[200px]">{{ data.name }}</span>
+        </nav>
+
+        <!-- LAYOUT PRINCIPAL DA PÁGINA (Grid de Detalhes) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- COLUNA DA ESQUERDA: GALERIA DE FOTOS (Inspirada na imagem_2843a3.png) -->
+          <div class="lg:col-span-7 flex gap-4 items-start">
+            
+            <!-- Lista Vertical de Miniaturas (Thumbnails) -->
+            <div class="flex flex-col gap-2 shrink-0 w-14 sm:w-16">
+              
+              <!-- Thumbnail 1 (Obrigatória) -->
+              <button (click)="selectedImage.set(data.imagePath1)"
+                      [class.border-blue-500]="activePreviewImage() === data.imagePath1"
+                      [class.ring-2]="activePreviewImage() === data.imagePath1"
+                      [class.ring-blue-500/20]="activePreviewImage() === data.imagePath1"
+                      [class.border-slate-200]="activePreviewImage() !== data.imagePath1"
+                      class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer">
+                <img [src]="data.imagePath1" [alt]="data.name" class="w-full h-full object-cover rounded-lg" />
+              </button>
+
+              <!-- Thumbnail 2 (Se existir) -->
+              @if (data.imagePath2) {
+                <button (click)="selectedImage.set(data.imagePath2)"
+                        [class.border-blue-500]="activePreviewImage() === data.imagePath2"
+                        [class.ring-2]="activePreviewImage() === data.imagePath2"
+                        [class.ring-blue-500/20]="activePreviewImage() === data.imagePath2"
+                        [class.border-slate-200]="activePreviewImage() !== data.imagePath2"
+                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer">
+                  <img [src]="data.imagePath2" [alt]="data.name" class="w-full h-full object-cover rounded-lg" />
+                </button>
+              }
+
+              <!-- Thumbnail 3 (Se existir) -->
+              @if (data.imagePath3) {
+                <button (click)="selectedImage.set(data.imagePath3)"
+                        [class.border-blue-500]="activePreviewImage() === data.imagePath3"
+                        [class.ring-2]="activePreviewImage() === data.imagePath3"
+                        [class.ring-blue-500/20]="activePreviewImage() === data.imagePath3"
+                        [class.border-slate-200]="activePreviewImage() !== data.imagePath3"
+                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 p-1 bg-white overflow-hidden transition-all duration-200 focus:outline-none cursor-pointer">
+                  <img [src]="data.imagePath3" [alt]="data.name" class="w-full h-full object-cover rounded-lg" />
+                </button>
+              }
+            </div>
+
+            <!-- Janela do Preview de Imagem Principal -->
+            <div class="flex-1 aspect-square bg-white border border-slate-200/80 rounded-3xl p-6 flex items-center justify-center relative shadow-sm min-h-[280px] sm:min-h-[400px]">
+              @if (activePreviewImage()) {
+                <img [src]="activePreviewImage()" [alt]="data.name" class="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300" />
+              } @else {
+                <i class="bi bi-image text-slate-200 text-5xl"></i>
+              }
+
+              <!-- Selo de Esgotado caso o estoque acabe -->
+              @if (data.stock === 0) {
+                <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-sm">
+                  Fora de Estoque
+                </span>
+              }
+            </div>
+
+          </div>
+
+          <!-- COLUNA DA DIREITA: DETALHES DO PRODUTO & AÇÕES -->
+          <div class="lg:col-span-5 space-y-6 bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm">
+            
+            <!-- Categoria e ID -->
+            <div class="space-y-1">
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/40 px-2 py-0.5 rounded-md uppercase tracking-wider inline-block">
+                {{ data.categoryName || 'Sem Categoria' }}
+              </span>
+              <p class="text-[10px] font-mono text-slate-400 font-medium">Ref: {{ data.id }}</p>
+            </div>
+
+            <!-- Título e Descrição curta -->
+            <div class="space-y-2">
+              <h1 class="text-xl font-black text-emerald-600 tracking-tight leading-snug">
+                {{ data.name }}
+              </h1>
+              <p class="text-xs text-slate-500 font-medium leading-relaxed">
+                {{ data.about || 'Nenhuma descrição detalhada fornecida para este item.' }}
+              </p>
+            </div>
+
+            <!-- Bloco Comercial: Preço e Estoque -->
+            <div class="p-4 bg-slate-50/80 rounded-2xl border border-slate-100 space-y-3">
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-xs font-bold text-slate-400">R$</span>
+                <span class="text-3xl font-black text-emerald-600 tracking-tight">
+                  {{ data.price.toFixed(2) }}
+                </span>
+              </div>
+              
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <i class="bi bi-box-seam" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
+                <span [class.text-slate-600]="data.stock > 0" [class.text-red-500]="data.stock === 0">
+                  {{ data.stock }} {{ data.stock === 1 ? 'unidade disponível' : 'unidades em estoque' }}
+                </span>
+              </div>
+
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <i class="bi bi-cash" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
+                <span [class.text-slate-600]="data.stock > 0" [class.text-red-500]="data.stock === 0">
+                  R$: {{ this.totalValueStocked()}} em mercadoria 
+                </span>
+              </div>
+
+              <div class="flex items-center gap-2 text-xs font-semibold">
+                <i class="bi bi-trash" [class.text-emerald-600]="data.stock > 0" [class.text-red-500]="data.stock === 0"></i>
+                <span [class.text-slate-600]="data.stock > 0" [class.text-red-500]="data.stock === 0">
+                  {{ this.item().deleted? "Item desativado" : "Item ativo"}}
+                </span>
+              </div>
+            </div>
+
+            <!-- BOTÃO EDITAR ITEM -->
+            <div class="pt-2 flex flex-col gap-2">
+              <button (click)="this.formUpdateItemIsActive.set(true)" type="button"
+                      class="w-full bg-emerald-600 hover:bg-slate-800 text-white font-semibold text-xs px-5 py-3.5 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer transform hover:-translate-y-0.5">
+                <i class="bi bi-pencil-square text-sm"></i>
+                Editar Item
+              </button>
+              
+              <button type="button"
+                      class="w-full border border-slate-200 hover:bg-slate-50 text-slate-600 font-semibold text-xs px-5 py-3 rounded-xl transition-colors flex items-center justify-center cursor-pointer">
+                Voltar ao Catálogo
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    }
   } @else {
     <!-- SKELETON DE LOADING OU ESTADO NÃO ENCONTRADO -->
     <div class="max-w-5xl mx-auto p-12 text-center text-slate-400 text-xs font-semibold">
