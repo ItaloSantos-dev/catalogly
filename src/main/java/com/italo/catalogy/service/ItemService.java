@@ -107,23 +107,17 @@ public class ItemService {
     }
 
     public void deleteItemById(UUID id, UserModel userModel){
+        System.out.println("Veio");
         ItemModel itemModel = this.itemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
 
         if (!itemModel.getCatalog().getSeller().getUser().getId().equals(userModel.getId()))
             throw new RuntimeException("Deu ruin");
 
-        if (this.orderItemRepository.existsByItemId(id)){
-            itemModel.setDeleted(true);
-            this.itemRepository.save(itemModel);
-            return;
-        }
-        ResponseEntity<ItemAvocadoPayResponseDTO> itemAvocadoPayResponseDTOResponseEntity = this.avocadoPayConfig.deleteItemById(itemModel.getGatewayId());
-
-        if (itemAvocadoPayResponseDTOResponseEntity.getStatusCode()!=HttpStatus.OK)
-            throw new RuntimeException("Deu ruin");
-
-        this.itemRepository.deleteById(id);
+         
+        itemModel.setDeleted(true);
+        this.itemRepository.save(itemModel);
+        return;
 
     }
 

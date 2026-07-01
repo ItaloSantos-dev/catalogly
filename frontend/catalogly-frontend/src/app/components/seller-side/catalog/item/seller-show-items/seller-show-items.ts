@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ItemService } from '../../../../../service/item/item-service';
 import { ItemResponseDTO } from '../../../../../../types/item/item-response';
 import { HelperService } from '../../../../../service/helper/helper-service';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-seller-show-items',
@@ -15,6 +15,7 @@ export class SellerShowItems {
   private ItemService = inject(ItemService);
   items = signal(<ItemResponseDTO[]>[]);
   private helperService = inject(HelperService);
+  private router = inject(Router);
 
  itemsMock: ItemResponseDTO[] = [
   {
@@ -36,7 +37,7 @@ export class SellerShowItems {
     about: "Teclado mecânico com switches azuis e iluminação LED.",
     price: 299.9,
     stock: 18,
-    deleted: false,
+    deleted: true,
     imagePath1: "/images/teclado-1.jpg",
     imagePath2: null,
     imagePath3: null
@@ -90,5 +91,14 @@ export class SellerShowItems {
       }
     });
     this.helperService.setAtualPage(1);
+  }
+
+  deleteItem(id:string){
+    this.ItemService.deleteItemById(id).subscribe({
+      next:async() =>{
+        await this.router.navigate(['/']);
+        await this.router.navigate(['/catalog/products']);
+      },
+    }); 
   }
 }

@@ -25,4 +25,10 @@ export class ItemService {
   updateItemById(id:string, data:FormData):Observable<ItemResponseDTO>{
     return this.backApi.updateItemById(id, data);
   }
+
+  deleteItemById(id:string){
+    console.log("Fazendo essa porra");
+    
+    return this.backApi.deleteItemById(id);
+  }
 }

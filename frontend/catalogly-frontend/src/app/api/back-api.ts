@@ -87,4 +87,9 @@ export class BackApi {
     updateItemById(id:string, data:FormData):Observable<ItemResponseDTO>{
         return this.httpClient.put<ItemResponseDTO>(this.baseUrl + "item/" + id, data);
     }
+
+    deleteItemById(id:string){
+        console.log("Fazendo essa desgraça");
+        return this.httpClient.delete(this.baseUrl + "item/" + id);
+    }
 }
