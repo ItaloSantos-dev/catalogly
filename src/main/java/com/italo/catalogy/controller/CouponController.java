@@ -44,4 +44,10 @@ public class CouponController {
         CouponModel couponModel = this.couponService.updateCouponById(id, userModel, updateCouponRequestDTO);
         return ResponseEntity.ok(this.couponMapper.modelToResponse(couponModel));
     }
+
+    @DeleteMapping("/{id}") 
+    public ResponseEntity<Void> deleteCouponById(@PathVariable UUID id, @AuthenticationPrincipal UserModel userModel){
+        this.couponService.deleteCouponById(id, userModel);
+        return ResponseEntity.noContent().build();
+    }
 }

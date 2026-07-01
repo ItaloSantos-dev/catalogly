@@ -4,7 +4,8 @@ import { CatalogPrivateResponseDTO } from '../../../../../../types/catalog/catal
 import { SellerService } from '../../../../../service/seller/seller-service';
 import { CouponResponseDTO } from '../../../../../../types/coupon/coupon-response';
 import { HelperService } from '../../../../../service/helper/helper-service';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
+import { CouponService } from '../../../../../service/coupon/coupon-service';
 
 @Component({
   selector: 'app-seller-show-coupons',
@@ -19,6 +20,8 @@ export class SellerShowCoupons {
   private sellerService = inject(SellerService);
   private helperService = inject(HelperService);
   showInativeCoupons = signal(false);
+  private couponService = inject(CouponService);
+  private router = inject(Router);
 
 
   private couponsMock: CouponResponseDTO[] = [
@@ -103,6 +106,15 @@ export class SellerShowCoupons {
     this.helperService.setAtualPage(3);
     
     
+  }
+
+  deleteCoupon(id:string){
+    this.couponService.deleteCouponById(id).subscribe({
+      next:async()=>{
+        await this.router.navigate(['/']);
+        await this.router.navigate(['/catalog/coupons']);
+      }
+    })
   }
 
 }

@@ -133,15 +133,16 @@
                     </div>
 
                 </div>
-
-                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-50 pl-2">
-                    <button title="Excluir Cupom" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-red-200 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer">
-                        <i class="bi bi-trash text-xs"></i>
-                    </button>
-                    <button title="Editar Regras" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-slate-200 bg-white text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center cursor-pointer">
-                        <i class="bi bi-pencil text-xs"></i>
-                    </button>
-                </div>
+                @if (coupon.active){
+                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-50 pl-2">
+                        <button (click)="deleteCoupon(coupon.id)" title="Excluir Cupom" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-red-200 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer">
+                            <i class="bi bi-trash text-xs"></i>
+                        </button>
+                        <button title="Editar Regras" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-slate-200 bg-white text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center cursor-pointer">
+                            <i class="bi bi-pencil text-xs"></i>
+                        </button>
+                    </div>
+                }
 
             </div>
             }
@@ -199,7 +200,7 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-50 pl-2">
-                    <button title="Excluir Cupom" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-red-200 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer">
+                    <button (click)="deleteCoupon(coupon.id)" title="Excluir Cupom" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-red-200 bg-white text-slate-400 hover:text-red-500 transition-colors flex items-center justify-center cursor-pointer">
                         <i class="bi bi-trash text-xs"></i>
                     </button>
                     <button title="Editar Regras" class="w-8 h-8 rounded-lg border border-slate-100 hover:border-slate-200 bg-white text-slate-400 hover:text-slate-700 transition-colors flex items-center justify-center cursor-pointer">

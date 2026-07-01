@@ -23,4 +23,8 @@ export class CouponService {
     data.amount = String(Number(data.amount)/100);
     return this.backApi.createCoupon(data);
   }
+
+  deleteCouponById(id:string):Observable<void>{
+    return this.backApi.deleteCouponById(id);
+  }
 }

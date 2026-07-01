@@ -62,4 +62,17 @@ public class CouponService {
     public List<CouponModel> getCouponsOfCatalogById(UUID id){
         return this.couponRepository.findAllByCatalogId(id);
     }
+
+    public void deleteCouponById(UUID id, UserModel userModel){
+        CouponModel couponModel = this.couponRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        if (!couponModel.getCatalog().getSeller().getUser().getId().equals(userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+        
+        couponModel.setActive(false);
+        this.couponRepository.save(couponModel);
+
+        return;
+    }
 }

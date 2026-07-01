@@ -101,4 +101,8 @@ export class BackApi {
     updateCategoryById(id:string, data:UpdateCategoryrequestDTO):Observable<any>{
         return this.httpClient.put<any>(this.baseUrl + "category/" + id, data);
     }
+
+    deleteCouponById(id:string):Observable<any>{
+        return this.httpClient.delete<any>(this.baseUrl + "coupon/" + id);
+    }
 }
