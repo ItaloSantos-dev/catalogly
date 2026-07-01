@@ -52,6 +52,12 @@ public class CategoryController {
         return ResponseEntity.ok(this.categoryMapper.modelToResponse(category));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable UUID id){
+        CategoryModel categoryModel = this.categoryService.getCategoryById(id);
+        return ResponseEntity.ok(this.categoryMapper.modelToResponse(categoryModel));
+    }
+
     @GetMapping("/{id}/items")
     public ResponseEntity<List<ItemResponseDTO>> getItensOfCategoryById(
             @PathVariable UUID id

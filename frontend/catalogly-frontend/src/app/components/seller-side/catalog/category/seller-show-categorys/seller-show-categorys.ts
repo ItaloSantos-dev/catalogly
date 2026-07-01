@@ -22,7 +22,40 @@ export class SellerShowCategorys {
   private categoryService = inject(CategoryService);
   private router = inject(Router);
 
-  
+
+  // categories: CategoryRespondeDTO[] = [
+  // {
+  //   id: "1",
+  //   name: "Eletrônicos",
+  //   description: "Produtos eletrônicos em geral",
+  //   itemsCount: 25
+  // },
+  // {
+  //   id: "2",
+  //   name: "Roupas",
+  //   description: "Vestuário masculino e feminino",
+  //   itemsCount: 48
+  // },
+  // {
+  //   id: "3",
+  //   name: "Calçados",
+  //   description: "Tênis, sapatos e sandálias",
+  //   itemsCount: 19
+  // },
+  // {
+  //   id: "4",
+  //   name: "Livros",
+  //   description: "Livros físicos e digitais",
+  //   itemsCount: 67
+  // },
+  // {
+  //   id: "5",
+  //   name: "Casa e Decoração",
+  //   description: "Itens para decoração e utilidades domésticas",
+  //   itemsCount: 31
+  // }
+  // ];
+
   ngOnInit(){
     this.sellerService.getMyCatalog().subscribe((data) =>{
       if (data) {
@@ -39,7 +72,6 @@ export class SellerShowCategorys {
 
       }
     })
-
 
     this.helperService.setAtualPage(2);
 

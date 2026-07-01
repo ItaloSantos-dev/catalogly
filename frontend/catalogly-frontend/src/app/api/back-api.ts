@@ -14,6 +14,7 @@ import { CreateCouponRequestDTO } from "../../types/coupon/create-coupon-request
 import { SupplierResponseDTO } from "../../types/supplier/supplier-response";
 import { CreateSupplierRequestDTO } from "../../types/supplier/create-supplier-request";
 import { UpdateItemRequestDTO } from "../../types/item/update-item-request";
+import { UpdateCategoryrequestDTO } from "../../types/category/update-category-request";
 
 @Injectable({
     providedIn: 'root'
@@ -91,5 +92,13 @@ export class BackApi {
     deleteItemById(id:string){
         console.log("Fazendo essa desgraça");
         return this.httpClient.delete(this.baseUrl + "item/" + id);
+    }
+
+    getCategoryByid(id:string):Observable<CategoryRespondeDTO>{
+        return this.httpClient.get<CategoryRespondeDTO>(this.baseUrl + "category/" + id);
+    }
+
+    updateCategoryById(id:string, data:UpdateCategoryrequestDTO):Observable<any>{
+        return this.httpClient.put<any>(this.baseUrl + "category/" + id, data);
     }
 }

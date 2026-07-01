@@ -78,7 +78,7 @@ public class CategoryService {
         if (!categoryModel.getCatalog().getSeller().getUser().getId().equals(userModel.getId()))
             throw new RuntimeException("Deu ruin");
 
-        if (this.categoryRepository.existsByNameAndCatalogSellerUserId(updateCategoryRequestDTO.name(), userModel.getId()))
+        if (this.categoryRepository.existsByNameAndCatalogSellerUserIdAndIdNot(updateCategoryRequestDTO.name(), userModel.getId(), categoryModel.getId()))
             throw new RuntimeException("Deu ruin");
 
         categoryModel = this.categoryMapper.updateToModel(categoryModel, updateCategoryRequestDTO);
@@ -89,6 +89,11 @@ public class CategoryService {
 
     public List<CategoryModel> getCategorysByCatalogId(UUID id){
         return this.categoryRepository.findByCatalogId(id);
+    }
+
+    public CategoryModel getCategoryById(UUID id){
+        return this.categoryRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Deu ruin"));
     }
 
 }
