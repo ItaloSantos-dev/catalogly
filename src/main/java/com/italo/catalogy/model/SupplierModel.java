@@ -40,6 +40,9 @@ public class SupplierModel {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
+    @Column(name="active", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean active;
+
     @CNPJ
     @Pattern(regexp = "\\d{14}")
     @Column(name = "cnpj", length = 14, nullable = false)

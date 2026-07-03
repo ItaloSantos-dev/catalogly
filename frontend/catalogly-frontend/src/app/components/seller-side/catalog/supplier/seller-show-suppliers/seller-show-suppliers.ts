@@ -25,6 +25,7 @@ export class SellerShowSuppliers {
     cnpj: '12.345.678/0001-90',
     contactSupplierType: ContactSupplierType.EMAIL,
     contactValue: 'contato@technordeste.com.br',
+    active:true,
     supplierItems: [
       {
         id: '550e8400-e29b-41d4-a716-446655440001',
@@ -69,6 +70,7 @@ export class SellerShowSuppliers {
     cnpj: '98.765.432/0001-10',
     contactSupplierType: ContactSupplierType.PHONE,
     contactValue: '(11) 99999-9999',
+    active:false,
     supplierItems: [
       {
         id: '550e8400-e29b-41d4-a716-446655440003',
@@ -95,6 +97,7 @@ export class SellerShowSuppliers {
     cnpj: '11.222.333/0001-44',
     contactSupplierType: ContactSupplierType.EMAIL,
     contactValue: 'vendas@megacomponentes.com.br',
+    active:true,
     supplierItems: [
       {
         id: '550e8400-e29b-41d4-a716-446655440004',
@@ -151,5 +154,7 @@ export class SellerShowSuppliers {
         this.suppliers.set(data);
       }
     })
+
+    this.suppliers.set(this.suppliersMock);
   }
 }

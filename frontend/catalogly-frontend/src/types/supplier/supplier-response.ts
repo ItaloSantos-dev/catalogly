@@ -6,5 +6,6 @@ export interface SupplierResponseDTO{
     cnpj:string,
     contactSupplierType:ContactSupplierType;
     contactValue:string;
+    active:boolean;
     supplierItems:SupplierItemResponseDTO[];
 }

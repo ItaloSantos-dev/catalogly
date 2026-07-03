@@ -31,6 +31,7 @@ public class SupplierMapper {
                 supplierModel.getCnpj(),
                 supplierModel.getContactSupplierType(),
                 supplierModel.getContactValue(),
+                supplierModel.getActive(),
                 items
         );
     }

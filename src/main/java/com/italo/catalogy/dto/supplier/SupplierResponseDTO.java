@@ -18,6 +18,7 @@ public record SupplierResponseDTO(
         ContactSupplierType contactSupplierType,
         @NotBlank
         String contactValue,
+        boolean active,
         @Nullable
         List<SupplierItemResponseDTO> supplierItems
 ) {
