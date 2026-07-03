@@ -5,6 +5,7 @@ import { SupplierResponseDTO } from '../../../../../../types/supplier/supplier-r
 import { ContactSupplierType } from '../../../../../../types/enums/contact-supplier-type';
 import { SupplierService } from '../../../../../service/supplier/supplier-service';
 import { CatalogService } from '../../../../../service/catalog/catalog-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seller-show-suppliers',
@@ -17,10 +18,12 @@ export class SellerShowSuppliers {
   suppliers = signal(<SupplierResponseDTO[]>[]);
   private supplierService = inject(SupplierService);
   private catalogService = inject(CatalogService);
+  private router = inject(Router);
 
 
  suppliersMock: SupplierResponseDTO[] = [
   {
+    id:'01',
     name: 'Distribuidora Tech Nordeste',
     cnpj: '12.345.678/0001-90',
     contactSupplierType: ContactSupplierType.EMAIL,
@@ -66,6 +69,7 @@ export class SellerShowSuppliers {
     ]
   },
   {
+    id:'01',
     name: 'Importadora Alpha',
     cnpj: '98.765.432/0001-10',
     contactSupplierType: ContactSupplierType.PHONE,
@@ -93,6 +97,7 @@ export class SellerShowSuppliers {
     ]
   },
   {
+    id:'01',
     name: 'Mega Componentes',
     cnpj: '11.222.333/0001-44',
     contactSupplierType: ContactSupplierType.EMAIL,
@@ -155,6 +160,17 @@ export class SellerShowSuppliers {
       }
     })
 
-    this.suppliers.set(this.suppliersMock);
+  }
+
+  deleteItemById(id:string){
+    this.supplierService.updateActiveSupplierById(id).subscribe({
+      next:async() =>{
+        await this.router.navigate(['/']);
+        await this.router.navigate(['/catalog/suppliers']);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 }

@@ -13,4 +13,8 @@ export class SupplierService {
   createSupplier(data:CreateSupplierRequestDTO):Observable<any>{
     return this.backApi.createSupplier(data);
   }
+
+  updateActiveSupplierById(id:string):Observable<void>{
+    return this.backApi.updateActiveSupplierById(id);
+  }
 }

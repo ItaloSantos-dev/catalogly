@@ -15,6 +15,7 @@ import com.italo.catalogy.respository.SupplierRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SupplierService {
@@ -67,5 +68,19 @@ public class SupplierService {
 
     public List<SupplierModel> getSuppliersOfCatalogById(UserModel userModel){
         return this.supplierRepository.findAllBySellerUserId(userModel.getId());
+    }
+
+    public void updateActiveSupplierById(UUID supplierId, UserModel userModel){
+        SupplierModel supplierModel = this.supplierRepository.findById(supplierId)
+            .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        if(!supplierModel.getSeller().getUser().getId().equals(userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+
+        supplierModel.setActive(!supplierModel.getActive());
+
+        this.supplierRepository.save(supplierModel);
+
+        return;
     }
 }

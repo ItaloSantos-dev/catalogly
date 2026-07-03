@@ -105,4 +105,8 @@ export class BackApi {
     deleteCouponById(id:string):Observable<any>{
         return this.httpClient.delete<any>(this.baseUrl + "coupon/" + id);
     }
+
+    updateActiveSupplierById(id:string):Observable<void>{
+        return this.httpClient.delete<void>(this.baseUrl + "supplier/" + id);
+    }
 }

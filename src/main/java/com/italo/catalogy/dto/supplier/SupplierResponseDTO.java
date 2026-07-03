@@ -8,8 +8,10 @@ import org.hibernate.validator.constraints.br.CNPJ;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 public record SupplierResponseDTO(
+        UUID id,
         @NotBlank
         String name,
         @CNPJ

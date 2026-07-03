@@ -27,12 +27,13 @@ public class SupplierMapper {
 
     public SupplierResponseDTO modelToResponse(SupplierModel supplierModel, List<SupplierItemResponseDTO> items){
         return new SupplierResponseDTO(
-                supplierModel.getName(),
-                supplierModel.getCnpj(),
-                supplierModel.getContactSupplierType(),
-                supplierModel.getContactValue(),
-                supplierModel.getActive(),
-                items
+            supplierModel.getId(),
+            supplierModel.getName(),
+            supplierModel.getCnpj(),
+            supplierModel.getContactSupplierType(),
+            supplierModel.getContactValue(),
+            supplierModel.getActive(),
+            items
         );
     }
 }
