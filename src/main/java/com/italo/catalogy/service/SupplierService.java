@@ -83,4 +83,11 @@ public class SupplierService {
 
         return;
     }
+
+    public List<SupplierItemModel> getItemsOfSupplierById(UUID id, UserModel userModel){
+        SupplierModel supplierModel = this.supplierRepository.findByIdAndSellerUserId(id, userModel.getId())
+            .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        return supplierModel.getItems();
+    }
 }

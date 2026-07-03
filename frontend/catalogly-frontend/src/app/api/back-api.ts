@@ -15,6 +15,7 @@ import { SupplierResponseDTO } from "../../types/supplier/supplier-response";
 import { CreateSupplierRequestDTO } from "../../types/supplier/create-supplier-request";
 import { UpdateItemRequestDTO } from "../../types/item/update-item-request";
 import { UpdateCategoryrequestDTO } from "../../types/category/update-category-request";
+import { SupplierItemResponseDTO } from "../../types/supplier-item/supplier-item-response";
 
 @Injectable({
     providedIn: 'root'
@@ -108,5 +109,9 @@ export class BackApi {
 
     updateActiveSupplierById(id:string):Observable<void>{
         return this.httpClient.delete<void>(this.baseUrl + "supplier/" + id);
+    }
+
+    getItemOfSupplierById(id:string):Observable<SupplierItemResponseDTO[]>{
+       return this.httpClient.get<SupplierItemResponseDTO[]>(this.baseUrl + "supplier/" + id + "/items"); 
     }
 }

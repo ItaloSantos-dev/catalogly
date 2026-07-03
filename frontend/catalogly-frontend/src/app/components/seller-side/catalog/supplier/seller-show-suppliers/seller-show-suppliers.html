@@ -105,11 +105,14 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-              
-              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 select-none">
-                <i class="bi bi-box-seam text-sm"></i>
-                {{ supplier.supplierItems.length }} {{ supplier.supplierItems.length === 1 ? 'item' : 'itens' }}
-              </span>
+              <a [routerLink]="[supplier.id,'items']">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 select-none">
+                
+                  <i class="bi bi-box-seam text-sm"></i>
+                
+                  {{ supplier.supplierItems.length }} {{ supplier.supplierItems.length === 1 ? 'item' : 'itens' }}
+                </span>
+              </a>
 
               <button title="Ver detalhes do fornecedor" 
                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 transition-all cursor-pointer">

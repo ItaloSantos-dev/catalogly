@@ -2,14 +2,19 @@ package com.italo.catalogy.controller;
 
 import com.italo.catalogy.dto.supplier.CreateSupplierRequestDTO;
 import com.italo.catalogy.dto.supplier.SupplierResponseDTO;
+import com.italo.catalogy.dto.supplier_item.SupplierItemResponseDTO;
+import com.italo.catalogy.mapper.SupplierItemMapper;
+import com.italo.catalogy.model.SupplierItemModel;
 import com.italo.catalogy.model.UserModel;
 import com.italo.catalogy.service.SupplierService;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("supplier")
 public class SupplierController {
     private final SupplierService supplierService;
+    private final SupplierItemMapper supplierItemMapper;
 
-    public SupplierController(SupplierService supplierService) {
+    public SupplierController(SupplierService supplierService, SupplierItemMapper supplierItemMapper) {
         this.supplierService = supplierService;
+        this.supplierItemMapper = supplierItemMapper;
     }
 
     @PostMapping
@@ -31,6 +38,17 @@ public class SupplierController {
             @RequestBody CreateSupplierRequestDTO createSupplierRequestDTO
             ){
         return ResponseEntity.ok(this.supplierService.createSupplier(createSupplierRequestDTO, userModel));
+    }
+
+    @GetMapping("/{id}/items")
+    public ResponseEntity<List<SupplierItemResponseDTO>> getItemsOfSupplierById(@PathVariable UUID id, @AuthenticationPrincipal UserModel userModel){
+        List<SupplierItemModel> items = this.supplierService.getItemsOfSupplierById(id, userModel);
+
+        List<SupplierItemResponseDTO> response = items.stream()
+            .map(item -> this.supplierItemMapper.modelToResponse(item))
+            .toList();
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

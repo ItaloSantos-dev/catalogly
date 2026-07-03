@@ -17,6 +17,7 @@ import { SellerShowSuppliers } from './components/seller-side/catalog/supplier/s
 import { SellerCreateSupplier } from './components/seller-side/catalog/supplier/seller-create-supplier/seller-create-supplier';
 import { SellerShowItem } from './components/seller-side/catalog/item/seller-show-item/seller-show-item';
 import { SellerEditCategory } from './components/seller-side/catalog/category/seller-edit-category/seller-edit-category';
+import { SellerShowSupplierItems } from './components/seller-side/catalog/supplier/seller-show-supplier-items/seller-show-supplier-items';
 
 
 export const routes: Routes = [
@@ -93,6 +94,10 @@ export const routes: Routes = [
             {
                 path: 'suppliers/create',
                 component:SellerCreateSupplier
+            },
+            {
+                path: 'suppliers/:id/items',
+                component:SellerShowSupplierItems
             },
  
         ]

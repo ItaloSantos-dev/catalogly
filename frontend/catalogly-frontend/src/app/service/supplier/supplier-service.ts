@@ -3,6 +3,7 @@ import { BackApi } from '../../api/back-api';
 import { Observable } from 'rxjs';
 import { SupplierResponseDTO } from '../../../types/supplier/supplier-response';
 import { CreateSupplierRequestDTO } from '../../../types/supplier/create-supplier-request';
+import { SupplierItemResponseDTO } from '../../../types/supplier-item/supplier-item-response';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,9 @@ export class SupplierService {
 
   updateActiveSupplierById(id:string):Observable<void>{
     return this.backApi.updateActiveSupplierById(id);
+  }
+
+  getItemOfSupplierById(id:string):Observable<SupplierItemResponseDTO[]>{
+    return this.backApi.getItemOfSupplierById(id);
   }
 }

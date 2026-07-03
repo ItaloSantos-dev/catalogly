@@ -1,0 +1,145 @@
+<div class="w-full font-sans antialiased text-slate-800 p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-slate-50/50 min-h-screen">
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <button type="button" class="text-[11px] font-bold text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1 cursor-pointer bg-transparent border-0 p-0">
+          <i class="bi bi-arrow-left"></i> Voltar para Fornecedores
+        </button>
+        <h1 class="text-xl font-black text-slate-950 tracking-tight flex items-center gap-2">
+          <i class="bi bi-journal-bookmark text-slate-400 text-lg"></i>
+          Catálogo: <span class="text-emerald-600">{{ supplierName() }}</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-medium">Produtos mapeados, códigos de faturamento (cProd) e histórico de preços de aquisição.</p>
+      </div>
+
+      <button type="button" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-4 py-3 rounded-xl transition-all shadow-md shadow-emerald-600/10 cursor-pointer flex items-center justify-center gap-1.5 self-start md:self-auto">
+        <i class="bi bi-plus-lg"></i> Vincular Novo Produto
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+          <i class="bi bi-box-seam text-base"></i>
+        </div>
+        <div>
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Produtos Mapeados</p>
+          <p class="text-lg font-black text-slate-950 tracking-tight">{{ supplierItems().length }} itens</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+          <i class="bi bi-currency-dollar text-base"></i>
+        </div>
+        <div>
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Custo Médio (Compra)</p>
+          <p class="text-lg font-black text-slate-950 tracking-tight">R$ {{ averageCost().toFixed(2) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      
+      @for (itemLink of supplierItems(); track itemLink.id) {
+        
+        <div [class.opacity-60]="itemLink.item.deleted"
+             class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 hover:border-slate-300 transition-all group">
+          
+          <div class="flex items-center gap-4 min-w-0 flex-1">
+            <div class="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200/60 overflow-hidden flex items-center justify-center shrink-0 relative">
+              @if (itemLink.item.imagePath1) {
+                <img [src]="itemLink.item.imagePath1" [alt]="itemLink.item.name" class="w-full h-full object-cover" />
+              } @else {
+                <i class="bi bi-box text-slate-300 text-lg"></i>
+              }
+              
+              @if (itemLink.item.deleted) {
+                <span class="absolute inset-0 bg-red-600/10 flex items-center justify-center">
+                  <i class="bi bi-eye-slash-fill text-red-600 text-xs" title="Item Excluído do Sistema"></i>
+                </span>
+              }
+            </div>
+
+            <div class="min-w-0 space-y-1">
+              <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                <p class="text-sm font-black text-slate-950 truncate group-hover:text-emerald-600 transition-colors">
+                  {{ itemLink.item.name }}
+                </p>
+                @if (itemLink.item.categoryName) {
+                  <span class="text-[9px] font-bold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                    {{ itemLink.item.categoryName }}
+                  </span>
+                }
+              </div>
+              <p class="text-xs text-slate-400 font-medium truncate max-w-md">
+                {{ itemLink.item.about || 'Sem descrição interna associada.' }}
+              </p>
+              
+              <div class="flex items-center gap-2 text-[11px] font-semibold text-slate-400">
+                <span [class.text-red-500]="itemLink.item.stock === 0" [class.text-slate-500]="itemLink.item.stock > 0">
+                  Estoque Geral: <strong class="text-slate-700 font-bold">{{ itemLink.item.stock }} un.</strong>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-6 shrink-0 lg:px-6 lg:border-x lg:border-slate-100">
+            <div class="space-y-1">
+              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Código do Fornecedor</span>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 text-xs font-mono font-bold border border-slate-200/40 shadow-inner">
+                <i class="bi bi-barcode text-slate-400"></i>
+                {{ itemLink.cprod }}
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between sm:justify-start gap-6 shrink-0">
+            
+            <div class="space-y-0.5">
+              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Último Custo</span>
+              <p class="text-sm font-black text-amber-600 bg-amber-500/5 border border-amber-500/10 px-2 py-0.5 rounded-lg">
+                R$ {{ itemLink.lastPrice.toFixed(2) }}
+              </p>
+            </div>
+
+            <div class="space-y-0.5">
+              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Preço de Venda</span>
+              <p class="text-sm font-black text-emerald-600 bg-emerald-500/5 border border-emerald-500/10 px-2 py-0.5 rounded-lg">
+                R$ {{ itemLink.item.price.toFixed(2) }}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-1.5 w-full sm:w-auto pt-2 sm:pt-0">
+              <button title="Editar mapeamento do item" 
+                      class="flex-1 sm:flex-none w-9 h-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 transition-colors flex items-center justify-center cursor-pointer">
+                <i class="bi bi-sliders text-xs"></i>
+              </button>
+              
+              <button title="Remover produto deste fornecedor" 
+                      class="w-9 h-9 rounded-xl border border-slate-100 hover:border-red-100 bg-white text-slate-400 hover:text-red-600 transition-colors flex items-center justify-center cursor-pointer">
+                <i class="bi bi-link-45deg-slash text-sm"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      } @empty {
+        <div class="p-16 border border-dashed border-slate-200 rounded-3xl bg-white text-center space-y-3 shadow-sm">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 mx-auto animate-pulse">
+            <i class="bi bi-tags-fill text-xl"></i>
+          </div>
+          <div class="space-y-1">
+            <p class="text-sm font-bold text-slate-800">Nenhum produto vinculado a este fornecedor</p>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">Mapeie os itens do seu estoque com os códigos equivalentes da nota fiscal do fornecedor para habilitar compras automatizadas.</p>
+          </div>
+        </div>
+      }
+
+    </div>
+
+  </div>
+</div>

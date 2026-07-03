@@ -5,11 +5,11 @@ import { SupplierResponseDTO } from '../../../../../../types/supplier/supplier-r
 import { ContactSupplierType } from '../../../../../../types/enums/contact-supplier-type';
 import { SupplierService } from '../../../../../service/supplier/supplier-service';
 import { CatalogService } from '../../../../../service/catalog/catalog-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-seller-show-suppliers',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './seller-show-suppliers.html',
   styleUrl: './seller-show-suppliers.css',
 })

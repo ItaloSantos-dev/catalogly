@@ -17,5 +17,7 @@ public interface SupplierRepository extends JpaRepository<SupplierModel, UUID> {
 
     Optional<SupplierModel> findByIdAndSellerId(UUID id, UUID sellerId);
 
+    Optional<SupplierModel> findByIdAndSellerUserId(UUID id, UUID sellerId);
+
     List<SupplierModel> findAllBySellerUserId(UUID id);
 }
