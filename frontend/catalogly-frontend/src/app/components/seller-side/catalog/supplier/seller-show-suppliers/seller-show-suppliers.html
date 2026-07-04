@@ -16,6 +16,8 @@
         <a routerLink="create" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
           <i class="bi bi-person-plus stroke-[1.5]"></i> Novo Fornecedor
         </a>
+
+        
       </div>
     </div>
 
@@ -129,6 +131,17 @@
                       <i class="bi bi-arrow-clockwise text-xs text-green-500 hover:text-green-700"></i>
                     }
               </button>
+
+              @if (supplier.stockOrdersCount>0) {
+                <a [routerLink]="[supplier.id, 'stock-orders']" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+                  <i class="bi bi-box stroke-[1.5]"></i> Ver pedidos
+                </a>
+              }
+              <!-- @else {
+                <a routerLink="" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+                  <i class="bi bi-box stroke-[1.5]"></i> Ver pedidos
+                </a>
+              } -->
 
             </div>
 

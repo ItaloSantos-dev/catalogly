@@ -22,6 +22,7 @@ public class SupplierMapper {
         supplierModel.setContactValue(createSupplierRequestDTO.contactValue());
         supplierModel.setCreatedAt(LocalDateTime.now());
         supplierModel.setUpdatedAt(LocalDateTime.now());
+        supplierModel.setActive(true);
         return supplierModel;
     }
 
@@ -33,7 +34,8 @@ public class SupplierMapper {
             supplierModel.getContactSupplierType(),
             supplierModel.getContactValue(),
             supplierModel.getActive(),
-            items
+            items,
+            supplierModel.getStockOrders() == null ? 0: supplierModel.getStockOrders().size() 
         );
     }
 }

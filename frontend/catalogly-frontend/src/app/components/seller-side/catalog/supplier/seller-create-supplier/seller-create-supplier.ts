@@ -65,7 +65,7 @@ export class SellerCreateSupplier {
       name: this.formCreateSupplier.get('name')?.value as string,
       cnpj: this.formCreateSupplier.get('cnpj')?.value as string,
       contactSupplierType: this.formCreateSupplier.get('contactSupplierType')?.value as ContactSupplierType,
-      contactValue: this.formCreateSupplier.get('contactSupplierType')?.value as string,
+      contactValue: this.formCreateSupplier.get('contactValue')?.value as string,
       items: itens
     }
   }

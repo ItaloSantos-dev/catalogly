@@ -1,0 +1,149 @@
+<div class="w-full font-sans antialiased text-slate-800 p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-slate-50/50 min-h-screen">
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <button type="button" class="text-[11px] font-bold text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1 cursor-pointer bg-transparent border-0 p-0">
+          <i class="bi bi-arrow-left"></i> Voltar para Fornecedores
+        </button>
+        <h1 class="text-xl font-black text-slate-950 tracking-tight">
+          Pedidos de Estoque: <span class="text-emerald-600">{{ supplierName() }}</span>
+        </h1>
+        <p class="text-xs text-slate-400 font-medium">Controle de ordens de fornecimento, faturamento e arquivos de Nota Fiscal (XML).</p>
+      </div>
+
+      <button type="button" class="bg-slate-950 hover:bg-slate-800 text-white font-semibold text-xs px-4 py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 self-start sm:self-auto cursor-pointer">
+        <i class="bi bi-cart-plus text-sm"></i> Nova Ordem de Compra
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+          <i class="bi bi-check2-all text-base"></i>
+        </div>
+        <div>
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Total Faturado</p>
+          <p class="text-lg font-black text-slate-950 tracking-tight">R$ {{ totalInvested().toFixed(2) }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shrink-0">
+          <i class="bi bi-clock-history text-base"></i>
+        </div>
+        <div>
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Aguardando Envio</p>
+          <p class="text-lg font-black text-slate-950 tracking-tight">{{ pendingCount() }} {{ pendingCount() === 1 ? 'pedido' : 'pedidos' }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/60 flex items-center justify-center text-slate-600 shrink-0">
+          <i class="bi bi-receipt text-base"></i>
+        </div>
+        <div>
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Volume de Ordens</p>
+          <p class="text-lg font-black text-slate-950 tracking-tight">{{ stockOrders().length }} registradas</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      
+      @for (order of stockOrders(); track order.invoiceXmlurl) {
+        
+        <div class="bg-white border border-slate-200/80 rounded-3xl shadow-sm p-5 space-y-4 hover:border-slate-300 transition-colors">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-black text-slate-950 tracking-tight">Ordem de Fornecimento</span>
+                <span class="text-[10px] font-mono text-slate-400">Comprador: {{ order.sellerName }}</span>
+              </div>
+              <p class="text-[11px] text-slate-400 font-medium">Possui {{ order.itemsAmount }} unidades físicas de suprimentos neste lote.</p>
+            </div>
+
+            <div>
+              @switch (order.status) {
+                @case (OrderStatus.CONCLUED) {
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black bg-emerald-50 border border-emerald-200 text-emerald-700 uppercase tracking-wider">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Concluído
+                  </span>
+                }
+                @case (OrderStatus.PENDING) {
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black bg-amber-50 border border-amber-200 text-amber-700 uppercase tracking-wider">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Pendente
+                  </span>
+                }
+                @case (OrderStatus.CANCELED) {
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black bg-red-50 border border-red-100 text-red-600 uppercase tracking-wider">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Cancelado
+                  </span>
+                }
+              }
+            </div>
+          </div>
+
+          <div class="bg-slate-50/50 rounded-2xl p-3 border border-slate-100">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Composição do Lote</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              @for (subItem of order.supplierItems; track $index) {
+                <div class="bg-white border border-slate-100 rounded-xl p-2.5 flex items-center justify-between text-xs font-semibold">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black flex items-center justify-center text-slate-600">
+                      {{ subItem.amount }}x
+                    </span>
+                    <span class="text-slate-500 text-[11px]">Preço unitário: R$ {{ subItem.priceUnique.toFixed(2) }}</span>
+                  </div>
+                  <span class="text-slate-950 font-bold">R$ {{ subItem.priceFinal.toFixed(2) }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+            
+            <div class="flex items-center gap-2">
+              @if (order.invoiceXmlurl) {
+                <a [href]="order.invoiceXmlurl" target="_blank"
+                   class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 shadow-sm transition-colors cursor-pointer group">
+                  <i class="bi bi-file-earmark-code text-emerald-500 text-sm transition-transform group-hover:scale-110"></i>
+                  Visualizar XML da Nota
+                </a>
+              } @else {
+                <span class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-400 bg-slate-100/60 border border-slate-200/30 select-none">
+                  <i class="bi bi-file-earmark-lock text-sm"></i>
+                  Sem nota anexada
+                </span>
+              }
+            </div>
+
+            <div class="flex items-center gap-3 justify-between sm:justify-end">
+              <span class="text-xs font-bold text-slate-400">Total do Pedido:</span>
+              <span class="text-xl font-black text-slate-950 tracking-tight">
+                R$ {{ order.priceFinal.toFixed(2) }}
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      } @empty {
+        <div class="p-16 border border-dashed border-slate-200 rounded-3xl bg-white text-center space-y-3 shadow-sm">
+          <div class="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 mx-auto">
+            <i class="bi bi-cart-x text-xl"></i>
+          </div>
+          <div class="space-y-1">
+            <p class="text-sm font-bold text-slate-800">Nenhum pedido efetuado</p>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">Não encontramos nenhuma transação ou faturamento de estoque para este fornecedor específico até o momento.</p>
+          </div>
+        </div>
+      }
+
+    </div>
+
+  </div>
+</div>

@@ -16,6 +16,7 @@ import { CreateSupplierRequestDTO } from "../../types/supplier/create-supplier-r
 import { UpdateItemRequestDTO } from "../../types/item/update-item-request";
 import { UpdateCategoryrequestDTO } from "../../types/category/update-category-request";
 import { SupplierItemResponseDTO } from "../../types/supplier-item/supplier-item-response";
+import { StockOrderResponseDTO } from "../../types/stock-order/stock-order-response";
 
 @Injectable({
     providedIn: 'root'
@@ -113,5 +114,9 @@ export class BackApi {
 
     getItemOfSupplierById(id:string):Observable<SupplierItemResponseDTO[]>{
        return this.httpClient.get<SupplierItemResponseDTO[]>(this.baseUrl + "supplier/" + id + "/items"); 
+    }
+
+    getStockOrdersOfSupplierById(id:string):Observable<StockOrderResponseDTO[]>{
+        return this.httpClient.get<StockOrderResponseDTO[]>(this.baseUrl + "supplier/" + id + "/stock-orders");
     }
 }

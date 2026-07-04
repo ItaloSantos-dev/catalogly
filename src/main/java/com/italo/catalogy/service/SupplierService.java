@@ -6,6 +6,7 @@ import com.italo.catalogy.dto.supplier_item.SupplierItemResponseDTO;
 import com.italo.catalogy.mapper.SupplierItemMapper;
 import com.italo.catalogy.mapper.SupplierMapper;
 import com.italo.catalogy.model.SellerModel;
+import com.italo.catalogy.model.StockOrderModel;
 import com.italo.catalogy.model.SupplierItemModel;
 import com.italo.catalogy.model.SupplierModel;
 import com.italo.catalogy.model.UserModel;
@@ -89,5 +90,13 @@ public class SupplierService {
             .orElseThrow(() -> new RuntimeException("Deu ruin"));
 
         return supplierModel.getItems();
+    }
+
+    public List<StockOrderModel> getStockOrdersOfSupplierById(UUID id, UserModel userModel){
+        SupplierModel supplierModel =  this.supplierRepository.findByIdAndSellerUserId(id, userModel.getId())
+            .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        return supplierModel.getStockOrders();
+
     }
 }

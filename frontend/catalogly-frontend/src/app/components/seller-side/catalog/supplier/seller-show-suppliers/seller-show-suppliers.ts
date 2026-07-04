@@ -29,6 +29,7 @@ export class SellerShowSuppliers {
     contactSupplierType: ContactSupplierType.EMAIL,
     contactValue: 'contato@technordeste.com.br',
     active:true,
+    stockOrdersCount:5,
     supplierItems: [
       {
         id: '550e8400-e29b-41d4-a716-446655440001',
@@ -75,6 +76,7 @@ export class SellerShowSuppliers {
     contactSupplierType: ContactSupplierType.PHONE,
     contactValue: '(11) 99999-9999',
     active:false,
+    stockOrdersCount:5,
     supplierItems: [
       {
         id: '550e8400-e29b-41d4-a716-446655440003',
@@ -103,6 +105,7 @@ export class SellerShowSuppliers {
     contactSupplierType: ContactSupplierType.EMAIL,
     contactValue: 'vendas@megacomponentes.com.br',
     active:true,
+    stockOrdersCount:0,
     supplierItems: [
       {
         id: '550e8400-e29b-41d4-a716-446655440004',
@@ -157,9 +160,11 @@ export class SellerShowSuppliers {
     this.catalogService.getSuppliersOfCatalog().subscribe({
       next: (data) =>{
         this.suppliers.set(data);
+        console.log(this.suppliers());
       }
     })
-
+    
+    
   }
 
   deleteItemById(id:string){
@@ -172,5 +177,6 @@ export class SellerShowSuppliers {
         console.error(err);
       }
     })
+    
   }
 }

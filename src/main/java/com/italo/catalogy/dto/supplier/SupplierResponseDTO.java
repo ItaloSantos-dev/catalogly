@@ -22,6 +22,7 @@ public record SupplierResponseDTO(
         String contactValue,
         boolean active,
         @Nullable
-        List<SupplierItemResponseDTO> supplierItems
+        List<SupplierItemResponseDTO> supplierItems,
+        Integer stockOrdersCount
 ) {
 }

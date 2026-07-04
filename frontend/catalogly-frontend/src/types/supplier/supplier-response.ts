@@ -9,4 +9,5 @@ export interface SupplierResponseDTO{
     contactValue:string;
     active:boolean;
     supplierItems:SupplierItemResponseDTO[];
+    stockOrdersCount:number;
 }
