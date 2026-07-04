@@ -137,6 +137,11 @@
                   <i class="bi bi-box stroke-[1.5]"></i> Ver pedidos
                 </a>
               }
+              @if (supplierHasItemsActive(supplier)) {
+                <a [routerLink]="[supplier.id, 'stock-order','create']" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+                  <i class="bi bi-box stroke-[1.5]"></i> Fazer pedido
+                </a>
+              }
               <!-- @else {
                 <a routerLink="" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
                   <i class="bi bi-box stroke-[1.5]"></i> Ver pedidos

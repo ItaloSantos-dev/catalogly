@@ -8,6 +8,7 @@ import java.util.UUID;
 public record SupplierItemResponseDTO(
         UUID id,
         String supplierName,
+        UUID supplierId,
         ItemResponseDTO item,
         String cProd,
         BigDecimal lastPrice

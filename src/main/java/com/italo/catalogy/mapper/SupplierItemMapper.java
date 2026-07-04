@@ -37,6 +37,7 @@ public class SupplierItemMapper {
         return new SupplierItemResponseDTO(
                 supplierItemModel.getId(),
                 supplierItemModel.getSupplier().getName(),
+                supplierItemModel.getSupplier().getId(),
                 this.itemMapper.modelToResponse(supplierItemModel.getItem()),
                 supplierItemModel.getSupplierItemCode()==null? null : supplierItemModel.getSupplierItemCode(),
                 supplierItemModel.getLastPrice()==null? null : supplierItemModel.getLastPrice()

@@ -92,6 +92,7 @@ export class SellerShowSupplierStockOrders {
         }
       })
     }
+    this.stockOrders.set(this.stockOrdersMock);
 
   }
 

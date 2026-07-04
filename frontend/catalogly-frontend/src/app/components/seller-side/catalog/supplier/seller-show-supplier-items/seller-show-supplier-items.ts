@@ -22,19 +22,21 @@ export class SellerShowSupplierItems {
   });
 
   averageCost = computed(() => {
-    const items = this.supplierItems();
-    if (items.length === 0) return 0;
-    const total = items.reduce((acc, current) => acc + current.lastPrice, 0);
-    return total / items.length;
-  });
+  const items = this.supplierItems();
+  if (items.length === 0) return 0;
+
+  const total = items.reduce((acc, current) => acc + (current.lastPrice ?? 0), 0);
+  return total / items.length;
+});
 
 
-   suppliersItemsMock: SupplierItemResponseDTO[] = [
+  suppliersItemsMock: SupplierItemResponseDTO[] = [
   {
     id: "1",
     supplierName: "Fornecedor Alpha",
     cprod: "ALP-001",
     lastPrice: 79.90,
+    supplierId:"01",
     item: {
       id: "item-1",
       categoryId: "cat-1",
@@ -43,7 +45,7 @@ export class SellerShowSupplierItems {
       about: "Furadeira elétrica 750W com impacto.",
       price: 99.90,
       stock: 15,
-      deleted: false,
+      deleted: true,
       imagePath1: "/images/furadeira.jpg",
       imagePath2: null,
       imagePath3: null,
@@ -54,6 +56,7 @@ export class SellerShowSupplierItems {
     supplierName: "Fornecedor Beta",
     cprod: "BET-145",
     lastPrice: 18.50,
+    supplierId:"01",
     item: {
       id: "item-2",
       categoryId: "cat-2",
@@ -73,6 +76,7 @@ export class SellerShowSupplierItems {
     supplierName: "Fornecedor Gama",
     cprod: "GAM-889",
     lastPrice: 245.00,
+    supplierId:"01",
     item: {
       id: "item-3",
       categoryId: "cat-3",
@@ -92,6 +96,7 @@ export class SellerShowSupplierItems {
     supplierName: "Fornecedor Delta",
     cprod: "DEL-502",
     lastPrice: 5.75,
+    supplierId:"01",
     item: {
       id: "item-4",
       categoryId: "cat-4",
@@ -111,6 +116,7 @@ export class SellerShowSupplierItems {
     supplierName: "Fornecedor Omega",
     cprod: "OMG-990",
     lastPrice: 135.00,
+    supplierId:"01",
     item: {
       id: "item-5",
       categoryId: "cat-5",
@@ -125,7 +131,7 @@ export class SellerShowSupplierItems {
       imagePath3: "/images/contator3.jpg",
     },
   },
-];
+  ];
 
 
   ngOnInit(){

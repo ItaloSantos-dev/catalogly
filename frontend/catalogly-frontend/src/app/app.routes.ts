@@ -19,6 +19,7 @@ import { SellerShowItem } from './components/seller-side/catalog/item/seller-sho
 import { SellerEditCategory } from './components/seller-side/catalog/category/seller-edit-category/seller-edit-category';
 import { SellerShowSupplierItems } from './components/seller-side/catalog/supplier/seller-show-supplier-items/seller-show-supplier-items';
 import { SellerShowSupplierStockOrders } from './components/seller-side/catalog/supplier/seller-show-supplier-stock-orders/seller-show-supplier-stock-orders';
+import { SellerCreateStockOrder } from './components/seller-side/catalog/stock-order/seller-create-stock-order/seller-create-stock-order';
 
 
 export const routes: Routes = [
@@ -103,6 +104,10 @@ export const routes: Routes = [
             {
                 path: 'suppliers/:id/stock-orders',
                 component:SellerShowSupplierStockOrders
+            },
+            {
+                path: 'suppliers/:id/stock-order/create',
+                component:SellerCreateStockOrder
             },
  
         ]

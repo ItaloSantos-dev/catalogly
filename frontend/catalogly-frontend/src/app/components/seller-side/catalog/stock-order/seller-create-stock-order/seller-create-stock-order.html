@@ -1,0 +1,161 @@
+<div class="w-full font-sans antialiased text-slate-800 p-4 sm:p-6 lg:p-8 space-y-6 flex-1 bg-slate-50/50 min-h-screen">
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <div class="space-y-1">
+      <button type="button" class="text-[11px] font-bold text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1 cursor-pointer bg-transparent border-0 p-0">
+        <i class="bi bi-arrow-left"></i> Voltar para Fornecedores
+      </button>
+      <h1 class="text-xl font-black text-slate-950 tracking-tight">
+        Nova Ordem de Estoque
+      </h1>
+      <p class="text-xs text-slate-400 font-medium">
+        Abastecimento direto com o distribuidor: <span class="text-indigo-600 font-bold">{{ supplierName() }}</span>
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <div class="lg:col-span-8 space-y-3">
+        <div class="bg-white border border-slate-200/80 rounded-2xl px-5 py-3.5 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Itens Disponíveis em Catálogo</h3>
+        </div>
+
+        @for (supplierItem of supplierItems(); track supplierItem.id) {
+          
+          <div [class.border-indigo-500/40]="!supplierItem.item.deleted && (quantities()[supplierItem.id] || 0) > 0"
+               [class.bg-indigo-50/10]="!supplierItem.item.deleted && (quantities()[supplierItem.id] || 0) > 0"
+               [class.opacity-50]="supplierItem.item.deleted"
+               [class.bg-slate-50/40]="supplierItem.item.deleted"
+               class="bg-white border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm hover:border-slate-300 transition-all group">
+            
+            <div class="flex items-center gap-3.5 min-w-0 flex-1">
+              <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/60 overflow-hidden flex items-center justify-center shrink-0 relative">
+                @if (supplierItem.item.imagePath1) {
+                  <img [src]="supplierItem.item.imagePath1" [alt]="supplierItem.item.name" class="w-full h-full object-cover" />
+                } @else {
+                  <i class="bi bi-box text-slate-300 text-base"></i>
+                }
+              </div>
+              
+              <div class="min-w-0 space-y-0.5">
+                <div class="flex items-center gap-2">
+                  <p class="text-xs font-black text-slate-950 truncate">
+                    {{ supplierItem.item.name }}
+                  </p>
+                  
+                  @if (supplierItem.item.deleted) {
+                    <span class="inline-flex items-center text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-red-50 border border-red-100 text-red-600 select-none">
+                      Inativo
+                    </span>
+                  }
+                </div>
+
+                <div class="flex items-center gap-2 text-[10px] text-slate-400 font-medium">
+                  <span class="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">Ref: {{ supplierItem.cprod }}</span>
+                  <span>•</span>
+                  <span [class.text-red-500]="supplierItem.item.stock <= 5">Estoque atual: {{ supplierItem.item.stock }} un.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="shrink-0 sm:text-right space-y-0.5 px-2">
+              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Preço de Custo</span>
+              <p class="text-xs font-black text-slate-950">
+                R$ {{ supplierItem.lastPrice?.toFixed(2) }} <span class="text-[9px] text-slate-400 font-normal">/un</span>
+              </p>
+            </div>
+
+            <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1 shrink-0 self-start sm:self-auto"
+                 [class.pointer-events-none]="supplierItem.item.deleted"
+                 [class.opacity-40]="supplierItem.item.deleted">
+              
+              <button type="button" (click)="adjustQuantity(supplierItem.id, -1)" [disabled]="supplierItem.item.deleted"
+                      class="w-7 h-7 rounded-lg hover:bg-white text-slate-500 hover:text-slate-800 transition-colors flex items-center justify-center text-xs font-bold cursor-pointer border-0 bg-transparent disabled:cursor-not-allowed">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              
+              <input type="number" min="0" placeholder="0" [disabled]="supplierItem.item.deleted"
+                     [value]="supplierItem.item.deleted ? 0 : (quantities()[supplierItem.id] || '')"
+                     (input)="onQuantityChange(supplierItem.id, $event)"
+                     class="w-10 text-center bg-transparent border-0 focus:outline-none text-xs font-black text-slate-950 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none disabled:text-slate-400" />
+              
+              <button type="button" (click)="adjustQuantity(supplierItem.id, 1)" [disabled]="supplierItem.item.deleted"
+                      class="w-7 h-7 rounded-lg hover:bg-white text-slate-500 hover:text-slate-800 transition-colors flex items-center justify-center text-xs font-bold cursor-pointer border-0 bg-transparent disabled:cursor-not-allowed">
+                <i class="bi bi-plus-lg"></i>
+              </button>
+            </div>
+
+          </div>
+
+        } @empty {
+          <div class="p-12 border border-dashed border-slate-200 rounded-2xl bg-white text-center text-xs text-slate-400 font-semibold shadow-sm">
+            Nenhum produto cadastrado para este fornecedor.
+          </div>
+        }
+      </div>
+
+      <div class="lg:col-span-4 lg:sticky lg:top-6">
+        <div class="bg-gradient-to-br from-gray-500 to-gray-900 text-white rounded-3xl p-7 shadow-2xl shadow-emerald-900/20 border border-emerald-900/60 space-y-6 relative overflow-hidden">
+            
+            <div class="absolute -right-6 -bottom-6 text-emerald-900/40 text-8xl pointer-events-none select-none">
+            <i class="bi bi-cart3"></i>
+            </div>
+
+            <div class="space-y-1 relative">
+            <h3 class="text-sm font-black tracking-tight flex items-center gap-2">
+                <i class="bi bi-receipt-cutoff text-emerald-400"></i>
+                Resumo do Pedido
+            </h3>
+            <p class="text-[11px] text-emerald-400 font-medium">Valores calculados apenas com itens ativos.</p>
+            </div>
+
+            <hr class="border-emerald-800/80 my-1" />
+
+            <div class="space-y-4 relative text-xs font-medium">
+            
+            <div class="flex items-center justify-between text-emerald-200">
+                <span class="flex items-center gap-2">
+                <i class="bi bi-box-seam text-emerald-500"></i>
+                Itens Unitários (Tipos):
+                </span>
+                <span class="font-bold text-white bg-emerald-900/60 px-2.5 py-0.5 rounded-lg font-mono">
+                {{ uniqueItemsCount() }} {{ uniqueItemsCount() === 1 ? 'tipo' : 'tipos' }}
+                </span>
+            </div>
+
+            <div class="flex items-center justify-between text-emerald-200">
+                <span class="flex items-center gap-2">
+                <i class="bi bi-boxes text-emerald-500"></i>
+                Volume Total de Itens:
+                </span>
+                <span class="font-bold text-white bg-emerald-900/60 px-2.5 py-0.5 rounded-lg font-mono">
+                {{ totalUnitsCount() }} un.
+                </span>
+            </div>
+
+            <div class="pt-3 border-t border-emerald-800/60 flex flex-col gap-1.5">
+                <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="bi bi-currency-dollar text-emerald-500 text-base"></i>
+                Valor de Itens Conhecidos:
+                </span>
+                <div class="text-3xl font-black text-emerald-300 tracking-tight font-mono leading-none">
+                R$ {{ totalOrderValue().toFixed(2) }}
+                </div>
+            </div>
+            </div>
+
+            <div class="pt-3 relative">
+            <button type="button" (click)="ngOnSubmit()" [disabled]="totalUnitsCount() === 0"
+                    class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-500 text-emerald-950 font-black text-xs px-5 py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 disabled:shadow-none cursor-pointer flex items-center justify-center gap-2.5">
+                <i class="bi bi-file-earmark-arrow-up text-sm"></i>
+                Fechar Ordem de Compra
+            </button>
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+
+  </div>
+</div>
