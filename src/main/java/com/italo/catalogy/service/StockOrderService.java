@@ -172,4 +172,14 @@ public class StockOrderService {
 
         return  this.stockOrderRepository.save(stockOrderModel);
     }
+
+    public StockOrderModel getStockOrderById(UUID id, UserModel userModel){
+        StockOrderModel stockOrderModel = this.stockOrderRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException());
+
+        if (!stockOrderModel.getSellerModel().getUser().getId().equals(userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+
+        return stockOrderModel;
+    }       
 }

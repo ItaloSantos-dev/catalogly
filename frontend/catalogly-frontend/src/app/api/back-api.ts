@@ -124,4 +124,8 @@ export class BackApi {
     createStockOrder(data:CreateStockOrderRequestDTO):Observable<any>{
         return this.httpClient.post<any>(this.baseUrl + "stock-order", data);
     }
+
+    getstockORderById(id:string):Observable<StockOrderResponseDTO>{
+        return this.httpClient.get<StockOrderResponseDTO>(this.baseUrl + "stock-order/" + id);
+    }
 }

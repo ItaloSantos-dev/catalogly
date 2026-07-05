@@ -25,13 +25,15 @@ public class StockOrderMapper {
 
     public StockOrderResponseDTO modelToResponse (StockOrderModel stockOrderModel, List<StockOrderItemResponseDTO> supplierItems){
         return new StockOrderResponseDTO(
+                stockOrderModel.getId(),
                 stockOrderModel.getSellerModel().getId(),
                 stockOrderModel.getSellerModel().getUser().getFirstName() + " " + stockOrderModel.getSellerModel().getUser().getLastName(),
                 stockOrderModel.getSupplierModel().getId(),
                 stockOrderModel.getSupplierModel().getName(),
                 stockOrderModel.getItemsAmount(),
                 stockOrderModel.getStatus(),
-                stockOrderModel.getPriceFinal(),
+                stockOrderModel.getPriceEstimated()==null ? null : stockOrderModel.getPriceEstimated(),
+                stockOrderModel.getPriceFinal()==null ? null : stockOrderModel.getPriceFinal(),
                 stockOrderModel.getStockOrderInvoiceModel()==null?
                         null : stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path(),
                 supplierItems

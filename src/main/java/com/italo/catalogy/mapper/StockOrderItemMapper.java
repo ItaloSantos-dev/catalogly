@@ -10,6 +10,12 @@ import java.math.BigDecimal;
 
 @Component
 public class StockOrderItemMapper {
+    private SupplierItemMapper supplierItemMapper;
+
+    StockOrderItemMapper (SupplierItemMapper supplierItemMapper){
+        this.supplierItemMapper = supplierItemMapper;
+    }
+
     public StockOrderItemModel createToModel(StockOrderModel stockOrderModel, SupplierItemModel supplierItemModel, Integer amount){
         BigDecimal priceUnique = null;
         BigDecimal priceFinal = null;
@@ -32,6 +38,7 @@ public class StockOrderItemMapper {
 
     public StockOrderItemResponseDTO modelToResponse (StockOrderItemModel stockOrderItemModel){
         return new StockOrderItemResponseDTO(
+                this.supplierItemMapper.modelToResponse(stockOrderItemModel.getSupplierItem()),
                 stockOrderItemModel.getAmount(),
                 stockOrderItemModel.getPriceUnique(),
                 stockOrderItemModel.getPriceFinal()

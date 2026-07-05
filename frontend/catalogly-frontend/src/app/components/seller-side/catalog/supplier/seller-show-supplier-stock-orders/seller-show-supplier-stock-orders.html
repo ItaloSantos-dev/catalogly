@@ -90,15 +90,35 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
               @for (subItem of order.supplierItems; track $index) {
+                @if (subItem.priceUnique !== null && subItem.priceUnique !== undefined) {
                 <div class="bg-white border border-slate-100 rounded-xl p-2.5 flex items-center justify-between text-xs font-semibold">
                   <div class="flex items-center gap-2">
                     <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black flex items-center justify-center text-slate-600">
                       {{ subItem.amount }}x
                     </span>
-                    <span class="text-slate-500 text-[11px]">Preço unitário: R$ {{ subItem.priceUnique.toFixed(2) }}</span>
+                    <span class="text-slate-500 text-[11px]">
+                      Preço unitário: R$ {{ subItem.priceUnique.toFixed(2) }}
+                    </span>
                   </div>
-                  <span class="text-slate-950 font-bold">R$ {{ subItem.priceFinal.toFixed(2) }}</span>
+                  <span class="text-slate-950 font-bold">
+                    R$ {{ subItem.priceFinal?.toFixed(2) }}
+                  </span>
                 </div>
+              } @else {
+                <div class="bg-white border border-slate-100 rounded-xl p-2.5 flex items-center justify-between text-xs font-semibold">
+                  <div class="flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black flex items-center justify-center text-slate-600">
+                      {{ subItem.amount }}x
+                    </span>
+                    <span class="text-slate-500 text-[11px]">
+                      Preço unitário:
+                      <span class="font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">
+                        Desconhecido
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              }
               }
             </div>
           </div>
@@ -123,14 +143,13 @@
             <div class="flex items-center gap-3 justify-between sm:justify-end">
               <span class="text-xs font-bold text-slate-400">Total do Pedido:</span>
               <span class="text-xl font-black text-slate-950 tracking-tight">
-                R$ {{ order.priceFinal.toFixed(2) }}
+                R$ {{ order.priceFinal?.toFixed(2) }}
               </span>
             </div>
 
-            <a class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
+            <a [routerLink]="['/catalog/stock-order', order.id]" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-300 shadow-md shadow-emerald-600/10 hover:shadow-lg hover:shadow-emerald-600/20 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer">
               <i class="bi bi-truck stroke-[1.5]"></i> Ver mais
             </a>
-
           </div>
 
         </div>

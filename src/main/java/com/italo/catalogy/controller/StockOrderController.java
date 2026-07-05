@@ -36,6 +36,20 @@ public class StockOrderController {
         this.supplierItemMapper = supplierItemMapper;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<StockOrderResponseDTO> getStockOrderBYId(@PathVariable UUID id, @AuthenticationPrincipal UserModel userModel){
+        StockOrderModel stockOrderModel = this.stockOrderService.getStockOrderById(id, userModel);
+
+        List<StockOrderItemResponseDTO> items = stockOrderModel.getItems().stream()
+            .map(item -> this.stockOrderItemMapper.modelToResponse(item))
+            .toList();
+        
+        StockOrderResponseDTO response = this.stockOrderMapper.modelToResponse(stockOrderModel, items);
+
+        return ResponseEntity.ok(response);
+
+    }
+
     @PostMapping
     public ResponseEntity<StockOrderResponseDTO> createStockOrder (
             @RequestBody CreateStockOrderRequestDTO createStockOrderRequestDTO,
