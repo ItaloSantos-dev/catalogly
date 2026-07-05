@@ -128,4 +128,8 @@ export class BackApi {
     getstockORderById(id:string):Observable<StockOrderResponseDTO>{
         return this.httpClient.get<StockOrderResponseDTO>(this.baseUrl + "stock-order/" + id);
     }
+
+    updateInvoiceXmlOfStockOrderById(data:FormData):Observable<any>{
+        return this.httpClient.post<any>(this.baseUrl + "stock-order/input-invoice-xml", data);
+    }
 }

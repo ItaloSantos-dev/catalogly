@@ -17,4 +17,9 @@ export class StockOrderService {
   getStockOrderById(id:string):Observable<StockOrderResponseDTO>{
     return this.backApi.getstockORderById(id);
   }
+
+  updateInvoiceXmlOfStockOrderById(data:FormData):Observable<any>{
+    return this.backApi.updateInvoiceXmlOfStockOrderById(data);
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { StockOrderResponseDTO } from '../../../../../../types/stock-order/stock-order-response';
 import { StockOrderService } from '../../../../../service/stock-order/stock-order-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StockOrderStatus } from '../../../../../../types/enums/stock-order-status';
 
 @Component({
@@ -13,6 +13,10 @@ import { StockOrderStatus } from '../../../../../../types/enums/stock-order-stat
 export class SellerShowStockOrder {
   stockOrder = signal(<StockOrderResponseDTO>{});
   private stockOrderService = inject(StockOrderService);
+  xmlFile = signal(<File>{});
+  private stockOrderId = signal("");
+  private router = inject(Router);
+
 
   constructor (private route:ActivatedRoute){};
 
@@ -23,6 +27,19 @@ export class SellerShowStockOrder {
   uniqueItemsCount = computed(() => {
     return this.stockOrder()?.supplierItems?.length ?? 0;
   });
+
+  selectedFileName = '';
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files?.length) {
+      this.xmlFile.set(input.files[0])
+      this.selectedFileName = input.files[0].name;
+    } else {
+      this.selectedFileName = '';
+    }
+  }
 
 
  stockOrderMock: StockOrderResponseDTO = {
@@ -114,6 +131,7 @@ export class SellerShowStockOrder {
     const id = this.route.snapshot.paramMap.get("id");
 
     if(id){
+      this.stockOrderId.set(id);
       this.stockOrderService.getStockOrderById(id).subscribe({
         next:(data) =>{
           this.stockOrder.set(data);
@@ -125,5 +143,28 @@ export class SellerShowStockOrder {
         }
       })
     }
+  }
+
+  generateFormData():FormData{
+    console.log(this.xmlFile());
+    
+    const formData = new FormData();
+
+    formData.append('invoiceXml', this.xmlFile());
+    formData.append('stockOrderId', this.stockOrderId());
+
+    return formData;
+  }
+
+  onSubmitXmlOfOrder(){
+    this.stockOrderService.updateInvoiceXmlOfStockOrderById(this.generateFormData()).subscribe({
+      next:async() =>{
+        await this.router.navigate(['/catalog']);
+        await this.router.navigate(['/catalog/stock-order', this.stockOrderId()]);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 }

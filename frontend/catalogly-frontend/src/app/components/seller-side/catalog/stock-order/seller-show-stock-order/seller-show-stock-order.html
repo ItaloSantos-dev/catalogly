@@ -260,11 +260,50 @@
                   </p>
                 </div>
 
-                <button
-                  class="flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 text-xs font-semibold text-white bg-emerald-600 rounded-xl shadow-md shadow-emerald-600/10 transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-600/20 hover:-translate-y-0.5 cursor-pointer">
-                  <i class="bi bi-upload"></i>
-                  Salvar XML da compra
-                </button>
+                <input
+                  type="file"
+                  id="xml"
+                  class="hidden"
+                  accept=".xml"
+                  (change)="onFileSelected($event)"
+                />
+
+                @if (selectedFileName) {
+                  <span
+                    class="flex items-center gap-2 max-w-full px-3 py-2 text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg"
+                  >
+                    <i class="bi bi-file-earmark-check-fill text-emerald-600"></i>
+
+                    <span class="truncate max-w-64">
+                      {{ selectedFileName }}
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    (click)="onSubmitXmlOfOrder()"
+                    class="flex cursor-pointer items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 text-xs font-semibold text-white bg-sky-600 rounded-xl shadow-md shadow-sky-600/10 transition-all duration-300 hover:bg-sky-700 hover:shadow-lg hover:shadow-sky-600/20 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                    [disabled]="!selectedFileName"
+                  >
+                    <i class="bi bi-cloud-arrow-up"></i>
+                    Enviar
+                  </button>
+                  <label
+                    for="xml"
+                    class="flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 text-xs font-semibold text-white bg-emerald-600 rounded-xl shadow-md shadow-emerald-600/10 transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-600/20 hover:-translate-y-0.5 cursor-pointer"
+                  >
+                    <i class="bi bi-arrow-clockwise"></i>
+                    Alterar XML
+                  </label>
+                  
+                }@else{
+                  <label
+                    for="xml"
+                    class="flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 text-xs font-semibold text-white bg-emerald-600 rounded-xl shadow-md shadow-emerald-600/10 transition-all duration-300 hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-600/20 hover:-translate-y-0.5 cursor-pointer"
+                  >
+                    <i class="bi bi-file-earmark-arrow-up"></i>
+                    Selecionar XML
+                  </label>
+                }
               </div>
             }
           </div>
