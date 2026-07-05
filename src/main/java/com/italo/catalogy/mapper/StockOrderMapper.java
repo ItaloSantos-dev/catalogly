@@ -5,6 +5,8 @@ import com.italo.catalogy.dto.stock_order.StockOrderResponseDTO;
 import com.italo.catalogy.dto.stock_order_item.StockOrderItemResponseDTO;
 import com.italo.catalogy.model.*;
 import com.italo.catalogy.model.enums.StockOrderStatus;
+import com.italo.catalogy.service.XmlService;
+
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,6 +15,12 @@ import java.util.List;
 
 @Component
 public class StockOrderMapper {
+    private final XmlService xmlService;
+
+    StockOrderMapper (XmlService xmlService){
+        this.xmlService =xmlService;
+    }
+    
     public StockOrderModel createToModel(SellerModel sellerModel, SupplierModel supplierModel){
         StockOrderModel stockOrderModel = new StockOrderModel();
         stockOrderModel.setCreatedAt(LocalDateTime.now());
@@ -35,7 +43,7 @@ public class StockOrderMapper {
                 stockOrderModel.getPriceEstimated()==null ? null : stockOrderModel.getPriceEstimated(),
                 stockOrderModel.getPriceFinal()==null ? null : stockOrderModel.getPriceFinal(),
                 stockOrderModel.getStockOrderInvoiceModel()==null?
-                        null : stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path(),
+                        null : this.xmlService.getAssignedUrlXml(stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path()),
                 supplierItems
         );
     }

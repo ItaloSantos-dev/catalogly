@@ -242,10 +242,10 @@
                   </div>
                 </div>
                 
-                <a [href]="data.invoiceXmlurl" target="_blank"
+                <button (click)="downloadXml()"
                    class="w-full bg-gradient-to-r from-emerald-900 to-emerald-950 hover:from-emerald-800 hover:to-emerald-950 text-white font-semibold text-xs px-4 py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer transform hover:-translate-y-0.5">
                   <i class="bi bi-download text-sm"></i> Baixar Arquivo XML
-                </a>
+                </button>
               </div>
             } @else {
               <div class="flex flex-col items-center justify-center py-4 space-y-3 text-center">

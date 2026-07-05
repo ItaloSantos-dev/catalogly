@@ -50,6 +50,7 @@ export class SellerShowStockOrder {
   supplierName: "Distribuidora ABC",
   itemsAmount: 22,
   status: StockOrderStatus.PENDING,
+  invoiceXmlurl:"ssss",
   supplierItems: [
     {
       amount: 5,
@@ -143,6 +144,7 @@ export class SellerShowStockOrder {
         }
       })
     }
+    this.stockOrder.set(this.stockOrderMock);
   }
 
   generateFormData():FormData{
@@ -166,5 +168,37 @@ export class SellerShowStockOrder {
         console.error(err);
       }
     })
+  }
+
+  downloadXml() {
+    console.log("Baixando xml");
+    
+    const a = document.createElement('a');
+    const url = this.stockOrder().invoiceXmlurl as string;
+
+    fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao baixar o XML');
+      }
+
+      return response.blob();
+    })
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = `stock-order-${this.stockOrder().supplierName}-#${this.stockOrder().id}.xml`;
+
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(blobUrl);
+    })
+      .catch(err => {
+        console.error('Erro ao baixar XML:', err);
+    });
   }
 }
