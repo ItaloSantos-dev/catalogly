@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public record TieCprodInvoiceWithSupplierItemId(
         String cProd,
+        //Id do stockOrderItem
         UUID stockOrderItemId
 ) {
 }

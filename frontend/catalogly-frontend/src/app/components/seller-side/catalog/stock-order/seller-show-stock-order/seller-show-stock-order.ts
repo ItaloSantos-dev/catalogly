@@ -144,7 +144,6 @@ export class SellerShowStockOrder {
         }
       })
     }
-    this.stockOrder.set(this.stockOrderMock);
   }
 
   generateFormData():FormData{
@@ -160,7 +159,8 @@ export class SellerShowStockOrder {
 
   onSubmitXmlOfOrder(){
     this.stockOrderService.updateInvoiceXmlOfStockOrderById(this.generateFormData()).subscribe({
-      next:async() =>{
+      next:async(data) =>{
+        
         await this.router.navigate(['/catalog']);
         await this.router.navigate(['/catalog/stock-order', this.stockOrderId()]);
       },

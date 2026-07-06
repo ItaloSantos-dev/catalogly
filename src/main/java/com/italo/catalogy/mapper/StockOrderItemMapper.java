@@ -38,6 +38,7 @@ public class StockOrderItemMapper {
 
     public StockOrderItemResponseDTO modelToResponse (StockOrderItemModel stockOrderItemModel){
         return new StockOrderItemResponseDTO(
+                stockOrderItemModel.getId(),
                 this.supplierItemMapper.modelToResponse(stockOrderItemModel.getSupplierItem()),
                 stockOrderItemModel.getAmount(),
                 stockOrderItemModel.getPriceUnique(),
