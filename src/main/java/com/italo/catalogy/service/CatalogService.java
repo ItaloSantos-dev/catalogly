@@ -113,6 +113,7 @@ public class CatalogService {
     }
 
     public CatalogModel getBySellerId(UUID id){
+        System.out.println(id);
         return this.catalogRepository.findBySellerUserId(id)
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
     }

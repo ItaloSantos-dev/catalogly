@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CreateSellerRequestDTO } from '../../../../../types/seller/create-seller-request';
 import { RegisterRequestDTO } from '../../../../../types/auth/register-request';
 import { SellerService } from '../../../../service/seller/seller-service';
@@ -13,6 +13,8 @@ import { SellerService } from '../../../../service/seller/seller-service';
 })
 export class SellerRegister {
   private sellerService = inject(SellerService);
+
+  private router = inject(Router);
 
   formRegisterSeller = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -39,9 +41,10 @@ export class SellerRegister {
   } 
 
   ngSubmit(){
+    localStorage.clear();
     this.sellerService.registerSeller(this.createRegisterSellerRequestDTO()).subscribe({
       next:(response)=>{
-        console.log(response);
+        this.router.navigate(['/catalog', 'dashboard'])
       },
       error:(error)=>{
         console.error(error);

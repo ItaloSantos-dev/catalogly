@@ -41,6 +41,7 @@ public class SellerService {
 
         String emailUser = tokenIsNull ? createSellerRequestDTO.userData().email() : userModel.getEmail();
 
+        System.out.println("Email: " + emailUser);
         if (this.sellerRepository.existsByUserEmail(emailUser))
             throw new RuntimeException("Deu ruin");
 
