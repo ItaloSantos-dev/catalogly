@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.italo.catalogy.dto.invoice_xml.InvoiceXmlDTO;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -58,5 +62,20 @@ public class XmlService {
             throw  new RuntimeException(e.getMessage());
         }
     }
+
+    public InputStream getInvoiceXml(String path){
+        try{
+            GetObjectResponse respose =  minioClient.getObject(GetObjectArgs.builder()
+                .bucket(bucketName)
+                .object(path)
+                .build()
+            );
+            InputStream inputStream = respose;
+            return inputStream;
+        }catch (MinioException e){
+            throw  new RuntimeException(e.getMessage());
+        }
+    }
+    
 
 }

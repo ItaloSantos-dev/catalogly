@@ -48,21 +48,21 @@ public class SupplierItemMapper {
 
         List<TieItemInvoice> invoiceProductList = invoiceProducts.stream()
                 .map(invoiceProduct -> new TieItemInvoice(
-                        invoiceProduct.prod().xProd(),
                         invoiceProduct.prod().cProd(),
+                        invoiceProduct.prod().xProd(),
                         invoiceProduct.prod().vUnCom()
                 ))
                 .toList();
 
         List<TieItemStockOrder> stockOrderItems = stockOrderModel.getItems().stream()
-                .map(supplierItem -> new TieItemStockOrder(
-                        supplierItem.getSupplierItem().getId(),
-                        supplierItem.getSupplierItem().getItem().getName(),
-                        this.imageService.getAssignedUrlImage(supplierItem.getSupplierItem().getItem().getImagePath1())
+                .map(stockOrderItem -> new TieItemStockOrder(
+                        stockOrderItem.getId(),
+                        stockOrderItem.getSupplierItem().getItem().getName(),
+                        this.imageService.getAssignedUrlImage(stockOrderItem.getSupplierItem().getItem().getImagePath1())
                 ))
                 .toList();
 
-        return new SupplierItemWithCprodResponseDTO(stockOrderItems, invoiceProductList, this.xmlService.getAssignedUrlXml(stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path()));
+        return new SupplierItemWithCprodResponseDTO(stockOrderItems, invoiceProductList, this.xmlService.getAssignedUrlXml(stockOrderModel.getStockOrderInvoiceModel().getInvoice_xml_path()), stockOrderModel.getId(), stockOrderModel.getSupplierModel().getId());
 
         //Arrumar os nomes de amarração  verificar a logica dos detalhes de qual item retorna, o item do catalogo ou o item do supplier
     }

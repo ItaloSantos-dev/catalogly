@@ -33,7 +33,7 @@ export class SellerShowSupplierStockOrders {
           id: "si-001",
           supplierName: "Distribuidora Alpha",
           supplierId: "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
-          cprod: "1001",
+          cProd: "1001",
           lastPrice: 50,
           item: {
             id: "item-001",
@@ -58,7 +58,7 @@ export class SellerShowSupplierStockOrders {
           id: "si-002",
           supplierName: "Distribuidora Alpha",
           supplierId: "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
-          cprod: "1002",
+          cProd: "1002",
           lastPrice: 150.1,
           item: {
             id: "item-002",
@@ -96,7 +96,7 @@ export class SellerShowSupplierStockOrders {
           id: "si-003",
           supplierName: "Fornecedor Beta",
           supplierId: "550e8400-e29b-41d4-a716-446655440000",
-          cprod: "2001",
+          cProd: "2001",
           lastPrice: 99.9,
           item: {
             id: "item-003",
@@ -121,7 +121,7 @@ export class SellerShowSupplierStockOrders {
           id: "si-004",
           supplierName: "Fornecedor Beta",
           supplierId: "550e8400-e29b-41d4-a716-446655440000",
-          cprod: "2002",
+          cProd: "2002",
           lastPrice: 120.04,
           item: {
             id: "item-004",
@@ -159,7 +159,7 @@ export class SellerShowSupplierStockOrders {
           id: "si-005",
           supplierName: "Fornecedor Gama",
           supplierId: "5e7d8c11-31a7-4bcb-95c0-92d2f7f1f1b3",
-          cprod: "3001",
+          cProd: "3001",
           lastPrice: 45,
           item: {
             id: "item-005",

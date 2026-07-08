@@ -164,9 +164,9 @@
               <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] font-semibold">
                 
                 <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-slate-400 font-medium">
-                  @if (subItem.supplierItem.cprod) {
+                  @if (subItem.supplierItem.cProd) {
                     <span class="font-mono bg-slate-100 border border-slate-200/30 text-slate-600 px-2 py-0.5 rounded">
-                      cProd NFe: {{ subItem.supplierItem.cprod }}
+                      cProd NFe: {{ subItem.supplierItem.cProd }}
                     </span>
                   } @else {
                     <span class="text-amber-600 font-bold bg-amber-50/60 px-2 py-0.5 rounded border border-amber-100 text-[10px]">
@@ -234,14 +234,21 @@
             <hr class="border-slate-100" />
 
             @if (data.invoiceXmlurl) {
-              <div class="space-y-3">
+              <div class="space-y-3 justify-center text-center items-center flex flex-col">
                 <div class="p-3 bg-emerald-50 border border-emerald-100 rounded-xl flex items-start gap-2.5">
                   <i class="bi bi-file-earmark-code-fill text-emerald-600 text-base mt-0.5"></i>
                   <div class="text-[11px] font-medium text-emerald-800 leading-tight">
                     Documento auxiliar faturado. O arquivo XML de importação está disponível para download imediato.
                   </div>
                 </div>
-                
+                <a
+                routerLink="tie-items"
+                  class="flex cursor-pointer items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 text-xs font-semibold text-white bg-sky-600 rounded-xl shadow-md shadow-sky-600/10 transition-all duration-300 hover:bg-sky-700 hover:shadow-lg hover:shadow-sky-600/20 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  
+                >
+                  <i class="bi bi-cloud-arrow-up"></i>
+                  Linkar itens
+                </a>
                 <button (click)="downloadXml()"
                    class="w-full bg-gradient-to-r from-emerald-900 to-emerald-950 hover:from-emerald-800 hover:to-emerald-950 text-white font-semibold text-xs px-4 py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer transform hover:-translate-y-0.5">
                   <i class="bi bi-download text-sm"></i> Baixar Arquivo XML

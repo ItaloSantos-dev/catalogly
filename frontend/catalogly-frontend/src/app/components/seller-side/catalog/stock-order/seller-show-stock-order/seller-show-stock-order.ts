@@ -1,12 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { StockOrderResponseDTO } from '../../../../../../types/stock-order/stock-order-response';
 import { StockOrderService } from '../../../../../service/stock-order/stock-order-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { StockOrderStatus } from '../../../../../../types/enums/stock-order-status';
 
 @Component({
   selector: 'app-seller-show-stock-order',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './seller-show-stock-order.html',
   styleUrl: './seller-show-stock-order.css',
 })
@@ -58,7 +58,7 @@ export class SellerShowStockOrder {
         id: "si-001",
         supplierName: "Distribuidora ABC",
         supplierId: "eda01daf-8ea2-4eba-8085-2e637f949e60",
-        cprod: "789100000001",
+        cProd: "789100000001",
         lastPrice: 12.5,
         item: {
           id: "item-001",
@@ -83,7 +83,7 @@ export class SellerShowStockOrder {
         id: "si-002",
         supplierName: "Distribuidora ABC",
         supplierId: "eda01daf-8ea2-4eba-8085-2e637f949e60",
-        cprod: "789100000002",
+        cProd: "789100000002",
         lastPrice: 8.9,
         item: {
           id: "item-002",
@@ -108,7 +108,7 @@ export class SellerShowStockOrder {
         id: "si-003",
         supplierName: "Distribuidora ABC",
         supplierId: "eda01daf-8ea2-4eba-8085-2e637f949e60",
-        cprod: "789100000003",
+        cProd: "789100000003",
         lastPrice: 13,
         item: {
           id: "item-003",
@@ -144,6 +144,8 @@ export class SellerShowStockOrder {
         }
       })
     }
+
+    this.stockOrder.set(this.stockOrderMock);
   }
 
   generateFormData():FormData{
@@ -159,10 +161,8 @@ export class SellerShowStockOrder {
 
   onSubmitXmlOfOrder(){
     this.stockOrderService.updateInvoiceXmlOfStockOrderById(this.generateFormData()).subscribe({
-      next:async(data) =>{
-        
-        await this.router.navigate(['/catalog']);
-        await this.router.navigate(['/catalog/stock-order', this.stockOrderId()]);
+      next:async() =>{
+        await this.router.navigate(['/catalog/stock-order', this.stockOrderId(), 'tie-items']);
       },
       error: (err) => {
         console.error(err);

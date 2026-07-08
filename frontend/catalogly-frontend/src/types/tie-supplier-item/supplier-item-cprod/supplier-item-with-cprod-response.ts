@@ -5,4 +5,6 @@ export interface SupplierItemWithCprodResponseDTO{
     stockOrderItems:TieItemStockOrder[];
     invoiceItems:TieItemInvoice[];
     xmlLink:string;
+    stockOrderId:string;
+    supplierId:string;
 }

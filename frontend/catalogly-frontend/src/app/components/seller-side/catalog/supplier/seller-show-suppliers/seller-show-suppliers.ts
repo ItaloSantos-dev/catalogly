@@ -35,7 +35,7 @@ export class SellerShowSuppliers {
         id: "550e8400-e29b-41d4-a716-446655440001",
         supplierId: "01",
         supplierName: "Distribuidora Tech Nordeste",
-        cprod: "MOU-RGB-001",
+        cProd: "MOU-RGB-001",
         lastPrice: 89.90,
         item: {
           id: "550e8400-e29b-41d4-a716-446655440010",
@@ -54,7 +54,7 @@ export class SellerShowSuppliers {
         id: "550e8400-e29b-41d4-a716-446655440002",
         supplierId: "01",
         supplierName: "Distribuidora Tech Nordeste",
-        cprod: "TEC-MEC-002",
+        cProd: "TEC-MEC-002",
         lastPrice: 159.90,
         item: {
           id: "550e8400-e29b-41d4-a716-446655440011",
@@ -84,7 +84,7 @@ export class SellerShowSuppliers {
         id: "550e8400-e29b-41d4-a716-446655440003",
         supplierId: "02",
         supplierName: "Importadora Alpha",
-        cprod: "MON-24-001",
+        cProd: "MON-24-001",
         lastPrice: 599.90,
         item: {
           id: "550e8400-e29b-41d4-a716-446655440012",
@@ -114,7 +114,7 @@ export class SellerShowSuppliers {
         id: "550e8400-e29b-41d4-a716-446655440004",
         supplierId: "03",
         supplierName: "Mega Componentes",
-        cprod: "SSD-1TB-001",
+        cProd: "SSD-1TB-001",
         lastPrice: 279.90,
         item: {
           id: "550e8400-e29b-41d4-a716-446655440013",
@@ -133,7 +133,7 @@ export class SellerShowSuppliers {
         id: "550e8400-e29b-41d4-a716-446655440005",
         supplierId: "03",
         supplierName: "Mega Componentes",
-        cprod: "RAM-16GB-001",
+        cProd: "RAM-16GB-001",
         lastPrice: 189.90,
         item: {
           id: "550e8400-e29b-41d4-a716-446655440014",

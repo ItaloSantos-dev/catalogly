@@ -5,6 +5,6 @@ export interface SupplierItemResponseDTO{
     supplierName:string;
     supplierId:string;
     item:ItemResponseDTO;
-    cprod?:string;
+    cProd?:string;
     lastPrice?:number
 }

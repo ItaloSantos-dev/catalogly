@@ -6,8 +6,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.math.BigDecimal;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Prod(
-    String cProd,
-    String xProd,
+    String cProd, //Codigo
+    String xProd, //Nome
     BigDecimal vUnCom, //Preço unit
     BigDecimal vProd //Preço total
 ) {

@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -33,6 +35,7 @@ public class StockOrderService {
     private final SupplierItemMapper supplierItemMapper;
     private final StockOrderInvoiceMapper stockOrderInvoiceMapper;
     private final String EXTENSION_ACCEPTED = ".xml";
+    private final XmlMapper xmlMapper = new XmlMapper();
 
     public StockOrderService(StockOrderItemService stockOrderItemService, SellerRepository sellerRepository, StockOrderMapper stockOrderMapper, SupplierRepository supplierRepository, StockOrderRepository stockOrderRepository, XmlService xmlService, SupplierItemMapper supplierItemMapper, StockOrderInvoiceMapper stockOrderInvoiceMapper) {
         this.stockOrderItemService = stockOrderItemService;
@@ -81,6 +84,29 @@ public class StockOrderService {
 
     }
 
+    public SupplierItemWithCprodResponseDTO getCprodAndItemsIdOfStockOrderById(UUID id, UserModel userModel){
+        StockOrderModel stockOrder = this.stockOrderRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Deu ruin"));
+
+        if(!stockOrder.getSellerModel().getUser().getId().equals(userModel.getId()))
+            throw new RuntimeException("Deu ruin");
+
+        if(stockOrder.getStockOrderInvoiceModel()==null)
+            throw new RuntimeException("Deu ruin");
+
+        InputStream invoiceXmlStream = this.xmlService.getInvoiceXml(stockOrder.getStockOrderInvoiceModel().getInvoice_xml_path());
+
+        InvoiceXmlDTO invoiceXmlDTO;
+        try{
+            invoiceXmlDTO = xmlMapper.readValue(invoiceXmlStream, InvoiceXmlDTO.class);
+        }catch (IOException exception){
+            throw new RuntimeException(exception.getMessage());
+        }
+
+        return this.supplierItemMapper.listToCprodAndSupplierItemWithCprodResponseDTO(invoiceXmlDTO.NFe().infNFe().det(), stockOrder);
+
+        
+    }
 
     public SupplierItemWithCprodResponseDTO inputInvoiceXml(UserModel userModel, MultipartFile invoiceXml, UUID stockOrderId){
 
@@ -89,10 +115,10 @@ public class StockOrderService {
         if (fileName == null || !fileName.toLowerCase().endsWith(this.EXTENSION_ACCEPTED))
             throw new RuntimeException("Arquivo inválido");
 
-        XmlMapper mapper = new XmlMapper();
+        
         InvoiceXmlDTO invoiceXmlDTO;
         try{
-            invoiceXmlDTO = mapper.readValue(invoiceXml.getBytes(), InvoiceXmlDTO.class);
+            invoiceXmlDTO = xmlMapper.readValue(invoiceXml.getBytes(), InvoiceXmlDTO.class);
         }catch (IOException exception){
             throw new RuntimeException(exception.getMessage());
         }
@@ -165,10 +191,13 @@ public class StockOrderService {
             mapItemIdAndCprod.put(idAndCprod.stockOrderItemId(), idAndCprod.cProd());
         }
 
+        System.out.println(mapCprodAndLastPrice);
         for (StockOrderItemModel stockOrderItemModel : stockOrderModel.getItems()){
-            stockOrderItemModel.getSupplierItem().setSupplierItemCode(mapItemIdAndCprod.get(stockOrderItemModel.getId()));
-            stockOrderItemModel.getSupplierItem().setLastPrice(mapCprodAndLastPrice.get(stockOrderItemModel.getSupplierItem().getSupplierItemCode()));
+            SupplierItemModel supplierItemModel = stockOrderItemModel.getSupplierItem();
+            supplierItemModel.setSupplierItemCode(mapItemIdAndCprod.get(stockOrderItemModel.getId()));
+            supplierItemModel.setLastPrice(mapCprodAndLastPrice.get(stockOrderItemModel.getSupplierItem().getSupplierItemCode()));
         }
+        stockOrderModel.setUpdatedAt(LocalDateTime.now());
 
         return  this.stockOrderRepository.save(stockOrderModel);
     }

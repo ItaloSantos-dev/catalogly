@@ -109,7 +109,7 @@ export class SellerCreateStockOrder {
   {
     id: "3",
     supplierName: "Fornecedor Gama",
-    cprod: "GAM-889",
+    cProd: "GAM-889",
     lastPrice: 245.00,
     supplierId:"01",
     item: {
@@ -129,7 +129,7 @@ export class SellerCreateStockOrder {
   {
     id: "4",
     supplierName: "Fornecedor Delta",
-    cprod: "DEL-502",
+    cProd: "DEL-502",
     lastPrice: 5.75,
     supplierId:"01",
     item: {
@@ -149,7 +149,7 @@ export class SellerCreateStockOrder {
   {
     id: "5",
     supplierName: "Fornecedor Omega",
-    cprod: "OMG-990",
+    cProd: "OMG-990",
     lastPrice: 135.00,
     supplierId:"01",
     item: {

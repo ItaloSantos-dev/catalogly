@@ -34,7 +34,7 @@ export class SellerShowSupplierItems {
   {
     id: "1",
     supplierName: "Fornecedor Alpha",
-    cprod: "ALP-001",
+    cProd: "ALP-001",
     lastPrice: 79.90,
     supplierId:"01",
     item: {
@@ -54,7 +54,7 @@ export class SellerShowSupplierItems {
   {
     id: "2",
     supplierName: "Fornecedor Beta",
-    cprod: "BET-145",
+    cProd: "BET-145",
     lastPrice: 18.50,
     supplierId:"01",
     item: {
@@ -74,7 +74,7 @@ export class SellerShowSupplierItems {
   {
     id: "3",
     supplierName: "Fornecedor Gama",
-    cprod: "GAM-889",
+    cProd: "GAM-889",
     lastPrice: 245.00,
     supplierId:"01",
     item: {
@@ -94,7 +94,7 @@ export class SellerShowSupplierItems {
   {
     id: "4",
     supplierName: "Fornecedor Delta",
-    cprod: "DEL-502",
+    cProd: "DEL-502",
     lastPrice: 5.75,
     supplierId:"01",
     item: {
@@ -114,7 +114,7 @@ export class SellerShowSupplierItems {
   {
     id: "5",
     supplierName: "Fornecedor Omega",
-    cprod: "OMG-990",
+    cProd: "OMG-990",
     lastPrice: 135.00,
     supplierId:"01",
     item: {
@@ -135,11 +135,16 @@ export class SellerShowSupplierItems {
 
 
   ngOnInit(){
+    
+    
     const id = this.route.snapshot.paramMap.get("id");
     if (id) {
       this.supplierService.getItemOfSupplierById(id).subscribe({
         next:(data) =>{
           this.supplierItems.set(data)
+          console.log(this.supplierItems()[0]);
+          
+          console.log(this.supplierItems()[0].cProd);
         },
         error: (err) => {
           console.error(err);

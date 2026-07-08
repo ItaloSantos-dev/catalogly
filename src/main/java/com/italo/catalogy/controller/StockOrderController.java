@@ -50,6 +50,15 @@ public class StockOrderController {
 
     }
 
+    @GetMapping("/{id}/cprod-and-items")
+    public ResponseEntity<SupplierItemWithCprodResponseDTO> getCprodAndItemsIdOfStockOrderById(
+        @PathVariable UUID id,
+        @AuthenticationPrincipal UserModel userModel
+    ){
+        SupplierItemWithCprodResponseDTO response = this.stockOrderService.getCprodAndItemsIdOfStockOrderById(id, userModel);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     public ResponseEntity<StockOrderResponseDTO> createStockOrder (
             @RequestBody CreateStockOrderRequestDTO createStockOrderRequestDTO,

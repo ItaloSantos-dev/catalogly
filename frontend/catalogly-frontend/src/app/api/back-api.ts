@@ -19,6 +19,7 @@ import { SupplierItemResponseDTO } from "../../types/supplier-item/supplier-item
 import { StockOrderResponseDTO } from "../../types/stock-order/stock-order-response";
 import { CreateStockOrderRequestDTO } from "../../types/stock-order/create-stock-order-request";
 import { SupplierItemWithCprodResponseDTO } from "../../types/tie-supplier-item/supplier-item-cprod/supplier-item-with-cprod-response";
+import { UpdateCprodOfSupplierItemsRequestDTO } from "../../types/tie-supplier-item/update-cprod/update-cprod-of-supplier-items-request";
 
 @Injectable({
     providedIn: 'root'
@@ -132,5 +133,13 @@ export class BackApi {
 
     updateInvoiceXmlOfStockOrderById(data:FormData):Observable<SupplierItemWithCprodResponseDTO>{
         return this.httpClient.post<SupplierItemWithCprodResponseDTO>(this.baseUrl + "stock-order/input-invoice-xml", data);
+    }
+
+    getCprodAndSupplierItemsOfStockOrderById(id:string):Observable<SupplierItemWithCprodResponseDTO>{
+        return this.httpClient.get<SupplierItemWithCprodResponseDTO>(this.baseUrl + "stock-order/" + id + "/cprod-and-items");
+    }
+
+    updateCprodOfSupplierItens(id:string, data:UpdateCprodOfSupplierItemsRequestDTO):Observable<any>{
+        return this.httpClient.put<any>(this.baseUrl + "stock-order/" + id + "/update-cprod-itens", data)
     }
 }

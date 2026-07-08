@@ -90,7 +90,7 @@
               <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Código do Fornecedor</span>
               <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 text-xs font-mono font-bold border border-slate-200/40 shadow-inner">
                 <i class="bi bi-barcode text-slate-400"></i>
-                {{ itemLink.cprod }}
+                 @if (itemLink.cProd) {{{ itemLink.cProd }}}
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@
             <div class="space-y-0.5">
               <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Último Custo</span>
               <p class="text-sm font-black text-amber-600 bg-amber-500/5 border border-amber-500/10 px-2 py-0.5 rounded-lg">
-                R$ {{ itemLink.lastPrice?.toFixed(2) }}
+                @if (itemLink.cProd) {{{ itemLink.lastPrice?.toFixed(2) }}}
               </p>
             </div>
 

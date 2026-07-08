@@ -21,6 +21,7 @@ import { SellerShowSupplierItems } from './components/seller-side/catalog/suppli
 import { SellerShowSupplierStockOrders } from './components/seller-side/catalog/supplier/seller-show-supplier-stock-orders/seller-show-supplier-stock-orders';
 import { SellerCreateStockOrder } from './components/seller-side/catalog/stock-order/seller-create-stock-order/seller-create-stock-order';
 import { SellerShowStockOrder } from './components/seller-side/catalog/stock-order/seller-show-stock-order/seller-show-stock-order';
+import { SellerTieItemWithCprod } from './components/seller-side/catalog/stock-order/seller-tie-item-with-cprod/seller-tie-item-with-cprod';
 
 
 export const routes: Routes = [
@@ -113,6 +114,10 @@ export const routes: Routes = [
             {
                 path: 'stock-order/:id',
                 component:SellerShowStockOrder
+            },
+            {
+                path: 'stock-order/:id/tie-items',
+                component:SellerTieItemWithCprod
             },
             
         ]
