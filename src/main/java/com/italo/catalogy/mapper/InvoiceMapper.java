@@ -121,7 +121,7 @@ public class InvoiceMapper {
         invoiceModel.setCustomer(customer);
         invoiceModel.setOrder(paymentModel.getOrder());
         invoiceModel.setPayment(paymentModel);
-        invoiceModel.setInvoiceNumber(serviceInvoiceResponseDTO.number().toString());
+        invoiceModel.setInvoiceNumber(String.valueOf(System.currentTimeMillis()));
         invoiceModel.setSeries(serviceInvoiceResponseDTO.rpsSerialNumber());
         //Ajustar e separar NFS e NF
         invoiceModel.setKey(UUID.randomUUID().toString());

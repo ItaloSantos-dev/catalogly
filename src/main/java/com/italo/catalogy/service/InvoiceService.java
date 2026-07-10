@@ -35,6 +35,7 @@ public class InvoiceService {
         UUID invoiceModelId = UUID.randomUUID();
 
         Integer lastRps  = this.invoiceRepository.findLastRps();
+        
         CreateServiceInvoiceRequestDTO createServiceInvoiceRequestDTO = this.invoiceMapper.dataToCreateServiceInvoice(paymentModel, invoiceModelId, lastRps+1);
 
         ResponseEntity<ServiceInvoiceResponseDTO> response = this.nfeIoConfig.inssueInvoiceService(createServiceInvoiceRequestDTO);
