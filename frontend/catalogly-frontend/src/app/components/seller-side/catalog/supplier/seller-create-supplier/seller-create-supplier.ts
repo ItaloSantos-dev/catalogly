@@ -6,11 +6,11 @@ import { SellerService } from '../../../../../service/seller/seller-service';
 import { HelperService } from '../../../../../service/helper/helper-service';
 import { SupplierService } from '../../../../../service/supplier/supplier-service';
 import { ContactSupplierType } from '../../../../../../types/enums/contact-supplier-type';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-seller-create-supplier',
-  imports: [ReactiveFormsModule, LinkItensAndSupplier],
+  imports: [ReactiveFormsModule, LinkItensAndSupplier, RouterLink],
   templateUrl: './seller-create-supplier.html',
   styleUrl: './seller-create-supplier.css',
 })

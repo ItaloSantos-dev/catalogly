@@ -1,13 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { CategoryRespondeDTO } from '../../../../../../types/category/category-response';
 import { CategoryService } from '../../../../../service/category/category-service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UpdateCategoryrequestDTO } from '../../../../../../types/category/update-category-request';
 
 @Component({
   selector: 'app-seller-edit-category',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './seller-edit-category.html',
   styleUrl: './seller-edit-category.css',
 })

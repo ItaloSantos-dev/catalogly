@@ -197,6 +197,7 @@ public class StockOrderService {
             supplierItemModel.setSupplierItemCode(mapItemIdAndCprod.get(stockOrderItemModel.getId()));
             supplierItemModel.setLastPrice(mapCprodAndLastPrice.get(stockOrderItemModel.getSupplierItem().getSupplierItemCode()));
         }
+        //Atualizar valores da stock order com os valores dos produtos 
         stockOrderModel.setUpdatedAt(LocalDateTime.now());
 
         return  this.stockOrderRepository.save(stockOrderModel);

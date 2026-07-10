@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateCouponRequestDTO } from '../../../../../../types/coupon/create-coupon-request';
 import { CouponService } from '../../../../../service/coupon/coupon-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HelperService } from '../../../../../service/helper/helper-service';
 
 @Component({
   selector: 'app-seller-create-coupon',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './seller-create-coupon.html',
   styleUrl: './seller-create-coupon.css',
 })

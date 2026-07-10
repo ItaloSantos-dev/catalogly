@@ -1,11 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { SupplierService } from '../../../../../service/supplier/supplier-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SupplierItemResponseDTO } from '../../../../../../types/supplier-item/supplier-item-response';
 
 @Component({
   selector: 'app-seller-show-supplier-items',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './seller-show-supplier-items.html',
   styleUrl: './seller-show-supplier-items.css',
 })

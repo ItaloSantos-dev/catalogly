@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { StockOrderResponseDTO } from '../../../../../../types/stock-order/stock-order-response';
 import { StockOrderStatus } from '../../../../../../types/enums/stock-order-status';
 import { SupplierService } from '../../../../../service/supplier/supplier-service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-seller-show-supplier-stock-orders',
@@ -13,9 +13,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 export class SellerShowSupplierStockOrders {
   stockOrders = signal(<StockOrderResponseDTO[]>[]);
   private supplierService = inject(SupplierService);
+  private router = inject(Router)
 
   constructor (private route:ActivatedRoute){}
-
+  
   stockOrdersMock: StockOrderResponseDTO[] = [
   {
     id: "01",
@@ -195,6 +196,9 @@ export class SellerShowSupplierStockOrders {
 
   }
 
+  directForCreateStockORder(id:string){
+    this.route
+  }
 
   OrderStatus = StockOrderStatus;
 
