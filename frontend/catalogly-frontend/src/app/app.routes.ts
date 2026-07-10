@@ -23,6 +23,7 @@ import { SellerCreateStockOrder } from './components/seller-side/catalog/stock-o
 import { SellerShowStockOrder } from './components/seller-side/catalog/stock-order/seller-show-stock-order/seller-show-stock-order';
 import { SellerTieItemWithCprod } from './components/seller-side/catalog/stock-order/seller-tie-item-with-cprod/seller-tie-item-with-cprod';
 import { SellerShowOrders } from './components/seller-side/catalog/order/seller-show-orders/seller-show-orders';
+import { UserLayout } from './components/user-side/catalog/layout/user-layout/user-layout';
 
 
 export const routes: Routes = [
@@ -126,6 +127,11 @@ export const routes: Routes = [
             },
             
         ]
+    },
+    {
+        path: 'catalogly',
+        component: UserLayout,
+        
     }
     
 ];
