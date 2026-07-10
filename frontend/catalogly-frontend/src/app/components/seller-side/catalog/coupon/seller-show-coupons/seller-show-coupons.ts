@@ -103,7 +103,7 @@ export class SellerShowCoupons {
         })
       }
     })
-    this.helperService.setAtualPage(3);
+    this.helperService.setAtualPage(4);
     
     
   }

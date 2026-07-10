@@ -73,7 +73,7 @@ export class SellerShowCategorys {
       }
     })
 
-    this.helperService.setAtualPage(2);
+    this.helperService.setAtualPage(3);
 
   }
 

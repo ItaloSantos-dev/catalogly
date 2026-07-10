@@ -34,6 +34,13 @@ public class OrderService {
         return orderRepository.findByBuyerId(userModel.getId());
     }
 
+    public List<OrderModel> getOrdersOfCatalogByUserId(UserModel userModel){
+        CatalogModel catalogModel = this.catalogRepository.findBySellerUserId(userModel.getId())
+            .orElseThrow(() -> new RuntimeException());
+        
+        return catalogModel.getOrders();
+    }
+
     public OrderModel createOrder(UserModel userModel, CreateOrderRequestDTO createOrderRequestDTO){
         CatalogModel catalogModel = this.catalogRepository.findById(createOrderRequestDTO.catalogId())
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));

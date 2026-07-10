@@ -207,7 +207,7 @@ export class SellerCreateCategory {
 
 
   ngOnInit(){
-    this.helperService.setAtualPage(2)
+    this.helperService.setAtualPage(3)
     this.sellerService.getMyCatalog().subscribe((data)=>{
       if(data){
         this.catalogPrivateOfSeller.set(data);

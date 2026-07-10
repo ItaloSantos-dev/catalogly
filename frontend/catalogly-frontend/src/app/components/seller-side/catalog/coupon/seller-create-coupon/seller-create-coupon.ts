@@ -35,7 +35,7 @@ export class SellerCreateCoupon {
   }
 
   ngOnInit(){
-    this.helperService.setAtualPage(3)
+    this.helperService.setAtualPage(4)
   }
 
   ngOnSubmit(){

@@ -78,7 +78,7 @@ export class SellerCreateItem {
   }
 
   ngOnInit(){
-    this.helperService.setAtualPage(1)
+    this.helperService.setAtualPage(2)
     this.sellerService.catalogPrivateData$.subscribe(data =>{
       if(data){
         console.log(data);

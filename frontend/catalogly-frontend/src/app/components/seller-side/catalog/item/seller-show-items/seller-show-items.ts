@@ -90,7 +90,7 @@ export class SellerShowItems {
         console.error("Error fetching items of catalog: ", err);
       }
     });
-    this.helperService.setAtualPage(1);
+    this.helperService.setAtualPage(2);
   }
 
   deleteItem(id:string){

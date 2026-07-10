@@ -44,7 +44,7 @@ export class SellerCreateSupplier {
   }
 
   ngOnInit(){
-    this.helperService.setAtualPage(4)
+    this.helperService.setAtualPage(5)
     this.sellerService.getMyCatalog().subscribe((data) =>{
       this.catalogPrivateOfSeller.set(data);
     })

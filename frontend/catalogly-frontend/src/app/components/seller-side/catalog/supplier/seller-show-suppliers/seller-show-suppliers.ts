@@ -161,7 +161,7 @@ export class SellerShowSuppliers {
   );
 
   ngOnInit(){
-    this.helperService.setAtualPage(4);
+    this.helperService.setAtualPage(5);
     this.catalogService.getSuppliersOfCatalog().subscribe({
       next: (data) =>{
         this.suppliers.set(data);

@@ -100,7 +100,7 @@ export class SellerShowItemsOfCategory {
   categoryName = computed(() => this.itemsOfCategory().find(i => !i.deleted)?.categoryName || 'Categoria');
 
   ngOnInit(){
-    this.helperService.setAtualPage(2);
+    this.helperService.setAtualPage(3);
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.categoryService.getItensOfCategoryById(id).subscribe({

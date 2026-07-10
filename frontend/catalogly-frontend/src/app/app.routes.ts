@@ -22,6 +22,7 @@ import { SellerShowSupplierStockOrders } from './components/seller-side/catalog/
 import { SellerCreateStockOrder } from './components/seller-side/catalog/stock-order/seller-create-stock-order/seller-create-stock-order';
 import { SellerShowStockOrder } from './components/seller-side/catalog/stock-order/seller-show-stock-order/seller-show-stock-order';
 import { SellerTieItemWithCprod } from './components/seller-side/catalog/stock-order/seller-tie-item-with-cprod/seller-tie-item-with-cprod';
+import { SellerShowOrders } from './components/seller-side/catalog/order/seller-show-orders/seller-show-orders';
 
 
 export const routes: Routes = [
@@ -118,6 +119,10 @@ export const routes: Routes = [
             {
                 path: 'stock-order/:id/tie-items',
                 component:SellerTieItemWithCprod
+            },
+            {
+                path: 'orders',
+                component:SellerShowOrders
             },
             
         ]

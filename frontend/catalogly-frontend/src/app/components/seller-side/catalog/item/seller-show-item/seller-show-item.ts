@@ -135,7 +135,7 @@ export class SellerShowItem {
   };
 
   ngOnInit(){
-    this.helperService.setAtualPage(1)
+    this.helperService.setAtualPage(2)
     
 
     this.sellerService.getMyCatalog().subscribe((data) =>{
