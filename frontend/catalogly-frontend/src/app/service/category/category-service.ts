@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ItemResponseDTO } from '../../../types/item/item-response';
 import { CategoryRespondeDTO } from '../../../types/category/category-response';
 import { UpdateCategoryrequestDTO } from '../../../types/category/update-category-request';
+import { CatalogPublicResponseDTO } from '../../../types/catalog/catalog-public-response';
 
 @Injectable({
   providedIn: 'root',
@@ -31,4 +32,6 @@ export class CategoryService {
   updateCategoryById(id:string, data:UpdateCategoryrequestDTO):Observable<any>{
     return this.backApi.updateCategoryById(id, data);
   }
+
+  
 }

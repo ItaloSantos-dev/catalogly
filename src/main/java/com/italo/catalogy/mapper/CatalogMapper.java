@@ -4,8 +4,10 @@ import com.italo.catalogy.dto.catalog.CatalogPrivateResponseDTO;
 import com.italo.catalogy.dto.catalog.CatalogPublicResponseDTO;
 import com.italo.catalogy.dto.catalog.CreateCatalogRequestDTO;
 import com.italo.catalogy.dto.catalog.UpdateCatalogRequestDTO;
-import com.italo.catalogy.dto.catalog.dashboard.CatalogDashboard;
 import com.italo.catalogy.dto.category.CategoryNameAndId;
+import com.italo.catalogy.dto.category.CategoryResponseDTO;
+import com.italo.catalogy.dto.coupon.CouponResponseDTO;
+import com.italo.catalogy.dto.item.ItemResponseDTO;
 import com.italo.catalogy.dto.catalog.dashboard.*;
 import com.italo.catalogy.model.CatalogModel;
 import com.italo.catalogy.model.SellerModel;
@@ -24,11 +26,15 @@ public class CatalogMapper {
     private final ImageService imageService;
     private final SellerMapper sellerMapper;
     private final ItemMapper itemMapper;
+    private final CouponMapper couponMapper;
+    private final CategoryMapper categoryMapper;
 
-    public CatalogMapper(ImageService imageService, SellerMapper sellerMapper, ItemMapper itemMapper) {
+    public CatalogMapper(ImageService imageService, SellerMapper sellerMapper, ItemMapper itemMapper, CategoryMapper categoryMapper, CouponMapper couponMapper) {
         this.imageService = imageService;
         this.sellerMapper = sellerMapper;
         this.itemMapper = itemMapper;
+        this.categoryMapper = categoryMapper;
+        this.couponMapper = couponMapper;
         
     }
 
@@ -49,7 +55,26 @@ public class CatalogMapper {
     }
 
     public CatalogPublicResponseDTO modelToPublicResponse(CatalogModel catalogModel){
+        List<ItemResponseDTO> items = catalogModel.getItems() == null ?
+            null:
+            catalogModel.getItems().stream()
+                .map(item -> this.itemMapper.modelToResponse(item))
+                .toList();
+
+        List<CategoryResponseDTO> categorys = catalogModel.getCategorys() == null ?
+            null:
+            catalogModel.getCategorys().stream()
+                .map(category -> this.categoryMapper.modelToResponse(category))
+                .toList();
+
+        List<CouponResponseDTO> coupons = catalogModel.getCoupons() == null ?
+            null:
+            catalogModel.getCoupons().stream()
+                .map(coupon -> this.couponMapper.modelToResponse(coupon))
+                .toList();
+            
         return new CatalogPublicResponseDTO(
+                catalogModel.getId(),
                 catalogModel.getSeller().getUser().getFirstName(),
                 catalogModel.getName(),
                 catalogModel.getSlug(),
@@ -58,7 +83,12 @@ public class CatalogMapper {
                 catalogModel.getFisicAddress(),
                 catalogModel.getPhone(),
                 this.imageService.getAssignedUrlImage(catalogModel.getImageIconPath()),
-                this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath())
+                this.imageService.getAssignedUrlImage(catalogModel.getImageBannerPath()),
+                items,
+                categorys,
+                coupons
+
+
         );
     }
 

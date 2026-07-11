@@ -1,0 +1,220 @@
+<div class="w-full font-sans antialiased text-slate-800 bg-slate-50/50 min-h-screen pb-16">
+  
+  @if (catalog(); as data) {
+    <div class="w-full h-48 sm:h-72 bg-slate-900 relative overflow-hidden select-none">
+      @if (data.imageBannerUrl) {
+        <img [src]="data.imageBannerUrl" [alt]="data.name" class="w-full h-full object-cover opacity-80" />
+      } @else {
+        <div class="w-full h-full bg-gradient-to-tr from-emerald-900 via-emerald-950 to-slate-950"></div>
+      }
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-16 sm:-mt-24 pb-6 border-b border-slate-200 relative z-10">
+        
+        <div class="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
+          <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-white bg-white shadow-xl overflow-hidden shrink-0 flex items-center justify-center select-none">
+            @if (data.imageIconUrl) {
+              <img [src]="data.imageIconUrl" [alt]="data.name" class="w-full h-full object-cover" />
+            } @else {
+              <i class="bi bi-shop text-slate-300 text-4xl"></i>
+            }
+          </div>
+
+          <div class="space-y-1 py-1">
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+              {{ data.name }}
+            </h1>
+            <p class="text-xs sm:text-sm font-semibold text-emerald-600">
+              {{ data.slogan || 'Bem-vindo ao nosso catálogo oficial' }}
+            </p>
+            <p class="text-[11px] text-slate-400 font-medium">
+              Por <strong class="text-slate-600 font-semibold">{{ data.sellerName }}</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 text-xs font-semibold text-slate-500 self-stretch md:self-auto justify-end border-t md:border-0 pt-4 md:pt-0 border-slate-100">
+          @if (data.phone) {
+            <div class="flex items-center gap-2 justify-center md:justify-start">
+              <i class="bi bi-whatsapp text-emerald-500 text-sm"></i>
+              <span>{{ data.phone }}</span>
+            </div>
+          }
+          @if (data.fisicAddress) {
+            <div class="flex items-center gap-2 justify-center md:justify-start text-center md:text-left">
+              <i class="bi bi-geo-alt text-slate-400 text-sm"></i>
+              <span class="max-w-xs truncate" [title]="data.fisicAddress">{{ data.fisicAddress }}</span>
+            </div>
+          }
+        </div>
+
+      </div>
+
+      @if (data.about) {
+        <div class="py-6 space-y-2">
+          <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider">Sobre o Catálogo</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-4xl font-medium">
+            {{ data.about }}
+          </p>
+        </div>
+      }
+
+      <div class="space-y-6 pt-4">
+        
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 relative">
+          <h2 class="text-sm font-black text-slate-950 uppercase tracking-wider flex items-center gap-2">
+            <span class="w-1.5 h-4 bg-emerald-500 rounded-full"></span>
+            Todos os Produtos
+          </h2>
+          
+          <div class="flex items-center gap-3">
+            <span class="text-[11px] text-slate-400 font-bold bg-slate-100 px-2 py-0.5 rounded-md font-mono hidden sm:inline">
+              {{ data.items.length }} disponíveis
+            </span>
+
+            <div class="relative">
+              <button type="button" (click)="toggleFilterBalloon()"
+                      [class.border-emerald-500]="isFilterOpen() || selectedCategoryId() || priceMin() || priceMax()"
+                      [class.text-emerald-600]="isFilterOpen() || selectedCategoryId() || priceMin() || priceMax()"
+                      class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 text-slate-700 shadow-sm hover:border-emerald-500 hover:text-emerald-600 transition-all cursor-pointer">
+                <i class="bi bi-funnel text-sm"></i>
+                <span>Filtrar</span>
+                @if (selectedCategoryId() || priceMin() || priceMax()) {
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                }
+              </button>
+
+              @if (isFilterOpen()) {
+                <div class="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-200/80 rounded-2xl shadow-xl p-4 z-30 space-y-4 animate-fadeIn">
+                  
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-black text-slate-950 tracking-tight">Filtros de Busca</span>
+                    <button type="button" (click)="clearFilters()" class="text-[10px] font-bold text-slate-400 hover:text-red-500 transition-colors bg-transparent border-0 cursor-pointer">
+                      Limpar Tudo
+                    </button>
+                  </div>
+
+                  <hr class="border-slate-100 my-1" />
+
+                  <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Categorias</label>
+                    <div class="max-h-32 overflow-y-auto space-y-1 pr-1 scrollbar-thin">
+                      
+                      <button type="button" (click)="selectCategory(null)"
+                              [class.bg-emerald-50]="selectedCategoryId() === null"
+                              [class.text-emerald-700]="selectedCategoryId() === null"
+                              class="w-full text-left text-xs px-2.5 py-1.5 rounded-lg font-medium hover:bg-slate-50 transition-colors block text-slate-600">
+                        Todas as Categorias
+                      </button>
+
+                      @for (cat of data.categorys; track cat.id) {
+                        <button type="button" (click)="selectCategory(cat.id)"
+                                [class.bg-emerald-50]="selectedCategoryId() === cat.id"
+                                [class.text-emerald-700]="selectedCategoryId() === cat.id"
+                                class="w-full text-left text-xs px-2.5 py-1.5 rounded-lg font-medium hover:bg-slate-50 transition-colors flex items-center justify-between text-slate-600">
+                          <span class="truncate">{{ cat.name }}</span>
+                          <span class="text-[10px] opacity-60 font-mono">({{ cat.itemsCount || 0 }})</span>
+                        </button>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Faixa de Preço (R$)</label>
+                    <div class="grid grid-cols-2 gap-2">
+                      <div class="relative">
+                        <span class="absolute left-2.5 top-2.5 text-[10px] font-bold text-slate-400">De</span>
+                        <input type="number" placeholder="0,00" 
+                               [value]="priceMin()" (input)="priceMin.set($any($event.target).value ? +$any($event.target).value : null)"
+                               class="w-full pl-7 pr-2 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 font-mono" />
+                      </div>
+                      <div class="relative">
+                        <span class="absolute left-2.5 top-2.5 text-[10px] font-bold text-slate-400">Até</span>
+                        <input type="number" placeholder="999+" 
+                               [value]="priceMax()" (input)="priceMax.set($any($event.target).value ? +$any($event.target).value : null)"
+                               class="w-full pl-8 pr-2 py-2 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 font-mono" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="button" (click)="toggleFilterBalloon()"
+                          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2 rounded-xl transition-colors text-center cursor-pointer border-0 shadow-sm shadow-emerald-600/10">
+                    Aplicar Filtros
+                  </button>
+
+                </div>
+              }
+            </div>
+
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          
+          @for (item of data.items; track item.id) {
+            @if (!item.deleted && 
+                 (selectedCategoryId() === null || item.categoryId === selectedCategoryId()) &&
+                 (priceMin() === null || item.price >= priceMin()!) &&
+                 (priceMax() === null || item.price <= priceMax()!)) {
+              
+              <div class="bg-white border border-slate-200/60 rounded-3xl overflow-hidden shadow-sm hover:shadow-md hover:border-slate-300 transition-all flex flex-col justify-between group">
+                <div class="w-full aspect-square bg-slate-50 relative overflow-hidden border-b border-slate-100 flex items-center justify-center select-none">
+                  @if (item.imagePath1) {
+                    <img [src]="item.imagePath1" [alt]="item.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  } @else {
+                    <i class="bi bi-box2 text-slate-300 text-3xl"></i>
+                  }
+                  @if (item.categoryName) {
+                    <span class="absolute top-3 left-3 text-[9px] font-black uppercase tracking-wider bg-slate-950/80 text-slate-200 px-2 py-0.5 rounded-lg backdrop-blur-sm">
+                      {{ item.categoryName }}
+                    </span>
+                  }
+                </div>
+
+                <div class="p-4 space-y-3 flex-1 flex flex-col justify-between">
+                  <div class="space-y-1">
+                    <h4 class="text-xs font-black text-slate-950 line-clamp-1 group-hover:text-emerald-600 transition-colors">
+                      {{ item.name }}
+                    </h4>
+                    <p class="text-[11px] text-slate-400 font-medium line-clamp-2 leading-normal">
+                      {{ item.about || 'Nenhum detalhe adicional fornecido para este produto.' }}
+                    </p>
+                  </div>
+
+                  <div class="space-y-2.5 pt-2">
+                    <div class="flex items-baseline justify-between gap-2">
+                      <div class="space-y-0.5">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block leading-none">Preço</span>
+                        <p class="text-base font-black text-slate-950 font-mono tracking-tight">R$ {{ item.price.toFixed(2) }}</p>
+                      </div>
+                      @if (item.stock === 0) {
+                        <span class="text-[10px] font-bold text-red-600 bg-red-50 border border-red-100 px-2 py-0.5 rounded-md">Esgotado</span>
+                      }
+                    </div>
+
+                    <button type="button" (click)="addToCart(item)" [disabled]="item.stock === 0"
+                            class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-100 disabled:text-slate-400 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-sm border-0 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-1.5">
+                      <i class="bi bi-cart-plus text-sm"></i> Adicionar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            }
+          }
+
+        </div>
+      </div>
+
+    </div>
+  } @else {
+    <div class="max-w-5xl mx-auto py-32 text-center space-y-3">
+      <div class="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <p class="text-xs text-slate-400 font-semibold">Carregando catálogo da Catalogly...</p>
+    </div>
+  }
+
+</div>

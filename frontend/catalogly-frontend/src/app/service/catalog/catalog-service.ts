@@ -5,6 +5,7 @@ import { CategoryRespondeDTO } from '../../../types/category/category-response';
 import { CouponResponseDTO } from '../../../types/coupon/coupon-response';
 import { SupplierResponseDTO } from '../../../types/supplier/supplier-response';
 import { OrderResponseDTO } from '../../../types/order/order-response';
+import { CatalogPublicResponseDTO } from '../../../types/catalog/catalog-public-response';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,9 @@ export class CatalogService {
 
   getOrdersOfCatalog():Observable<OrderResponseDTO[]>{
     return this.backApi.getOrdersOfCatalog();
+  }
+
+  getCatalogPublicBySlug(slug:string):Observable<CatalogPublicResponseDTO>{
+    return this.backApi.getCatalogPublicBySlug(slug);
   }
 }

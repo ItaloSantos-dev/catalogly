@@ -61,6 +61,7 @@ public class CatalogService {
     }
 
     public CatalogModel getCatalogBySlug(String slug){
+        System.out.println(slug);
         return this.catalogRepository.findBySlug(slug)
                 .orElseThrow(() -> new RuntimeException("Deu ruin"));
     }

@@ -24,6 +24,7 @@ import { SellerShowStockOrder } from './components/seller-side/catalog/stock-ord
 import { SellerTieItemWithCprod } from './components/seller-side/catalog/stock-order/seller-tie-item-with-cprod/seller-tie-item-with-cprod';
 import { SellerShowOrders } from './components/seller-side/catalog/order/seller-show-orders/seller-show-orders';
 import { UserLayout } from './components/user-side/catalog/layout/user-layout/user-layout';
+import { UserShowCatalog } from './components/user-side/catalog/user-show-catalog/user-show-catalog';
 
 
 export const routes: Routes = [
@@ -131,7 +132,12 @@ export const routes: Routes = [
     {
         path: 'catalogly',
         component: UserLayout,
-        
+        children:[
+            {
+                path:':slug',
+                component:UserShowCatalog
+            }
+        ]
     }
     
 ];
