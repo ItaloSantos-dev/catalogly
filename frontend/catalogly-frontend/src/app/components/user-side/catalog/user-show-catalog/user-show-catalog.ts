@@ -3,6 +3,8 @@ import { CatalogPublicResponseDTO } from '../../../../../types/catalog/catalog-p
 import { ItemResponseDTO } from '../../../../../types/item/item-response';
 import { ActivatedRoute } from '@angular/router';
 import { CatalogService } from '../../../../service/catalog/catalog-service';
+import { AuthService } from '../../../../service/auth/auth-service';
+import { CartService } from '../../../../service/cart/cart-service';
 
 @Component({
   selector: 'app-user-show-catalog',
@@ -13,6 +15,8 @@ import { CatalogService } from '../../../../service/catalog/catalog-service';
 export class UserShowCatalog {
   catalogService = inject(CatalogService);
   catalog = signal(<CatalogPublicResponseDTO>{});
+  authService = inject(AuthService);
+  cartService = inject(CartService);
 
   constructor(private route:ActivatedRoute){};
 
@@ -276,13 +280,18 @@ export class UserShowCatalog {
   }
 
   // Função simulada para o clique de compra do usuário
-  addToCart(item: ItemResponseDTO) {
-    console.log('Adicionando ao carrinho da Catalogly:', item.name);
+  addToCart(item:ItemResponseDTO, add:boolean) {
+    if (this.authService.getToken()) {
+      window.alert("Deu ruin");
+    }
+    else{
+      this.cartService.setItemCar(item, add);
+    }
   }
 
   ngOnInit(){
     const slug = this.route.snapshot.paramMap.get("slug");
-
+    this.catalog.set(this.catalogMock)
     if (slug) {
       console.log("VEIO");
       

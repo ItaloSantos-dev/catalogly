@@ -26,7 +26,7 @@ export class SellerShowItems {
     price: 149.9,
     stock: 35,
     deleted: false,
-    imagePath1: "/images/mouse-rgb-1.jpg",
+    imagePath1: "https://picsum.photos/400/400?1",
     imagePath2: "/images/mouse-rgb-2.jpg",
     imagePath3: null
   },
@@ -38,7 +38,7 @@ export class SellerShowItems {
     price: 299.9,
     stock: 18,
     deleted: true,
-    imagePath1: "/images/teclado-1.jpg",
+    imagePath1: "https://picsum.photos/400/400?2",
     imagePath2: null,
     imagePath3: null
   },
@@ -50,7 +50,7 @@ export class SellerShowItems {
     price: 249.5,
     stock: 12,
     deleted: false,
-    imagePath1: "/images/headset-1.jpg",
+    imagePath1: "https://picsum.photos/400/400?3",
     imagePath2: "/images/headset-2.jpg",
     imagePath3: "/images/headset-3.jpg"
   },
@@ -62,7 +62,7 @@ export class SellerShowItems {
     price: 899.99,
     stock: 7,
     deleted: false,
-    imagePath1: "/images/monitor-1.jpg",
+    imagePath1: "https://picsum.photos/400/400?4",
     imagePath2: null,
     imagePath3: null
   },
@@ -74,7 +74,7 @@ export class SellerShowItems {
     price: 549.0,
     stock: 20,
     deleted: false,
-    imagePath1: "/images/ssd-1.jpg",
+    imagePath1: "https://picsum.photos/400/400?5",
     imagePath2: "/images/ssd-2.jpg",
     imagePath3: null
   }
@@ -91,6 +91,7 @@ export class SellerShowItems {
       }
     });
     this.helperService.setAtualPage(2);
+    this.items.set(this.itemsMock);
   }
 
   deleteItem(id:string){
