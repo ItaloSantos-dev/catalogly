@@ -22,6 +22,8 @@ import { SupplierItemWithCprodResponseDTO } from "../../types/tie-supplier-item/
 import { UpdateCprodOfSupplierItemsRequestDTO } from "../../types/tie-supplier-item/update-cprod/update-cprod-of-supplier-items-request";
 import { OrderResponseDTO } from "../../types/order/order-response";
 import { CatalogPublicResponseDTO } from "../../types/catalog/catalog-public-response";
+import { RegisterRequestDTO } from "../../types/auth/register-request";
+import { UserResponseDTO } from "../../types/user/user-response";
 
 @Injectable({
     providedIn: 'root'
@@ -151,6 +153,10 @@ export class BackApi {
 
     getCatalogPublicBySlug(slug:string):Observable<CatalogPublicResponseDTO>{
         return this.httpClient.get<CatalogPublicResponseDTO>(this.baseUrl + "catalog/" + slug);
+    }
+
+    registerUser(data:RegisterRequestDTO):Observable<UserResponseDTO>{
+        return this.httpClient.post<UserResponseDTO>(this.baseUrl + "auth/register", data);
     }
 
 }

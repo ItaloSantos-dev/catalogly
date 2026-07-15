@@ -1,0 +1,148 @@
+<div class="w-full min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 font-sans antialiased text-slate-800 selection:bg-emerald-500 selection:text-white">
+  
+  <div class="w-full max-w-lg bg-white border border-slate-200/80 rounded-3xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-6 animate-fadeIn relative">
+    
+    <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+
+    <div class="text-center space-y-2 pt-2">
+      <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-white mx-auto shadow-lg shadow-emerald-500/20 select-none">
+        <i class="bi bi-person-plus-fill text-lg"></i>
+      </div>
+      <div class="space-y-0.5">
+        <h1 class="text-xl font-black text-slate-950 tracking-tight">Crie sua conta</h1>
+        <p class="text-xs text-slate-400 font-medium">Cadastre-se na <span class="text-emerald-600 font-bold">Catalogly</span> e comece a comprar hoje mesmo</p>
+      </div>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <div class="space-y-1.5">
+          <label for="firstName" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Nome</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-3 text-slate-400 select-none">
+              <i class="bi bi-person text-sm"></i>
+            </span>
+            <input id="firstName" type="text" formControlName="firstName" placeholder="Seu nome"
+                   [class.border-red-500]="firstNameControl?.touched && firstNameControl?.invalid"
+                   [class.focus:border-red-500]="firstNameControl?.touched && firstNameControl?.invalid"
+                   [class.focus:ring-red-500]="firstNameControl?.touched && firstNameControl?.invalid"
+                   class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-medium text-slate-950 placeholder-slate-400" />
+          </div>
+          @if (firstNameControl?.touched && firstNameControl?.invalid) {
+            <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+              <i class="bi bi-exclamation-circle-fill"></i> O nome é obrigatório.
+            </span>
+          }
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="lastName" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Sobrenome</label>
+          <input id="lastName" type="text" formControlName="lastName" placeholder="Seu sobrenome"
+                 [class.border-red-500]="lastNameControl?.touched && lastNameControl?.invalid"
+                 [class.focus:border-red-500]="lastNameControl?.touched && lastNameControl?.invalid"
+                 [class.focus:ring-red-500]="lastNameControl?.touched && lastNameControl?.invalid"
+                 class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-medium text-slate-950 placeholder-slate-400" />
+          @if (lastNameControl?.touched && lastNameControl?.invalid) {
+            <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+              <i class="bi bi-exclamation-circle-fill"></i> O sobrenome é obrigatório.
+            </span>
+          }
+        </div>
+
+      </div>
+
+      <div class="space-y-1.5">
+        <label for="cpf" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">CPF</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-3 text-slate-400 select-none">
+            <i class="bi bi-card-text text-sm"></i>
+          </span>
+          <input id="cpf" type="text" formControlName="cpf" placeholder="000.000.000-00"
+                 [class.border-red-500]="cpfControl?.touched && cpfControl?.invalid"
+                 [class.focus:border-red-500]="cpfControl?.touched && cpfControl?.invalid"
+                 [class.focus:ring-red-500]="cpfControl?.touched && cpfControl?.invalid"
+                 class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-mono text-slate-950 placeholder-slate-400" />
+        </div>
+        @if (cpfControl?.touched && cpfControl?.invalid) {
+          <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            @if (cpfControl?.errors?.['required']) { O CPF é obrigatório. }
+            @if (cpfControl?.errors?.['pattern']) { Insira um CPF válido (somente números ou formatado). }
+          </span>
+        }
+      </div>
+
+      <div class="space-y-1.5">
+        <label for="email" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">E-mail</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-3 text-slate-400 select-none">
+            <i class="bi bi-envelope text-sm"></i>
+          </span>
+          <input id="email" type="email" formControlName="email" placeholder="nome@exemplo.com"
+                 [class.border-red-500]="emailControl?.touched && emailControl?.invalid"
+                 [class.focus:border-red-500]="emailControl?.touched && emailControl?.invalid"
+                 [class.focus:ring-red-500]="emailControl?.touched && emailControl?.invalid"
+                 class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-medium text-slate-950 placeholder-slate-400" />
+        </div>
+        @if (emailControl?.touched && emailControl?.invalid) {
+          <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            @if (emailControl?.errors?.['required']) { O e-mail é obrigatório. }
+            @if (emailControl?.errors?.['email']) { Digite um formato de e-mail válido. }
+          </span>
+        }
+      </div>
+
+      <div class="space-y-1.5">
+        <label for="password" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Senha de Acesso</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-3 text-slate-400 select-none">
+            <i class="bi bi-lock text-sm"></i>
+          </span>
+          <input id="password" type="password" formControlName="password" placeholder="Mínimo 6 caracteres"
+                 [class.border-red-500]="passwordControl?.touched && passwordControl?.invalid"
+                 [class.focus:border-red-500]="passwordControl?.touched && passwordControl?.invalid"
+                 [class.focus:ring-red-500]="passwordControl?.touched && passwordControl?.invalid"
+                 class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-mono text-slate-950 placeholder-slate-400" />
+        </div>
+        @if (passwordControl?.touched && passwordControl?.invalid) {
+          <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            @if (passwordControl?.errors?.['required']) { A senha é obrigatória. }
+            @if (passwordControl?.errors?.['minlength']) { A senha deve possuir no mínimo 6 caracteres. }
+          </span>
+        }
+      </div>
+
+      <div class="pt-3">
+        <button type="submit" [disabled]="registerForm.invalid || isLoading()"
+                class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-100 disabled:text-slate-400 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-md disabled:shadow-none transition-all border-0 flex items-center justify-center gap-2 select-none"
+                [class.cursor-pointer]="registerForm.valid && !isLoading()" [class.cursor-not-allowed]="registerForm.invalid || isLoading()">
+          
+          @if (isLoading()) {
+            <span class="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></span>
+            <span>Salvando dados...</span>
+          } @else {
+            <i class="bi bi-check-circle text-sm"></i>
+            <span>Cadastrar Conta</span>
+          }
+        </button>
+      </div>
+
+    </form>
+
+    <hr class="border-slate-100 my-2" />
+
+    <div class="text-center">
+      <p class="text-xs text-slate-400 font-medium">
+        Já possui registro? 
+        <a routerLink="/login" class="text-emerald-600 hover:text-emerald-700 font-bold transition-colors no-underline">
+          Fazer Login no sistema
+        </a>
+      </p>
+    </div>
+
+  </div>
+</div>

@@ -46,6 +46,22 @@
   }
 
   @if (isLoggedIn()) {
+    
+    <div class="flex items-center gap-3 px-3 py-2.5 mb-2 rounded-xl text-xs font-bold text-black border-l-2 border-transparent select-none"
+       [class.justify-center]="isCollapsed()"
+       [title]="'Olá, nome'">
+    
+    <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+      <i class="bi bi-person-circle text-base"></i>
+    </div>
+
+    @if (!isCollapsed()) {
+      <div class="flex flex-col min-w-0 leading-tight">
+        <span class="text-[9px] text-black font-black uppercase tracking-wider">Bem-vindo,</span>
+        <span class="truncate text-black font-black">NOME</span>
+      </div>
+    }
+  </div>
 
     <a [routerLink]="['/catalogly', atualSlugOfCatalogShowUSer(), 'cart']"
    routerLinkActive="bg-indigo-600/10 text-indigo-400 border-indigo-500"
@@ -100,14 +116,8 @@
       <div class="flex items-center justify-between gap-2" [class.flex-col]="isCollapsed()">
         <div class="flex items-center gap-3 min-w-0" [class.flex-col]="isCollapsed()">
           <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-black text-slate-200 shrink-0 font-mono">
-            US
+            IS
           </div>
-          @if (!isCollapsed()) {
-            <div class="min-w-0">
-              <p class="text-xs font-black text-slate-200 truncate">Usuário Logado</p>
-              <p class="text-[10px] text-slate-500 font-medium truncate">conta&#64;email.com</p>
-            </div>
-          }
         </div>
         <button type="button" (click)="isLoggedIn.set(false)" title="Sair"
                 class="w-8 h-8 rounded-lg bg-transparent hover:bg-red-500/10 text-slate-500 hover:text-red-400 border-0 flex items-center justify-center transition-colors cursor-pointer">

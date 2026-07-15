@@ -27,6 +27,7 @@ import { UserLayout } from './components/user-side/catalog/layout/user-layout/us
 import { UserShowCatalog } from './components/user-side/catalog/user-show-catalog/user-show-catalog';
 import { UserShowCart } from './components/user-side/catalog/cart/user-show-cart/user-show-cart';
 import { UserLogin } from './components/user-side/catalog/auth/user-login/user-login';
+import { UserRegister } from './components/user-side/catalog/auth/user-register/user-register';
 
 
 export const routes: Routes = [
@@ -142,11 +143,14 @@ export const routes: Routes = [
             {
                 path:':slug/cart',
                 component:UserShowCart
-            }
-            ,
+            },
             {
                 path:'user/login',
                 component:UserLogin
+            },
+            {
+                path:'user/register',
+                component:UserRegister
             }
 
         ]

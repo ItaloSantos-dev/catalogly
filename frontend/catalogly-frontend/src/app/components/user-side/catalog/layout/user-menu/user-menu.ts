@@ -4,6 +4,8 @@ import { CartService } from '../../../../../service/cart/cart-service';
 import { CartItemQuantity } from '../../../../../../types/cart/cart-item-quantity';
 import { RouterLink } from "@angular/router";
 import { HelperService } from '../../../../../service/helper/helper-service';
+import { UserService } from '../../../../../service/user/user-service';
+import { UserResponseDTO } from '../../../../../../types/user/user-response';
 
 @Component({
   selector: 'app-user-menu',
@@ -17,9 +19,12 @@ export class UserMenu {
   cartService = inject(CartService);
   private helperService = inject(HelperService);
   atualSlugOfCatalogShowUSer = signal("");
+  private userService = inject(UserService);
 
   // Controla se o menu lateral está encolhido ou expandido
   isCollapsed = signal<boolean>(true);
+
+
 
   // Controla se o usuário está logado ou não (pode alterar para testar)
   isLoggedIn = signal<boolean>(false);
@@ -43,5 +48,6 @@ export class UserMenu {
     this.helperService.atualSlugOfCataloglyShowUser$.subscribe((data) =>{
       this.atualSlugOfCatalogShowUSer.set(data);
     })
+
   }
 }
