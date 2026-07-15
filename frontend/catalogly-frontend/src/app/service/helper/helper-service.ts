@@ -11,5 +11,12 @@ export class HelperService {
   setAtualPage(page: number) {
     this.atualPage.next(page);
   }
+
+  private atualSlugOfCataloglyShowUser = new BehaviorSubject<string>("");
+  atualSlugOfCataloglyShowUser$ = this.atualSlugOfCataloglyShowUser.asObservable();
+
+  setAtualSlugOfCataloglyShowUser(slug:string){
+    this.atualSlugOfCataloglyShowUser.next(slug);
+  }
   
 }

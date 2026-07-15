@@ -20,15 +20,17 @@ export class CartService {
     let newCar = this.car();
     let removeItem;
 
-    newCar.forEach((item, index)=>{
-      if (item.item.id===item.item.id) {
-
+    newCar.forEach((it, index)=>{
+      if (it.item.id===item.id) {
+        
         itemHasExists = true;
         if (add) 
-          item.quantity +=1;
+          it.quantity +=1;
         else
-          item.quantity-=1;
-        if (item.quantity===0) {
+          it.quantity-=1;
+        if (it.quantity===0) {
+          console.log(index);
+          
           removeItem = index;
         }
       }
@@ -38,8 +40,8 @@ export class CartService {
       newCar.push({item:item, quantity:1})
     }
 
-    if (removeItem) {
-      newCar.slice(removeItem,1);
+    if (removeItem!==undefined && removeItem>=0) {
+      newCar.splice(removeItem,1);
     }
 
     this.atualCar.next(newCar)

@@ -25,6 +25,7 @@ import { SellerTieItemWithCprod } from './components/seller-side/catalog/stock-o
 import { SellerShowOrders } from './components/seller-side/catalog/order/seller-show-orders/seller-show-orders';
 import { UserLayout } from './components/user-side/catalog/layout/user-layout/user-layout';
 import { UserShowCatalog } from './components/user-side/catalog/user-show-catalog/user-show-catalog';
+import { UserShowCart } from './components/user-side/catalog/cart/user-show-cart/user-show-cart';
 
 
 export const routes: Routes = [
@@ -136,7 +137,12 @@ export const routes: Routes = [
             {
                 path:':slug',
                 component:UserShowCatalog
+            },
+            {
+                path:':slug/cart',
+                component:UserShowCart
             }
+
         ]
     }
     

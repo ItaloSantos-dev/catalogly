@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CatalogService } from '../../../../service/catalog/catalog-service';
 import { AuthService } from '../../../../service/auth/auth-service';
 import { CartService } from '../../../../service/cart/cart-service';
+import { HelperService } from '../../../../service/helper/helper-service';
 
 @Component({
   selector: 'app-user-show-catalog',
@@ -14,9 +15,10 @@ import { CartService } from '../../../../service/cart/cart-service';
 })
 export class UserShowCatalog {
   catalogService = inject(CatalogService);
-  catalog = signal(<CatalogPublicResponseDTO>{});
+  catalog = signal(<CatalogPublicResponseDTO | null>null);
   authService = inject(AuthService);
   cartService = inject(CartService);
+  private helperService = inject(HelperService);
 
   constructor(private route:ActivatedRoute){};
 
@@ -291,17 +293,15 @@ export class UserShowCatalog {
 
   ngOnInit(){
     const slug = this.route.snapshot.paramMap.get("slug");
-    this.catalog.set(this.catalogMock)
     if (slug) {
       console.log("VEIO");
-      
+      this.helperService.setAtualSlugOfCataloglyShowUser(slug);
       this.catalogService.getCatalogPublicBySlug(slug).subscribe({
         next:(data) =>{
           this.catalog.set(data);
         },
         error:(err) =>{
           console.log(err);
-          
         }
       })
     }
