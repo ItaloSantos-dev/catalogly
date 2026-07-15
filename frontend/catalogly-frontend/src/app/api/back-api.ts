@@ -152,4 +152,5 @@ export class BackApi {
     getCatalogPublicBySlug(slug:string):Observable<CatalogPublicResponseDTO>{
         return this.httpClient.get<CatalogPublicResponseDTO>(this.baseUrl + "catalog/" + slug);
     }
+
 }

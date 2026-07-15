@@ -283,7 +283,7 @@ export class UserShowCatalog {
 
   // Função simulada para o clique de compra do usuário
   addToCart(item:ItemResponseDTO, add:boolean) {
-    if (this.authService.getToken()) {
+    if (!this.authService.getToken()) {
       window.alert("Deu ruin");
     }
     else{
@@ -294,7 +294,6 @@ export class UserShowCatalog {
   ngOnInit(){
     const slug = this.route.snapshot.paramMap.get("slug");
     if (slug) {
-      console.log("VEIO");
       this.helperService.setAtualSlugOfCataloglyShowUser(slug);
       this.catalogService.getCatalogPublicBySlug(slug).subscribe({
         next:(data) =>{

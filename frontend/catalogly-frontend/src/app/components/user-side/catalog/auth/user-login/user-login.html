@@ -1,0 +1,97 @@
+<div class="w-full min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 font-sans antialiased text-slate-800 selection:bg-emerald-500 selection:text-white">
+  
+  <div class="w-full max-w-md bg-white border border-slate-200/80 rounded-3xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-6 animate-fadeIn relative">
+    
+    <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+
+    <div class="text-center space-y-2 pt-2">
+      <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-white mx-auto shadow-lg shadow-emerald-500/20 select-none">
+        <i class="bi bi-lightning-charge-fill text-lg"></i>
+      </div>
+      <div class="space-y-0.5">
+        <h1 class="text-xl font-black text-slate-950 tracking-tight">Acesse sua conta</h1>
+        <p class="text-xs text-slate-400 font-medium">Seja bem-vindo de volta ao ecossistema da <span class="text-emerald-600 font-bold">Catalogly</span></p>
+      </div>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      
+      <div class="space-y-1.5">
+        <label for="email" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">E-mail Corporativo ou Pessoal</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-3 text-slate-400 select-none">
+            <i class="bi bi-envelope text-sm"></i>
+          </span>
+          <input id="email" type="email" formControlName="email" placeholder="nome@exemplo.com"
+                 [class.border-red-500]="emailControl?.touched && emailControl?.invalid"
+                 [class.focus:border-red-500]="emailControl?.touched && emailControl?.invalid"
+                 [class.focus:ring-red-500]="emailControl?.touched && emailControl?.invalid"
+                 class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-medium text-slate-950 placeholder-slate-400" />
+        </div>
+        
+        @if (emailControl?.touched && emailControl?.invalid) {
+          <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            @if (emailControl?.errors?.['required']) { O e-mail é obrigatório para acessar. }
+            @if (emailControl?.errors?.['email']) { Digite um formato de e-mail válido. }
+          </span>
+        }
+      </div>
+
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between">
+          <label for="password" class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Sua Senha</label>
+          <a routerLink="/recovery" class="text-[10px] font-bold text-slate-400 hover:text-emerald-600 transition-colors no-underline">
+            Esqueceu a senha?
+          </a>
+        </div>
+        <div class="relative">
+          <span class="absolute left-3.5 top-3 text-slate-400 select-none">
+            <i class="bi bi-lock text-sm"></i>
+          </span>
+          <input id="password" type="password" formControlName="password" placeholder="••••••••"
+                 [class.border-red-500]="passwordControl?.touched && passwordControl?.invalid"
+                 [class.focus:border-red-500]="passwordControl?.touched && passwordControl?.invalid"
+                 [class.focus:ring-red-500]="passwordControl?.touched && passwordControl?.invalid"
+                 class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-mono text-slate-950 placeholder-slate-400" />
+        </div>
+
+        @if (passwordControl?.touched && passwordControl?.invalid) {
+          <span class="text-[10px] font-bold text-red-500 flex items-center gap-1 animate-fadeIn">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            @if (passwordControl?.errors?.['required']) { A credencial de senha é obrigatória. }
+            @if (passwordControl?.errors?.['minlength']) { A senha precisa ter no mínimo 6 caracteres. }
+          </span>
+        }
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" [disabled]="loginForm.invalid || isLoading()"
+                class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-100 disabled:text-slate-400 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-md disabled:shadow-none transition-all border-0 flex items-center justify-center gap-2 select-none"
+                [class.cursor-pointer]="loginForm.valid && !isLoading()" [class.cursor-not-allowed]="loginForm.invalid || isLoading()">
+          
+          @if (isLoading()) {
+            <span class="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></span>
+            <span>Verificando credenciais...</span>
+          } @else {
+            <i class="bi bi-box-arrow-in-right text-sm"></i>
+            <span>Entrar no Sistema</span>
+          }
+        </button>
+      </div>
+
+    </form>
+
+    <hr class="border-slate-100 my-2" />
+
+    <div class="text-center">
+      <p class="text-xs text-slate-400 font-medium">
+        Novo na nossa plataforma? 
+        <a routerLink="/register" class="text-emerald-600 hover:text-emerald-700 font-bold transition-colors no-underline">
+          Criar uma conta gratuita
+        </a>
+      </p>
+    </div>
+
+  </div>
+</div>

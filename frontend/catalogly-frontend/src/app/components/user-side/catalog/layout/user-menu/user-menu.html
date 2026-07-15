@@ -118,20 +118,20 @@
     } @else {
       @if (!isCollapsed()) {
         <div class="flex justify-between gap-3">
-            <button type="button" (click)="isLoggedIn.set(true)"
+            <a routerLink="/catalogly/user/login" 
                 class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-2.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer border-0">
                 <i class="bi bi-box-arrow-in-right text-sm"></i> Entrar
-            </button>
-            <button type="button" (click)="isLoggedIn.set(true)"
+            </a>
+            <a 
                 class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-2.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer border-0">
                 <i class="bi bi-pencil-square text-sm"></i> Registrar
-            </button>
+            </a>
         </div>
       } @else {
-        <button type="button" (click)="isLoggedIn.set(true)" title="Fazer Login"
+        <a routerLink="/catalogly/user/login" title="Fazer Login"
                 class="w-10 h-10 rounded-xl bg-emerald-600 hover:bg-indigo-500 text-white flex items-center justify-center shadow-lg transition-all cursor-pointer border-0 mx-auto">
           <i class="bi bi-box-arrow-in-right text-base"></i>
-        </button>
+        </a>
       }
     }
 

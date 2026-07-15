@@ -19,7 +19,7 @@ export class UserMenu {
   atualSlugOfCatalogShowUSer = signal("");
 
   // Controla se o menu lateral está encolhido ou expandido
-  isCollapsed = signal<boolean>(false);
+  isCollapsed = signal<boolean>(true);
 
   // Controla se o usuário está logado ou não (pode alterar para testar)
   isLoggedIn = signal<boolean>(false);
