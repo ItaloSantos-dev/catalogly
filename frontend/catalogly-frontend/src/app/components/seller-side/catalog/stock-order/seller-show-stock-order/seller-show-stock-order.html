@@ -48,7 +48,7 @@
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Valor Estimado</p>
             <p class="text-base font-black text-slate-700 tracking-tight font-mono truncate">
               @if (data.priceEstimated!==null && data.priceEstimated!==undefined) {
-                R$ {{ data.priceEstimated?.toFixed(2) }}
+                R$ {{ data.priceEstimated.toFixed(2) }}
               }@else {
                 <p class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 inline-block select-none">
                 Aguardando Nota

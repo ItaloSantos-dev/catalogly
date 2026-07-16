@@ -24,6 +24,7 @@ import { OrderResponseDTO } from "../../types/order/order-response";
 import { CatalogPublicResponseDTO } from "../../types/catalog/catalog-public-response";
 import { RegisterRequestDTO } from "../../types/auth/register-request";
 import { UserResponseDTO } from "../../types/user/user-response";
+import { CreateOrderRequestDTO } from "../../types/order/create-order-request";
 
 @Injectable({
     providedIn: 'root'
@@ -157,6 +158,10 @@ export class BackApi {
 
     registerUser(data:RegisterRequestDTO):Observable<UserResponseDTO>{
         return this.httpClient.post<UserResponseDTO>(this.baseUrl + "auth/register", data);
+    }
+
+    createOrder(data:CreateOrderRequestDTO):Observable<OrderResponseDTO>{
+        return this.httpClient.post<OrderResponseDTO>(this.baseUrl + "order", data);
     }
 
 }

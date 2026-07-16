@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CatalogPublicResponseDTO } from '../../../../../types/catalog/catalog-public-response';
 import { ItemResponseDTO } from '../../../../../types/item/item-response';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogService } from '../../../../service/catalog/catalog-service';
 import { AuthService } from '../../../../service/auth/auth-service';
 import { CartService } from '../../../../service/cart/cart-service';
@@ -19,6 +19,8 @@ export class UserShowCatalog {
   authService = inject(AuthService);
   cartService = inject(CartService);
   private helperService = inject(HelperService);
+  private router = inject(Router);
+  
 
   constructor(private route:ActivatedRoute){};
 
@@ -284,7 +286,7 @@ export class UserShowCatalog {
   // Função simulada para o clique de compra do usuário
   addToCart(item:ItemResponseDTO, add:boolean) {
     if (!this.authService.getToken()) {
-      window.alert("Deu ruin");
+      this.router.navigate(['/catalogly', 'user', 'login'])
     }
     else{
       this.cartService.setItemCar(item, add);

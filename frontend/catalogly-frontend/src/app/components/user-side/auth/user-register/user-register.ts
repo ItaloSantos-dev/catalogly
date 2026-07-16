@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../../../../service/user/user-service';
-import { RegisterRequestDTO } from '../../../../../../types/auth/register-request';
+import { UserService } from '../../../../service/user/user-service';
+import { RegisterRequestDTO } from '../../../../../types/auth/register-request';
 import { Router } from '@angular/router';
 
 @Component({

@@ -119,6 +119,11 @@
               <span class="text-emerald-600 font-bold">A combinar</span>
             </div>
             
+            <div class="flex flex-col gap-1">
+              <label for="couponSlug">CUPOM:</label>
+              <input #couponInput name="couponSlug" id="couponSlug" type="text" [value]="couponSlug()" (input)="couponSlug.set(couponInput.value)" placeholder="EX: NATAL-10">
+            </div>
+
             <hr class="border-slate-100" />
             
             <div class="flex justify-between items-baseline pt-1">
@@ -130,7 +135,7 @@
           </div>
 
           <div class="space-y-2 pt-2">
-            <button type="button"
+            <button  (click)="ngOnSubmit()" 
                     class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 border-0 cursor-pointer">
               <i class="bi bi-shield-check text-sm"></i> Finalizar Pedido
             </button>

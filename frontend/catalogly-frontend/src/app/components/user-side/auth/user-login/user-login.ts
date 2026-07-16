@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginRequestDTO } from '../../../../../../types/auth/login-request';
-import { UserService } from '../../../../../service/user/user-service';
-import { AuthService } from '../../../../../service/auth/auth-service';
+import { LoginRequestDTO } from '../../../../../types/auth/login-request';
+import { UserService } from '../../../../service/user/user-service';
+import { AuthService } from '../../../../service/auth/auth-service';
 import { Router } from '@angular/router';
 
 @Component({
