@@ -164,4 +164,8 @@ export class BackApi {
         return this.httpClient.post<OrderResponseDTO>(this.baseUrl + "order", data);
     }
 
+    getOrdersOfUser():Observable<OrderResponseDTO[]>{
+        return this.httpClient.get<OrderResponseDTO[]>(this.baseUrl + "order");
+    }
+
 }

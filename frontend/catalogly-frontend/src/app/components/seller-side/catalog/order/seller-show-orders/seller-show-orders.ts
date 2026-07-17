@@ -37,48 +37,48 @@ export class SellerShowOrders {
     return this.orders().filter(o => o.orderStatus === OrderStatus.PENDING_PAYMENT).length;
   });
 
-  ORDERS_MOCK: OrderResponseDTO[] = [
-  {
-    id: "1",
-    orderStatus: OrderStatus.CREATED,
-    priceInitial: 99.90,
-    priceFinal: 99.90
-  },
-  {
-    id: "2",
-    orderStatus: OrderStatus.PENDING_PAYMENT,
-    couponId: "coupon-1",
-    couponSlug: "BEMVINDO10",
-    couponDiscount: 10,
-    priceInitial: 200,
-    priceFinal: 180,
-    paymentUrl: "https://pagamentos.exemplo.com/checkout/2"
-  },
-  {
-    id: "3",
-    orderStatus: OrderStatus.PAID,
-    priceInitial: 350,
-    priceFinal: 350
-  },
-  {
-    id: "4",
-    orderStatus: OrderStatus.PROCESSING,
-    priceInitial: 420,
-    priceFinal: 420
-  },
-  {
-    id: "5",
-    orderStatus: OrderStatus.COMPLETED,
-    priceInitial: 89.90,
-    priceFinal: 89.90
-  },
-  {
-    id: "6",
-    orderStatus: OrderStatus.CANCELED,
-    priceInitial: 159.90,
-    priceFinal: 159.90
-  }
-];
+//   ORDERS_MOCK: OrderResponseDTO[] = [
+//   {
+//     id: "1",
+//     orderStatus: OrderStatus.CREATED,
+//     priceInitial: 99.90,
+//     priceFinal: 99.90
+//   },
+//   {
+//     id: "2",
+//     orderStatus: OrderStatus.PENDING_PAYMENT,
+//     couponId: "coupon-1",
+//     couponSlug: "BEMVINDO10",
+//     couponDiscount: 10,
+//     priceInitial: 200,
+//     priceFinal: 180,
+//     paymentUrl: "https://pagamentos.exemplo.com/checkout/2"
+//   },
+//   {
+//     id: "3",
+//     orderStatus: OrderStatus.PAID,
+//     priceInitial: 350,
+//     priceFinal: 350
+//   },
+//   {
+//     id: "4",
+//     orderStatus: OrderStatus.PROCESSING,
+//     priceInitial: 420,
+//     priceFinal: 420
+//   },
+//   {
+//     id: "5",
+//     orderStatus: OrderStatus.COMPLETED,
+//     priceInitial: 89.90,
+//     priceFinal: 89.90
+//   },
+//   {
+//     id: "6",
+//     orderStatus: OrderStatus.CANCELED,
+//     priceInitial: 159.90,
+//     priceFinal: 159.90
+//   }
+// ];
 
   ngOnInit(){
     this.helperService.setAtualPage(1);

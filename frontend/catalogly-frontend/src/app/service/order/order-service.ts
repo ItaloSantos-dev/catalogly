@@ -13,4 +13,8 @@ export class OrderService {
   createOrder(data:CreateOrderRequestDTO):Observable<OrderResponseDTO>{
     return this.backApi.createOrder(data);
   }
+
+  getOrdersOfUser():Observable<OrderResponseDTO[]>{
+    return this.backApi.getOrdersOfUser();
+  }
 }

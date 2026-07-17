@@ -1,7 +1,9 @@
 import { OrderStatus } from "../enums/order-status";
+import { OrderItemResponseDTO } from "../order-item/order-item-response";
 
 export interface OrderResponseDTO{
     id:string;
+    catalogName:string;
     orderStatus:OrderStatus;
     couponId?:string;
     couponSlug?:string;
@@ -9,4 +11,5 @@ export interface OrderResponseDTO{
     priceInitial:number;
     priceFinal:number;
     paymentUrl?:string;
+    items:OrderItemResponseDTO[];
 }
